@@ -1,0 +1,593 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{braket}
+\usepackage{amsthm}
+\usepackage{changepage}
+\usepackage{titlesec}
+\usepackage{sectsty} 
+\sectionfont{\centering \normalfont \scshape}
+\subsectionfont{\normalfont}
+\subsubsectionfont{\normalfont}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancyplain} 
+\fancyhead{} 
+\fancyfoot[L]{} 
+\fancyfoot[R]{} 
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt} 
+\setlength{\headheight}{13.6pt} 
+
+
+\renewcommand{\thesubsubsection}{(\roman{subsubsection})}
+
+\titleformat{\subsubsection}[runin]{\vspace{-1ex}}{\thesubsubsection}{0em}{}
+
+\numberwithin{equation}{section} 
+\numberwithin{figure}{section} 
+\numberwithin{table}{section} 
+
+% new commands
+
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dt}{\frac{d}{dt}}
+\newcommand{\dder}[2]{\frac{d#1}{d#2}}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+\newcommand{\overbar}[1]{
+	\mkern 1.5mu \overline{\mkern-1.5mu\raisebox{0pt}[\dimexpr\height+0.5mm\relax]{$#1$}\mkern-1.5mu}\mkern 1.5mu
+}
+\newcommand*\dif{\mathop{}\!\mathrm{d}}
+\newcommand{\expval}[1]{\langle #1 \rangle}
+\newcommand{\tr}{\text{Tr }}
+
+
+% new environments
+
+\newenvironment{problem}{\subsection{}}{}
+\newenvironment{subproblem}{\subsubsection{}\begin{adjustwidth}{0.25in}{}\vspace{-0.28in}}{\end{adjustwidth}}
+\newenvironment{solution}{Sol) \begin{adjustwidth}{0.2in}{}\vspace{0.1in}}{\end{adjustwidth}}
+
+% 
+
+\title{	
+\normalfont \normalsize 
+\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
+\horrule{1pt} \\[0.4cm] 
+\huge Quantum Field Theory And Condensed Matter \\
+\vspace{0.1in}
+\Large R. Shankar
+\horrule{1pt} \\[0.4cm] 
+}
+
+\author{Youngwan Kim} 
+\date{\normalsize\today} 
+
+\begin{document}
+
+\maketitle 
+
+\section{Thermodynamics and Statistical Mechanics Review}
+
+\vskip 0.3in
+
+\begin{problem}
+	For an ideal gas, show that \\[3pt]
+	\begin{equation}
+		T(S,V)=\pder{U}{S}=\frac{2}{3nR}U \nonumber
+	\end{equation}\\[3pt]
+	to obtain a function of $T$. Next construct $F(T,V)=U(T)-S(T,V)T$ and show that,\\[3pt]
+	\begin{equation}
+		F(T,V)=\frac{3nRT}{2}\Big[(1+\ln{C})-\ln{\frac{3nRT}{2}}-\frac{2}{3}\ln{V}\Big]. \nonumber
+	\end{equation} \\[3pt]
+	Verify that the partial derivatives with respect to $T$ and $V$ give the expected results for the entropy and pressure for an ideal gas.
+\end{problem} 
+
+\vskip 1.5in
+
+\begin{solution}
+Starting from the definition of $U$, \\ 
+	\begin{equation}
+		\begin{split}
+		U&=C\left(\frac{e^{S/nR}}{V}\right)^{2/3} \\[3pt]
+		 T=\pder{U}{S} &= \frac{C}{V^{2/3}} \pder{}{S} e^{2S/3nR} \\[3pt]
+		 &= \frac{C}{V^{2/3}} \frac{2}{3nR}  e^{2S/3nR} = \frac{2}{3nR} U.
+		\end{split}
+	\end{equation}
+\end{solution}
+
+\vskip 0.5in
+
+\begin{problem}
+	Evaluate $Z(\beta)$ for the classical oscillator.
+\end{problem}\\
+
+\begin{solution}
+	\begin{equation}
+		\begin{split}
+		 Z(\beta) &= \int_{+\infty}^{-\infty}\int_{+\infty}^{-\infty} e^{-\beta\big(\frac{p^2}{2m}+\frac{1}{2}m\omega_{0}^2 x^2 \big)}  \dif p \dif x \\
+		 &= \int_{+\infty}^{-\infty} e^{-\frac{\beta }{2m}p^2}  \dif p \int_{+\infty}^{-\infty} e^{-\frac{\beta}{2}m\omega_{0}^2 x^2}  \dif x \\
+		 &= \sqrt{\frac{2m \pi}{\beta}}\sqrt{\frac{2\pi}{m\omega_{0}^2 \beta}} \\
+		 &= \frac{2\pi}{\omega_{0}\beta}
+		\end{split}
+	\end{equation}\\
+	Thus for a classical oscillator,\\
+	\begin{equation}
+		Z(\beta)_{c}= \frac{2\pi}{\omega_{0}\beta}
+	\end{equation}
+\end{solution}
+
+\vskip 0.3in
+
+\begin{problem}
+	Evaluate $Z(\beta)$ for the quantum oscillator.
+\end{problem} \\
+
+\begin{solution}
+	For the quantum case, consider the Hamiltonian of the osciallator.\\
+	\begin{equation}
+		H(X,P) = \frac{P^2}{2m} + \frac{1}{2}m\omega_{0}^2 X^2
+	\end{equation}\\
+	The eigenvalues $E_n$ of $H(X,P)$ can be derived as \\
+	\begin{equation}
+		E_n = \Big(n+\frac{1}{2}\Big)\hbar\omega_{0}
+	\end{equation}
+	The partition function $Z(\beta)$ is,
+	\begin{equation}
+		\begin{split}
+		Z(\beta) &= \sum_{n=0}^{\infty} e^{-\beta E_n} = \sum_{n=0}^{\infty} e^{-\beta \big(n+\frac{1}{2}\big)\hbar\omega_{0}}\\
+		&= e^{-\beta\frac{1}{2}\hbar\omega_{0}}\sum_{n=0}^{\infty} e^{-\beta n \hbar \omega_{0}} \\
+		&= e^{-\beta\frac{1}{2}\hbar\omega_{0}} \bigg(\frac{1}{1-e^{-\beta \hbar \omega_{0}}}\bigg) \\
+		&= \bigg[\sinh\bigg(\frac{1}{2}\beta\hbar\omega_{0}\bigg)\bigg]^{-1}
+		\end{split}
+	\end{equation}\\
+	Thus for the quantum oscillator, \\
+	\begin{equation}
+		Z(\beta)_{q} = \bigg[\sinh\bigg(\frac{1}{2}\beta\hbar\omega_{0}\bigg)\bigg]^{-1} 
+	\end{equation}
+\end{solution}
+
+\vskip 0.5in
+
+\begin{problem}
+	Evaluate $\expval{E}$ for the classical and quantum oscillators. Show that they become equal in the appropriate limit.
+\end{problem}\\
+
+\begin{solution}
+	For the classical oscillator,\\
+	\begin{equation}
+	\begin{split}
+		\expval{E}_{c} &=  - \pder{\ln Z_{c}}{\beta} \\
+		&= - \pder{}{\beta} [\ln 2\pi - \ln (\omega_{0}\beta)] \\
+		&=  \pder{}{\beta} \ln (\omega_{0}\beta) = \beta^{-1}
+	\end{split}
+	\end{equation}\\
+	For the quantum oscillator, \\
+	\begin{equation}
+		\begin{split}
+		 \expval{E}_{q} &=  - \pder{\ln Z_{q}}{\beta} \\
+		 &= \pder{}{\beta} \ln\bigg(\sinh\bigg(\frac{1}{2}\beta\omega_{0}\hbar\bigg)\bigg) \\
+		 &= \frac{1}{2}\omega_{0}\hbar \bigg[\tanh\bigg(\frac{1}{2}\beta\omega_{0}\hbar\bigg)\bigg]^{-1}
+		\end{split}
+	\end{equation} \\
+	\vskip 0.2in
+	Consider $\hbar \sim 0$ limit,\\ 
+	\begin{equation}
+		\expval{E}_{q}  \sim \frac{1}{2}\omega_{0}\hbar \bigg(\frac{1}{2}\beta\omega_{0}\hbar\bigg)^{-1} = \beta^{-1}
+	\end{equation}\\
+	Thus under the limit $\hbar \sim 0$, $\expval{E}_{q} \sim \expval{E}_{c}$. 
+	
+\end{solution}
+
+\vskip 0.5in
+
+\begin{problem}
+	Apply the grand canonical ideas to a system which is a quantum state of energy $\epsilon$ that may be occupied by fermions(bosons). Show that in the two cases, \\[3pt]
+	\begin{equation}
+		\expval{N}=n_{F/B}=\frac{1}{e^{\beta(\epsilon-\mu)}\pm 1}. \nonumber
+	\end{equation} \\[3pt]
+	These averages are commonly referred to with lower case symbols as $n_F$ and $n_B$ respectively.
+\end{problem} \\
+
+\begin{solution}
+	First, let us consider the grand partition function of both fermionic and bosonic systems. Let it $\mathcal{Z}_F$ and $\mathcal{Z}_B$ respectively. As bosons are indistinguishable and any number can occupy a certain energy state, we could write $\mathcal{Z}_B$ as \\[3pt]
+	\begin{equation}
+		\mathcal{Z}_B = \sum_{N=0}^{\infty} e^{N\beta(\mu-\epsilon)} = \frac{1}{1-e^{\beta(\mu-\epsilon)}}
+	\end{equation}\\[3pt]
+	A fermionic system will only have 2 states due to the Pauli exclusion theorem, so $Z_F$ would be expressed as, \\[3pt]
+	\begin{equation}
+		\mathcal{Z}_F = e^{0\cdot\beta(\mu-\epsilon)} + e^{1\cdot\beta(\mu-\epsilon)} = e^{\beta(\mu-\epsilon)} + 1
+	\end{equation}\\[3pt]
+	Using the relation between $\expval{N}$ and $\mathcal{Z}$,\\[3pt]
+	\begin{equation}
+		\expval{N} = \frac{1}{\beta\mathcal{Z}}\bigg(\pder{\mathcal{Z}}{\mu}\bigg) = \frac{1}{\beta}\pder{\ln \mathcal{Z}}{\mu}
+	\end{equation}\\[3pt]
+	For the fermionic system $\mathcal{Z}_F$, \\[3pt]
+	\begin{equation}
+		n_F = \frac{1}{\beta}\bigg(\pder{\ln \mathcal{Z}_F}{\mu}\bigg) = \frac{1}{e^{\beta(\epsilon-\mu)}+ 1}
+	\end{equation} \\[3pt]
+	For the bosonic sysytem $\mathcal{Z}_B$, \\[3pt]	
+	\begin{equation}
+		n_B = \frac{1}{\beta}\bigg(\pder{\ln \mathcal{Z}_B}{\mu}\bigg) = \frac{1}{e^{\beta(\epsilon-\mu)}- 1}
+	\end{equation} \\[3pt]
+	Thus for fermionic(bosonic) quantum systems, $\expval{N}$ can be expressed as \\[3pt]
+	\begin{equation}
+		n_{F/B}=\frac{1}{e^{\beta(\epsilon-\mu)}\pm 1}
+	\end{equation}
+\end{solution}
+
+\vskip 0.75in
+
+\section{The Ising Model in $d=0$ and $d=1$}
+
+\vskip 0.3in
+
+\begin{problem}
+	Show that \\
+	\begin{equation}
+		\frac{\partial^2 [-\beta F(K,h_1,h_2)]}{\partial h_1 \partial h_2} = \expval{s_1 s_2} - \expval{s_1}\expval{s_2} \nonumber
+	\end{equation}
+\end{problem} \\
+
+\begin{solution}
+	As $Z=e^{-\beta F}$,\\
+	\begin{equation}
+	\begin{split}
+		\frac{\partial^2 [-\beta F(K,h_1,h_2)]}{\partial h_1 \partial h_2}  &= \frac{\partial^2 \ln Z }{\partial h_1 \partial h_2} \\[5pt] 
+		&= \frac{1}{Z}\frac{\partial^2 Z}{\partial h_1 \partial h_2} - \frac{1}{Z^2}\pder{Z}{h_1}\pder{Z}{h_2}
+	\end{split}
+	\end{equation} \\
+	Also as $Z=\sum e^{K s_1 s_2 + h_1 s_1 + h_2 s_2 }$, \\
+	\begin{equation}
+	\begin{split}
+		\frac{1}{Z}\frac{\partial^2 Z}{\partial h_1 \partial h_2} &= \frac{1}{Z}\pder{}{h_1}\bigg(\pder{Z}{h_2}\bigg) \\[5pt]
+		&= \frac{1}{Z}\pder{}{h_1} \bigg(\sum_{s_1,s_2} s_2 e^{K s_1 s_2 + h_1 s_1 + h_2 s_2 }\bigg) \\[5pt]
+		&= \frac{1}{Z}\bigg(\sum_{s_1,s_2} s_1 s_2 e^{K s_1 s_2 + h_1 s_1 + h_2 s_2 }\bigg) = \expval{s_1 s_2}
+	\end{split}
+	\end{equation}\\
+	The second term, \\
+	\begin{equation}
+		\begin{split}
+		\frac{1}{Z^2}\pder{Z}{h_1}\pder{Z}{h_2} &= \bigg(\frac{1}{Z}\pder{Z}{h_1}\bigg)\bigg(\frac{1}{Z}\pder{Z}{h_2}\bigg) \\[5pt]
+		&= \frac{1}{Z}\bigg(\sum_{s_1,s_2} s_1 e^{K s_1 s_2 + h_1 s_1 + h_2 s_2 }\bigg)\frac{1}{Z}\bigg(\sum_{s_1,s_2} s_2 e^{K s_1 s_2 + h_1 s_1 + h_2 s_2 }\bigg) \\[5pt]
+		&= \expval{s_1}\expval{s_2}
+		\end{split}
+	\end{equation} \\
+	Thus , \\
+	\begin{equation}
+		\expval{s_1 s_2}_c \equiv \frac{\partial^2 [-\beta F(K,h_1,h_2)]}{\partial h_1 \partial h_2} = \expval{s_1 s_2} - \expval{s_1}\expval{s_2}
+	\end{equation}
+\end{solution}
+
+\vskip 0.5in
+
+\begin{problem}
+	Show that \\
+	\begin{equation}
+	\begin{split}
+		\expval{s_1s_2s_3s_4}_c &\equiv \frac{\partial^4(-\beta F)}{\partial h_1\partial h_2 \partial h_3 \partial h_4}\Bigr|_{h=0} \\[3pt]
+		&= \expval{s_1s_2s_3s_4} - \expval{s_1s_2}\expval{s_3s_4}- \expval{s_1s_3}\expval{s_2s_4}- \expval{s_1s_4}\expval{s_2s_3} \nonumber
+	\end{split}
+	\end{equation}
+\end{problem} \\
+
+\begin{solution}
+	The partition function for four spins with their source terms can be written as\\
+	\begin{equation}
+		Z = \sum_{s_1,s_2,s_3,s_4} e^{K(s_1 s_2 s_3 s_4)+h_1s_1+h_2s_2+h_3s_3+h_4s_4}
+	\end{equation}\\
+	We know that $s_i \in \{+1,-1\}$ and the source terms were originally
+	\begin{equation}
+		h(s_1 + s_2 + s_3 + s_4)=h_1s_1+h_2s_2+h_3s_3+h_4s_4
+	\end{equation} \\
+	so for the $h=0$ condition, there shouldn't be  
+\end{solution}
+
+\vskip 0.5in
+
+\begin{problem}
+	Derive $\expval{s_1s_2}$ and discuss its $K$ dependence at $h=0$.
+\end{problem}\\
+
+\begin{solution}
+	Recall that $Z=\sum e^{K(s_1s_2)+h(s_1+s_2)}=2e^K\cosh(2h)+2e^{-K}$.\\[3pt]
+	\begin{equation}
+		\begin{split}
+		\expval{s_1s_2}&= \frac{1}{Z} \sum_{s_1,s_2} s_1 s_2 e^{K(s_1s_2)+h(s_1+s_2)} \\[5pt]
+		&= \frac{1}{Z} \pder{Z}{K} = \pder{\ln Z}{K} \\[5pt]
+		&=  \pder{}{K} \bigg[\ln(2e^K\cosh(2h)+2e^{-K})\bigg] \\[5pt]
+		&= \frac{e^K\cosh(2h)-e^{-K}}{e^K\cosh(2h)+e^{-K}}
+		\end{split}
+	\end{equation}\\[3pt]
+	Considering the $h=0$ case,\\[3pt] 
+	\begin{equation}
+		\begin{split}
+		\expval{s_1s_2}\bigr|_{h=0} &= \frac{e^K -e^{-K}}{e^K +e^{-K}} \\[5pt]
+		&= \frac{\sinh(K)}{\cosh(K)} = \tanh(K)
+		\end{split}
+	\end{equation} \\[3pt]
+	Thus at $h=0$, K dependence of $\expval{s_1 s_2}$ shows up to be $\tanh(K)$.
+\end{solution}
+
+\vskip 0.5in
+
+\begin{problem}
+	Show that if you use the rates specified by the Metropolis algorithm, you get \\[3pt]
+	\begin{equation}
+		\frac{p(i)}{p(j)} = e^{-\beta(E_i - E_j)}
+		\nonumber
+	\end{equation} \\[3pt]
+	Given a computer that can generate a random number between 0 and 1, how will you accept a jump with probability $ e^{-\beta(E_i - E_j)}$?
+\end{problem} \\
+
+\begin{solution}
+	Let us first assume that the energy levels of two states $i$ and $j$ is given as $E_j > E_i$.\\
+	At equilibrium, we will have $\frac{dp(i)}{dt}=0$.
+\end{solution}
+
+\vskip 0.75in
+
+\section{Statistical to Quantum Mechanics}
+
+\vskip 0.3in
+
+\begin{problem}
+	\begin{subproblem}
+		Consider $U(x,x'; \tau)$ for the oscillator as $\tau\to\infty$ and read off the ground-state wavefunction and energy. Compare to what you learned as a child. Given this, try to pull out the next state from the subdominant terms.
+	\end{subproblem}
+	\begin{subproblem}
+		Set $x=x'=0$ and extract the energies from $U(\tau)$ in Eq. (3.24). Why are some energies missing?
+	\end{subproblem}
+\end{problem}
+
+\vskip 0.15in
+
+\begin{solution}
+	For an arbitrary initial state, $|\psi(0)\rangle$ \\[3pt]
+	\begin{equation}\label{prop}
+		\lim_{\tau \to \infty} \langle x |U(\tau)|x' \rangle |\psi(0)\rangle = \lim_{\tau \to \infty} U(x,x';\tau) |\psi(0)\rangle = \psi_0(x) \psi_0(x')^*|\psi(0)\rangle e^{-\frac{1}{\hbar}E_0 \tau}
+	\end{equation}\\[3pt]
+	Also for a quantum harmonic oscillator we know that $U(x,x';\tau)$ is given as\\[3pt]
+	\begin{equation}
+	\begin{split}
+			U(x,x';\tau) &= \sqrt{\frac{m\omega}{2\pi\hbar \sinh \omega \tau}} \text{ exp} \bigg[ -\frac{m\omega}{2\pi\hbar \sinh \omega \tau}((x^2+x'^2)\cosh \omega\tau - 2 xx')\bigg] \\
+			&= \sqrt{\frac{m\omega}{2\pi\hbar }}\sqrt{\frac{1}{\sinh \omega \tau}}\text{ exp} \bigg[ -\frac{m\omega}{2\pi\hbar }((x^2+x'^2)\frac{1}{\tanh \omega \tau}  - 2 \frac{xx'}{\sinh \omega \tau})\bigg]
+	\end{split}
+	\end{equation}\\[3pt]
+	Considering the limit of $\tau \to \infty$, where $\sinh \omega \tau \to \frac{1}{2}e^{\omega\tau}$ and $\tanh \omega \tau \to 1$\\[3pt]
+	\begin{equation}
+	\begin{split}
+			\lim_{\tau \to \infty} U(x,x';\tau) &=\lim_{\tau \to \infty} \sqrt{\frac{m\omega}{\pi\hbar }} \sqrt{\frac{1}{e^{\omega \tau} }} \exp\bigg[ -\frac{m\omega}{2\pi\hbar }((x^2+x'^2)  - \frac{4xx'}{e^{\omega \tau}})\bigg]\\
+			&=  \sqrt{\frac{m\omega}{\pi\hbar }}  \exp\bigg[ -\frac{m\omega}{2\pi\hbar }((x^2+x'^2) -\frac{1}{2}\omega\tau)\bigg]
+	\end{split}
+	\end{equation}\\[3pt]
+	Comparing the result with (\ref{prop}), terms with $\tau$ should be identical\\[3pt]
+	\begin{equation}
+		  e^{-\frac{1}{\hbar}E_0 \tau} = e^{-\frac{1}{2}\omega\tau}
+	\end{equation}\\
+	resulting the ground state energy to be $E_0 = \frac{1}{2}\hbar\omega$. For the ground state wave function, \\[3pt]
+	\begin{equation} 
+	\begin{split}
+			\psi_0(x) \psi_0(x')^* &=  \sqrt{\frac{m\omega}{\pi\hbar }}  \exp\bigg[ -\frac{m\omega}{2\pi\hbar }(x^2+x'^2)\bigg] \\
+			&= \bigg[\bigg(\frac{m\omega}{\pi\hbar }\bigg)^{\frac{1}{4}}e^{-\frac{m\omega x^2 }{ 2\hbar}}\bigg] \bigg[\bigg(\frac{m\omega}{\pi\hbar }\bigg)^{\frac{1}{4}}e^{-\frac{m\omega x'^2 }{ 2\hbar}}\bigg]
+	\end{split}
+	\end{equation}\\[3pt]
+	Thus we can conclude that the ground state wave function $\psi_0(x)$ is\\[3pt]
+	\begin{equation}
+		\psi_0(x)=\bigg(\frac{m\omega}{\pi\hbar }\bigg)^{\frac{1}{4}}e^{-\frac{m\omega x^2 }{ 2\hbar}}
+	\end{equation}\\[3pt]
+	Setting $x=x'=0$
+\end{solution}
+
+
+\vskip 0.3in
+
+\begin{problem}
+	Check that the free energy per site is the same as above for periodic boundary conditions starting with\\
+	\begin{equation}
+		Z= \tr T^N.
+	\end{equation}
+\end{problem}\\
+\begin{solution}
+	Let's assume $\lambda_0, \lambda_1$ as the eigenvalues of $T$ and their respective eigenvectors as $\ket{0},\ket{1}$. We can expand $T$ and express $T^N$ as,\\[3pt]
+	\begin{equation}
+		T = \lambda_0 \ket{0}\bra{0}+ \lambda_1\ket{1}\bra{1} \text{ , } T^N = \lambda_0^N \ket{0}\bra{0}+ \lambda_1^N \ket{1}\bra{1}
+	\end{equation}\\[3pt]
+	and it tells us that the eigenvalues for $T^N$ are $\lambda_0^N,\lambda_1^N$. Using the periodic boundary condition $s_0 = s_N$ for the $d=1$ Ising model, \\[3pt]
+	\begin{equation}
+		Z=\tr T^N = \lambda_0^N + \lambda_1^N 
+	\end{equation}\\[3pt]
+	Let us consider $\lambda_0 > \lambda_1$, and calculate the free energy per site under thermodynamic limits.\\[3pt]
+	\begin{equation}
+	\begin{split}
+			-f &\sim \lim_{N\to\infty} \frac{1}{N} \ln Z \\
+			&= \lim_{N\to\infty} \frac{1}{N} \ln \bigg[ \lambda_0^N \bigg( 1 + \mathcal{O}\big(\lambda_1 /\lambda_0\big)^N\bigg)\bigg] \\
+			&= \lim_{N\to\infty} \bigg[\ln \lambda_0 + \frac{1}{N} \mathcal{O}\big(\lambda_1 /\lambda_0\big)^N \bigg] = \ln \lambda_0 
+	\end{split}
+	\end{equation}\\[3pt]
+	It shows up to be that the free energy per site $f$ is the same whether we choose fixed or periodic boundary conditions for the $d=1$ Ising model.
+\end{solution}
+
+\vskip 0.3in
+
+\begin{problem}
+	Show that if you invert\\
+	\begin{equation}
+		\tanh K^* ( K ) = e^{-2K}
+	\end{equation}\\
+	you find $\tanh K = e^{-2K^{*}}$.
+\end{problem}\\
+
+\begin{solution}
+	Starting from $\tanh K^* = e^{-2K}$ \\[3pt]
+	\begin{equation}
+		\begin{split}
+		\tanh K^* = \frac{e^{2K^*}-1}{e^{2K^*}+1} &=  e^{-2K} \\
+		1 - \frac{2}{e^{2K^*}+1} &= e^{-2K} \\
+		 \frac{2}{e^{2K^*}+1} &= 1- e^{-2K} \\
+		 e^{2K^*}+1 &= \frac{2}{1- e^{-2K}} \\
+		 e^{2K^*} &= \frac{2}{1- e^{-2K}} -1 = \frac{1+ e^{-2K}}{1- e^{-2K}} \\
+		 e^{-2K^*} &= \frac{e^{K}- e^{-K}}{e^{K}+ e^{-K}} = \tanh K
+		\end{split}
+	\end{equation}
+\end{solution}
+
+\vskip 0.3in
+
+\begin{problem}
+	 Verify that when the correlation function of  Eq.(3.61) is inserted into Eq.(3.62), the power law prefactor drops out in the determination of $\xi$.
+\end{problem}\\
+
+\begin{solution}
+	Eq.(3.61) states that \\[3pt]
+	\begin{equation}
+		\lim_{|j-i|\to\infty} \expval{s_i s_j}_c \sim \frac{e^{-|j-i|/ \xi}}{|j-i|^{d-2+\eta}}
+	\end{equation}\\[3pt]
+	Inserting this into Eq.(3.62),\\[3pt]
+	\begin{equation}
+		\begin{split}
+		\lim_{|j-i|\to\infty} \bigg[ -\frac{\ln \expval{s_i s_j}_c}{|j-i|} \bigg] &=  \lim_{|j-i|\to\infty} \bigg[ - \frac{1}{|j-i|} \ln\bigg(\frac{e^{-|j-i|/ \xi}}{|j-i|^{d-2+\eta}}\bigg)\bigg] \\[5pt]
+		&=  \lim_{|j-i|\to\infty} \frac{1}{|j-i|} \bigg[ \frac{|j-i|}{\xi} + (d-2+\eta) \ln |j-i|\bigg] \\[5pt]
+		&= \lim_{|j-i|\to\infty} \bigg[ \frac{1}{\xi} + (d-2+\eta) \frac{\ln |j-i|}{|j-i|} \bigg] \\[5pt]
+		&= \xi^{-1}
+		\end{split} 
+	\end{equation}
+\end{solution}
+\vskip 0.3in
+\begin{problem}
+	Show that $f$ in \textit{Eq.(3.74)} agrees with \textit{Eq.(2.31)} upon subtracting $\ln \cosh K^*$ and using the definition of $K^*$.
+\end{problem}\\
+
+\begin{solution}
+	To avoid confusion let $f$ in Eq.(3.74) as $f'=-K^*$. By the definition of $K^*$, we know that $\tanh K = e^{-2K^*}$.\\[3pt]
+	\begin{equation}
+	\begin{split}
+	f'-\ln \cosh K^* &= -K^* - \ln \cosh K^* \\
+	&= 
+	\end{split}
+	\end{equation}
+\end{solution}
+\vskip 0.3in
+
+\begin{problem}
+	\textbf{(Very Important)} Find the eigenvalues of T in \textit{Eq. (3.78)} and show that there is degeneracy only for $h=K^*=0$. Why does this degeneracy not violate the Perron-Frobenius theorem? Show that the magnetization is \\[3pt]
+	\begin{equation}
+		\expval{s} = \sinh{h}/\left(\sqrt{\sinh^2 h + e^{-4K}}\right)
+		\nonumber
+	\end{equation}\\
+	in the thermodynamic limit.
+\end{problem}
+\vskip 0.3in
+
+\begin{problem}
+	Consider the correlation function for the $h=0$ problem with periodic boundary conditions and write it as a ratio of two traces. Saturate the denominator with the largest eigenket, but keep both eigenvectors in the numerator and show that the answer is invariant under $j-i \leftrightarrow N-\left(j-i\right)$. Using the fact that $\sigma_3$ exchanes $\ket{0}$ and $\ket{1}$ should speed things up. Argue that as long as $|j-i|$ is much smaller than $N$, only one term is needed.
+\end{problem}
+\vskip 0.3in
+
+\begin{problem}
+	Recall the remarkable fact that the correlation function $\expval{s_j s_i}$
+\end{problem}
+\vskip 0.3in
+
+\section{Quantum to Statistical Mechanics}
+
+\begin{problem}
+	Write $T_{ss'}=e^{R(s,s')}$, and expand the function $R$ in a series, allowing all possible powers of $s$ and $s'$. Show that $R(s,s')=Ass'+B(s+s')+C$ follows, given that $s^2 = s'^2 =1$ and both $T_{ss'}$ and $R$ are symmetric under $s\leftrightarrow s'$.
+\end{problem}
+\vskip 0.3in
+
+\begin{problem}
+	\textbf{(Important)}
+	\begin{subproblem}
+		Solve \textit{Eq.(4.9)} for $K,h$ and $c$ terms of $B_1,B_3$ and $\varepsilon$ by choosing $s=s'=\pm 1$ and $s=-s'$, and show that \\[3pt]
+		
+		\begin{equation}
+			\begin{split}
+			\tanh{h} &= \frac{B_3}{B} \tanh{\varepsilon B} \\
+			e^{-2K+c} &= \frac{B_1}{B} \sinh{\varepsilon B} \\
+			e^2c \left(1-e^{-4K} \right) &= 1 
+			\end{split} 
+			\nonumber
+		\end{equation}
+	\end{subproblem}
+\end{problem}
+
+\vskip 0.3in
+
+\begin{problem}
+	Verify that the exact results in \textit{Eqs. (4.10) - (4.12)} from \textit{Exercise 4.2} reduce to \textit{Eqs. (4.20) and (4.21)} and $c=0$ to $\mathcal{O}\left( \varepsilon \right)$.
+	
+\end{problem}
+\vskip 0.1in
+\begin{solution}
+	content...
+\end{solution}
+\vskip 0.3 in
+\section{The Feynman Path Integral}
+\vskip 0.3in
+\begin{problem}
+	Derive \textit{Eq. (5.8)} by introducing a resolution of the identity in terms of momentum states between the exponential operator and the position eigenket on the left-hand side of \textit{Eq. (5.8)}.
+	
+\end{problem} 
+\vskip 0.1in
+\begin{solution}
+	content...
+\end{solution}
+
+\vskip 0.3in
+
+\begin{problem}
+	 To show that the higher derivatives can be ignored in the limit $\alpha \to \infty$, first shift the origin to $x=x_0$ and estimate the average value of the new $x^2$ in terms of $\alpha$. Argue that a factor $e^{\alpha x^3}$ will be essentially equal to 1 in the region where the Gaussian integral has any real support.
+\end{problem}\\
+
+\begin{solution}
+	content...
+\end{solution}
+
+\vskip 0.3in
+
+\begin{problem}
+		\textbf{(Important)} Consider the oscillator. First solve for a trajectory that connects the spacetime points $(x,0)$ to $(x',t)$ by choosing the two free parameters in its solution. (Normally you choose them given the initial position and velocity; now you want the solution to go through the two end points in spacetime.) Then find its action and show that \\
+		\begin{equation}
+			U(x',x;t)=A(t)\left[ \frac{im\omega}{2\hbar \sin{\omega t}}\left[(x^2 + x'^2)\cos{\omega t}-2x'x\right]\right]
+		\nonumber
+		\end{equation} \\
+		If you want $A(t)$ you need to modify the trick used for the free particle,since the exponential is not a Gaussian in $(x-x')$. Note, however, that if you choose $x=0$, it becomes a Gaussian in $x'$ which allows you to show that $A(t)=(m\omega/2\pi i \hbar \sin{\omega t})^{1/2}$. That the answer for the fluctuation integral $A$ does not depend on the classical path, especially the end ponts $x$ or $x'$, is a propert of the quadratic action. It amounts in our toy model to the fact that if $F(x)$ is quadrati, that is $F=ax^2+bx+c$, then $F'' = 2a$ for all $x$, including the minimum.  
+\end{problem}\\
+
+\begin{solution}
+	content...
+\end{solution}
+
+\vskip 0.3in
+
+\begin{problem}
+	Include the kinetic energy $p^2/2m$ of the atoms in the Boltzmann wight and do the $p$ integrals as part of $Z$. Obtain an overall factor $( \sqrt{2\pi mkT} )^{N-1}$ and show that the statistical properties of the $x$'s are still given by the $Z$ in \textit{Eq.(5.44)}.
+\end{problem}\\
+
+\begin{solution}
+	content...
+\end{solution}
+
+\vskip 0.3in
+
+\begin{problem}
+	\textbf{(Very Important)} Assume that\\
+	\begin{equation}
+		H=\sum_{1}^{N} E_0 \ket{n} \bra{n} - t\left( \bra{n}\ket{n+1}+\bra{n+1}\ket{n}\right)
+	\nonumber
+	\end{equation}
+	describes the low-energy Hamiltonian of a particle in a periodic potential with minima at integers $n$. The integers $n$ go from $1$ to $N$ since it is assumed that the world is a ring of length $N$, so that the $(N+1)$th point is the ﬁrst. Thus, the problem has symmetry under translation by one site despite the ﬁnite length of the world. The ﬁrst term in $H$ represents the energy of the Gaussian state centered at $x=n$ 
+\end{problem}\\
+
+\begin{solution}
+	content...
+\end{solution}
+
+\vskip 0.3in
+
+\end{document}
