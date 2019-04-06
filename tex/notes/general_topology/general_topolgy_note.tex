@@ -33,7 +33,9 @@
 	\normalfont \normalsize 
 	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
 	\horrule{1pt} \\[0.4cm] 
-	\huge General Topology
+	\huge General Topology \\
+	\vspace{0.1in}
+	\Large 2019 Spring Semester
 	\horrule{1pt} \\[0.4cm] 
 }
 
@@ -62,17 +64,17 @@
 If such map is well defined on a certain set $X$, we can now introduce the notion of metric spaces, which is merely a set equipped with a well defined metric.
 \\
 \begin{definition}
-	A \textbf{metric space} $(X,d)$ is a set $X$ equipped with a metric $d:X\times X \to \mathbb{R}$.
+	A \textbf{metric space} $(X,d)$ is a set $X$ equipped with a metric $d:X\times X \to \mathbb{R}$.\\
 \end{definition}
 \begin{example} 
 	These are some simple examples of metric spaces.
-	\begin{enumerate}
+	\begin{enumerate}[label=\arabic*)]
 		\item $(\mathbb{R}^n,d)$ where $d(x,y)=$
 		\item $(X,d)$ where $d(x,y)=0$ if $x=y$ and $d(x,y)=1$ if $x\neq y$ \textbf{(discrete metric)}
 	\end{enumerate}
 \end{example}
-\vspace{1ex}
-Now it is natural to think of how the metric would be affected under the subsets, and the following theorem states that the restriction of such metric is still a metric on the subsets. 
+
+Now it is natural to think of how the metric would be affected under the subsets, and the following theorem states that the restriction of such metric is still a metric on the subsets. \\
 \begin{theorem}
 	Let $(X,d)$ be a metric space and let $Y\subset X$. Then $d\restriction_{Y\times Y} : Y \times Y \to \mathbb{R}$ is a metric on $Y$.
 \end{theorem}
@@ -86,16 +88,54 @@ Now it is natural to think of how the metric would be affected under the subsets
 
 \begin{example}
 	Some basic examples of open balls on different metric spaces.
-	\begin{enumerate}
+	\begin{enumerate}[label=\arabic*)]
 		\item On $(\mathbb{R},d)$ where $d$ is the usual metric, \ball{x}{r}$=(x-r,x+r)$.
-		\item On $(\mathbb{R},d)$ where $d$ is the discrete metric, \ball{x}{r}$=\{x\}$  if $r\in(0,1]$ and  \ball{x}{r}$=\mathbb{R}$  if $r>1$\\
+		\item On $(\mathbb{R},d)$ where $d$ is the discrete metric, \ball{x}{r}$=\{x\}$  if $r\in(0,1]$ and  \ball{x}{r}$=\mathbb{R}$  if $r>1$.\\
 	\end{enumerate}
 \end{example}
 
 \begin{lemma}
 	Let $(X,d)$ be a metric space, where $x\in X$ and $r>0$. Then,
 	\begin{enumerate}
-		\item $\bigcap\limits_{r>0}$
+		\item $\bigcup\limits_{r>0}$\ball{x}{r}=$X$
+		\item $\bigcap\limits_{r>0}$\ball{x}{\frac{1}{r}}=$\{x\}$ \\
 	\end{enumerate}
 \end{lemma}
+
+\begin{proof}
+$ $\newline
+\vspace{-0.15in}
+	\begin{enumerate}
+ 		\item $\bigcup\limits_{r>0}$\ball{x}{r}=$X$\\
+		\begin{enumerate}[label=(\roman*)]
+			\item As \ball{x}{r} $\subset X$ for any $r$ by definition, it is obvious that $\bigcup\limits_{r>0}$\ball{x}{r} $\subset X$.
+			\item Let $y \in X$, then $\exists n \in \mathbb{N}$ such that $d(x,y) < n$. Then $y \in$ \ball{x}{n} where \ball{x}{n} $\subset \bigcup\limits_{r>0}$\ball{x}{r}. Thus $y \in$ \ball{x}{n} $\subset \bigcup\limits_{r>0}$\ball{x}{r}, which implies that $\bigcup\limits_{r>0}$\ball{x}{r} $\supset X$.\\
+		\end{enumerate}
+		\item $\bigcap\limits_{r>0}$\ball{x}{\frac{1}{r}}=$\{x\}$ \\
+		\begin{enumerate}[label=(\roman*)]
+			\item As for $\forall r > 0$, $x \in$ \ball{x}{r} which makes $\{x\} \subset \bigcap\limits_{r>0}$\ball{x}{r} obvious.
+			\item Suppose $x \neq y$ for $y \in \bigcap\limits_{r>0}$\ball{x}{r}. Then since $d(x,y)>0$, there exists some $n\in \mathbb{N}$ such that $0<\frac{1}{n}<d(x,y)$. Then $y \notin$\ball{x}{\frac{1}{n}}, which contradicts our assumption that $x \neq y$. Thus $\forall y \in \bigcap\limits_{r>0}$\ball{x}{r} $:y=x$, which implies that $\{x\} \supset \bigcap\limits_{r>0}$\ball{x}{r}.
+		\end{enumerate}
+	\end{enumerate}
+\end{proof}
+
+\begin{definition}
+	Let $(X,d)$ be a metric space where $Y \subseteq X$ and $r \in \mathbb{R}$. We define, 
+	\begin{enumerate}
+		\item For $x \in Y$, $x$ is an \textbf{interior point} of $Y$ if $\exists r > 0$ such that \ball{x}{r} $\subset Y$.
+		\item The \textbf{interior of Y}, where we denote it as $int(A)=\{y\in Y | \exists r > 0 :$ \ball{y}{r} $\subset Y \}$.
+		\item If $int(Y)=Y$, we say that $Y$ is \textbf{open in X}, or an \textbf{open subset of X}. \\ 
+	\end{enumerate}
+\end{definition}
+
+By defining the concept of open balls, we just introduced the concept of open subsets of a certain metric space. Let's take a look at some examples to get close with these concepts.\\ 
+
+\begin{example}
+$ $\newline
+\vspace{-0.15in}
+	\begin{enumerate}[label=\arabic*)]
+		\item Consider the trivial case, $X \subseteq X $
+		\item For $[0,1)\subset\mathbb{R}$
+	\end{enumerate}
+\end{example}
 \end{document}
