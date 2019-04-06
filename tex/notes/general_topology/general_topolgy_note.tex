@@ -47,6 +47,8 @@
 %\newtheorem{examples}{Examples}
 \newtheorem{example}{Ex}
 \newtheorem{lemma}{Lem}
+\newtheorem*{remark}{Remark}
+\newtheorem*{recall}{Recall}
 \begin{document}
 	
 \maketitle	
@@ -123,10 +125,14 @@ $ $\newline
 	Let $(X,d)$ be a metric space where $Y \subseteq X$ and $r \in \mathbb{R}$. We define, 
 	\begin{enumerate}
 		\item For $x \in Y$, $x$ is an \textbf{interior point} of $Y$ if $\exists r > 0$ such that \ball{x}{r} $\subset Y$.
-		\item The \textbf{interior of Y}, where we denote it as $int(A)=\{y\in Y | \exists r > 0 :$ \ball{y}{r} $\subset Y \}$.
+		\item The \textbf{interior of Y}, where we denote it as $int(Y)=\{y\in Y$ $|$ $\exists r > 0 :$ \ball{y}{r} $\subset Y \}$, which is the set of all interior points of $Y$.
 		\item If $int(Y)=Y$, we say that $Y$ is \textbf{open in X}, or an \textbf{open subset of X}. \\ 
 	\end{enumerate}
 \end{definition}
+
+\begin{remark}
+	By definition, $int(A) \subset A$.\\
+\end{remark}
 
 By defining the concept of open balls, we just introduced the concept of open subsets of a certain metric space. Let's take a look at some examples to get close with these concepts.\\ 
 
@@ -134,8 +140,115 @@ By defining the concept of open balls, we just introduced the concept of open su
 $ $\newline
 \vspace{-0.15in}
 	\begin{enumerate}[label=\arabic*)]
-		\item Consider the trivial case, $X \subseteq X $
-		\item For $[0,1)\subset\mathbb{R}$
-	\end{enumerate}
+		\item $X \subseteq X $ : $int(X)=X$
+		\vskip 0.5ex
+		Then by the definition of open balls it is obvious that $int(X)=X$. To elabporate, for any $x \in X$ 
+		\item $Y=[0,1)\subset\mathbb{R}$ : $int(Y)=(0,1)$.
+		\vskip 0.5ex
+		This can be shown directly by using the definitions above. 0 is not an interior point as $\forall r>0$, \ball{0}{r}$=(-r,r)\not\subset [0,1)$. Also $\forall x \in (0,1)$, $x$ is an interior point. This is due to $\forall x, \exists r=min\{x,1-x\}$ such that \ball{x}{r} $\subset[0,1)$.
+		\item $Y=[0,1) \subset X=[0,\infty)$ : $int(Y)=[0,1)$.
+		\vskip 0.5ex
+		Compared to the previous case, the point $0$ is in $int(Y)$. This is because as for any $r>0$, \ball{0}{r} $= \{x\in[0,\infty) : d(0,x)<r \}=[0,r)$. 
+		\item $Y=\{(x,0):0<x<1\} \subset \mathbb{R}^2$ : $int(Y)=\phi$.\\
+		\end{enumerate}
 \end{example}
+
+The second and third example compared shows us that \textbf{whether such subset is open or not depends on the total metric space where the subset lies in.} After taking a look of some examples above, it's natural to have questions about which are open subsets, regardless of the choice of the total metric space. With some insight and the name itself, it seems as if every open balls should be open sets. The next theorem exactly states that every open ball is open. \textit{(very surprising)}\\
+
+\begin{theorem}
+	Let $(X,d)$ be a metric space where $x \in X , r>0$. The \textbf{open ball \ball{x}{r} is open} in $X$.\\
+\end{theorem}
+\begin{proof}
+	Let $ y \in$ \ball{x}{r}, and $ r' = r - d(x,y) > 0$. Also let $ z\in$ \ball{y}{r'}. We will show that $z \in$ \ball{x}{r} which is equivalent of showing $d(x,z)<r$. Using the triangular inequality,
+	\begin{equation}\nonumber
+		d(x,z) \leq d(x,y)+d(y,z)\\
+	\end{equation}
+	As $z \in$ \ball{y}{r'}, $d(y,z)<r'$. Using this relation we obtain, 
+	\begin{equation}\nonumber
+	d(x,z) \leq d(x,y)+d(y,z)<d(x,y)+r'=r\\
+	\end{equation}
+	As $d(x,z)<r$, it implies that $z\in$ \ball{x}{r}. Thus, as $\forall z\in$ \ball{y}{r'} $\implies z \in$ \ball{x}{r}, we can conclude that \ball{y}{r'} $\subset$ \ball{x}{r}. Again this shows us that $\forall y \in$ \ball{x}{r} $\implies y \in int(B(x;r))$. Thus $B(x;r)=int(B(x;r))$.\\
+\end{proof}
+
+\begin{example}
+	Consider a metric space $(X,d)$ where $X$ is a set and $d$ is the discrete metric. Open balls with radius 1 in this metric space, $B(x,1)=\{x\}$ are all open sets in $X$. In other words, every singleton subset are open sets in $X$ when discrete metric is given.\\ 
+\end{example}
+
+As we've seen that every open balls are open, now we will show that a union of open balls is also open. This lets us consider open balls as building blocks of open sets, which is quite acceptable.\\
+
+\begin{theorem}
+	Let $(X,d)$ be a metric space where $U \subset X$. Then $U$ is open in $X$ iff $U$ is an union of open balls in $X$. \\
+\end{theorem}
+
+\begin{proof}
+$ $\newline
+\vspace{-0.15in}	
+	\begin{enumerate}[label=(\roman*)]
+		\item $U$ is an union of open balls in $X$ $\implies$ $U$ is open in $X$.
+		\vskip 0.5ex
+		Let $U=\bigcup\limits_{x \in A} B(x;r_x)$ for some $A \subset U$. Let $y\in U$, so $y\in B(x;r_x)$ for some $x\in A$. Since $B(x;r_x)$ is open, there exists some $r>0$ for $y$ such that $B(y;r)\subset B(x;r_x)$\\
+		\item $U$ is an union of open balls in $X$ $\impliedby$ $U$ is open in $X$.
+		\vskip 0.5ex
+		Suppose $U$ is open in $X$, then for each $x \in U$ there exists $r_x>0$ such that $B(x;r_x)\subset U$. We claim that  $U=\bigcup\limits_{x \in U} B(x;r_x)$ which is a union of open balls. First, $U=\bigcup\limits_{x \in U} \{x\} \subset \bigcup\limits_{x \in U} B(x;r_x)$ as for every $x$, $\{x\}\subset B(x;r_x)$. The other side can be also shown as $B(x;r_x)\subset U \implies \bigcup\limits_{x \in U} B(x;r_x) \subset U$.
+	\end{enumerate}
+\end{proof}
+
+Yeah and why do we only have to think of open sets? Let us also define closed sets. Because that surely makes sense. I don't know, I feel so. And you should feel so too. That's how mathematics works. \textit{(I am majoring in Physics)}\\
+
+\begin{definition}
+	Let $(X,d)$ be a metric space, where $Y \subset X$ and $r\in\mathbb{R}$. We define,
+	\begin{enumerate}
+		\item $x \in X$ is said to be \textbf{adherent to Y} if for $\forall r>0$, $B(x;r)\cap Y\neq\phi$.
+		\item The \textbf{closure of Y} in $X$ is denoted as $\bar{Y}$, and defined as $\{x\in X$ $|$ $\forall r>0$, $B(x;r)\cap Y\neq\phi  \}$, which is the set of all points adherent to $Y$.
+		\item $Y$ is said to be \textbf{closed in X} if $Y=\bar{Y}$.\\
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	Again, by definition $Y \subset \bar{Y}$ always holds. Thus $int(Y)\subset Y\subset \bar{Y}$ also always holds.
+\end{remark}
+
+Again as we've introduced some new concepts let's get used to it by taking a close look to some simple examples.\\
+\begin{example}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}[label=\arabic*)]
+	\item yeet
+	\item yeet
+	\item yeet\\
+\end{enumerate}
+\end{example}
+
+\begin{theorem}
+	For $x \in X$, a singleton subset $\{x\}$ is closed in $X$.\\
+\end{theorem}
+
+\begin{theorem}
+	 $X$ and $\phi$ are both open and closed in $X$.\\
+\end{theorem}
+
+\begin{example}
+	For a metric space where the discrete metric is given, every subset are open and closed in it. We've shown that every singleton subset is an open set as they are open balls, and \textbf{Thm.4} states that those are also all closed at the same time. Again we've also seen that a union of open sets are open, which makes every subset open as they can be expressed as a union of singleton subsets. \\
+\end{example}
+
+Open and closed sets are weird, not open doesn't imply that it is closed, and conversely not closed also doesn't imply that it is open. The next theorem kind of lets us make a connection to open and closed subsets.\\
+
+\begin{theorem}
+\textbf{(very important)} 
+ For a metric space $X$ where $Y \subset X$, $Y$ is closed in $X$ iff $X\setminus Y$ is open in $Y$.\\
+\end{theorem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+	\begin{enumerate}[label=(\roman*)]
+		\item $Y$ is closed in $X$ $\implies$ $X\setminus Y$ is open in $Y$.
+		\vskip 0.5ex
+		Let $x \in X \setminus Y$ which implies that $x \notin Y$. Since $Y$ is closed, $Y=\bar{Y}$, thus $x \notin \bar{Y}$. In other words, $x$ is not adjacent to $Y$, which means that there exists some $r>0$ such that $B(x;r)\cap Y = \phi$. This again implies that $B(x;r) \subset X \setminus Y$. Thus $x \in int(X \setminus Y)$, and as this holds for $\forall x \in X \setminus Y$, we can conclude that $X\setminus Y \subset int(X \setminus Y)$. Thus $X \setminus Y$ is open in $Y$.\\
+		\item $Y$ is closed in $X$ $\impliedby$ $X\setminus Y$ is open in $Y$.
+		\vskip 0.5ex
+		Let $x \in X \setminus Y$, and as $X \setminus Y$ is open, there exists $r>0$ such that $B(x;r) \subset X \setminus Y \iff B(x;r)\cap Y = \phi \iff x \text{ is not adherent to } Y \iff x \notin \bar{Y} \iff x \in X \setminus \bar{Y}$. Thus as $x \in X \setminus Y \implies x \in X \setminus \bar{Y}$, 
+	\end{enumerate}
+\end{proof}
+
 \end{document}
