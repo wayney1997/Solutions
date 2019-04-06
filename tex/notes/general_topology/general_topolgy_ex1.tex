@@ -1,0 +1,101 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+
+%\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{changepage}
+\usepackage{titlesec}
+\usepackage{sectsty} 
+\sectionfont{\centering \normalfont \scshape}
+\subsectionfont{\normalfont}
+\subsubsectionfont{\normalfont}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancyplain} 
+\fancyhead{} 
+\fancyfoot[L]{} 
+\fancyfoot[R]{} 
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt} 
+\setlength{\headheight}{13.6pt} 
+
+\usepackage{enumitem}
+\newcommand{\subscript}[2]{$#1 _ #2$}
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+\newcommand{\ball}[2]{$B({#1};{#2})$}
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
+	\horrule{1pt} \\[0.4cm] 
+	\huge General Topology
+	\horrule{1pt} \\[0.4cm] 
+}
+
+\author{Youngwan Kim} 
+\date{\normalsize\today} 
+
+\newtheorem{theorem}{Thm}
+\newtheorem{definition}{Def}
+%\newtheorem{examples}{Examples}
+\newtheorem{example}{Ex}
+\newtheorem{lemma}{Lem}
+\begin{document}
+	
+\maketitle	
+
+\section{Metric Spaces} 
+\vspace{2.5ex}
+\begin{definition}
+	A \textbf{metric} $d$ defined on a set $X$ is a mapping $d:X \times X \to \mathbb{R}$ which has the following properties.
+	\begin{enumerate}[label=(\subscript{m}{{\arabic*}})]
+		\item $\forall x,y \in X : d(x,y) \geq 0$ , $d(x,y)=0 \iff x=y$
+		\item $\forall x,y \in X: d(x,y)=d(y,x)$
+		\item $\forall x,y,z \in X : d(x,y)+d(y,z) \geq d(x,z)$\\
+	\end{enumerate}
+\end{definition}
+If such map is well defined on a certain set $X$, we can now introduce the notion of metric spaces, which is merely a set equipped with a well defined metric.
+\\
+\begin{definition}
+	A \textbf{metric space} $(X,d)$ is a set $X$ equipped with a metric $d:X\times X \to \mathbb{R}$.
+\end{definition}
+\begin{example} 
+	These are some simple examples of metric spaces.
+	\begin{enumerate}
+		\item $(\mathbb{R}^n,d)$ where $d(x,y)=$
+		\item $(X,d)$ where $d(x,y)=0$ if $x=y$ and $d(x,y)=1$ if $x\neq y$ \textbf{(discrete metric)}
+	\end{enumerate}
+\end{example}
+\vspace{1ex}
+Now it is natural to think of how the metric would be affected under the subsets, and the following theorem states that the restriction of such metric is still a metric on the subsets. 
+\begin{theorem}
+	Let $(X,d)$ be a metric space and let $Y\subset X$. Then $d\restriction_{Y\times Y} : Y \times Y \to \mathbb{R}$ is a metric on $Y$.
+\end{theorem}
+\begin{proof}
+	left as an exercise
+\end{proof}
+\vspace{2.5ex}
+\begin{definition}
+	Let $(X,d)$ be a metric space and $x\in X$, $r \in \mathbb{R}$ where $r>0$. The \textbf{open ball} \ball{x}{r} is defined as $\{y\in X : d(x,y)<r\}$ where $x$ is called the \textbf{center} of \ball{x}{r}, and $r$ is called the \textbf{radius} of \ball{x}{r}.\\
+\end{definition}
+
+\begin{example}
+	Some basic examples of open balls on different metric spaces.
+	\begin{enumerate}
+		\item On $(\mathbb{R},d)$ where $d$ is the usual metric, \ball{x}{r}$=(x-r,x+r)$.
+		\item On $(\mathbb{R},d)$ where $d$ is the discrete metric, \ball{x}{r}$=\{x\}$  if $r\in(0,1]$ and  \ball{x}{r}$=\mathbb{R}$  if $r>1$\\
+	\end{enumerate}
+\end{example}
+
+\begin{lemma}
+	Let $(X,d)$ be a metric space, where $x\in X$ and $r>0$. Then,
+	\begin{enumerate}
+		\item $\bigcap\limits_{r>0}$
+	\end{enumerate}
+\end{lemma}
+\end{document}
