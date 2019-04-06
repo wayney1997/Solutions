@@ -28,6 +28,9 @@
 
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
 \newcommand{\ball}[2]{$B({#1};{#2})$}
+\newcommand{\overbar}[1]{
+	\mkern 1.5mu \overline{\mkern-1.5mu\raisebox{0pt}[\dimexpr\height+0.5mm\relax]{$#1$}\mkern-1.5mu}\mkern 1.5mu
+}
 
 \title{	
 	\normalfont \normalsize 
@@ -199,13 +202,13 @@ Yeah and why do we only have to think of open sets? Let us also define closed se
 	Let $(X,d)$ be a metric space, where $Y \subset X$ and $r\in\mathbb{R}$. We define,
 	\begin{enumerate}
 		\item $x \in X$ is said to be \textbf{adherent to Y} if for $\forall r>0$, $B(x;r)\cap Y\neq\phi$.
-		\item The \textbf{closure of Y} in $X$ is denoted as $\bar{Y}$, and defined as $\{x\in X$ $|$ $\forall r>0$, $B(x;r)\cap Y\neq\phi  \}$, which is the set of all points adherent to $Y$.
-		\item $Y$ is said to be \textbf{closed in X} if $Y=\bar{Y}$.\\
+		\item The \textbf{closure of Y} in $X$ is denoted as $\overline{Y}$, and defined as $\{x\in X$ $|$ $\forall r>0$, $B(x;r)\cap Y\neq\phi  \}$, which is the set of all points adherent to $Y$.
+		\item $Y$ is said to be \textbf{closed in X} if $Y=\overline{Y}$.\\
 	\end{enumerate}
 \end{definition}
 
 \begin{remark}
-	Again, by definition $Y \subset \bar{Y}$ always holds. Thus $int(Y)\subset Y\subset \bar{Y}$ also always holds.
+	Again, by definition $Y \subset \overline{Y}$ always holds. Thus $int(Y)\subset Y\subset \overline{Y}$ also always holds.
 \end{remark}
 
 Again as we've introduced some new concepts let's get used to it by taking a close look to some simple examples.\\
@@ -234,7 +237,8 @@ $ $ \newline
 Open and closed sets are weird, not open doesn't imply that it is closed, and conversely not closed also doesn't imply that it is open. The next theorem kind of lets us make a connection to open and closed subsets.\\
 
 \begin{theorem}
-\textbf{(very important)} 
+\textbf{Very Important!} \\
+$ $ \newline 
  For a metric space $X$ where $Y \subset X$, $Y$ is closed in $X$ iff $X\setminus Y$ is open in $Y$.\\
 \end{theorem}
 
@@ -244,11 +248,143 @@ $ $ \newline
 	\begin{enumerate}[label=(\roman*)]
 		\item $Y$ is closed in $X$ $\implies$ $X\setminus Y$ is open in $Y$.
 		\vskip 0.5ex
-		Let $x \in X \setminus Y$ which implies that $x \notin Y$. Since $Y$ is closed, $Y=\bar{Y}$, thus $x \notin \bar{Y}$. In other words, $x$ is not adjacent to $Y$, which means that there exists some $r>0$ such that $B(x;r)\cap Y = \phi$. This again implies that $B(x;r) \subset X \setminus Y$. Thus $x \in int(X \setminus Y)$, and as this holds for $\forall x \in X \setminus Y$, we can conclude that $X\setminus Y \subset int(X \setminus Y)$. Thus $X \setminus Y$ is open in $Y$.\\
+		Let $x \in X \setminus Y$ which implies that $x \notin Y$. Since $Y$ is closed, $Y=\overline{Y}$, thus $x \notin \overline{Y}$. In other words, $x$ is not adjacent to $Y$, which means that there exists some $r>0$ such that $B(x;r)\cap Y = \phi$. This again implies that $B(x;r) \subset X \setminus Y$. Thus $x \in int(X \setminus Y)$, and as this holds for $\forall x \in X \setminus Y$, we can conclude that $X\setminus Y \subset int(X \setminus Y)$. Thus $X \setminus Y$ is open in $Y$.\\
 		\item $Y$ is closed in $X$ $\impliedby$ $X\setminus Y$ is open in $Y$.
 		\vskip 0.5ex
-		Let $x \in X \setminus Y$, and as $X \setminus Y$ is open, there exists $r>0$ such that $B(x;r) \subset X \setminus Y \iff B(x;r)\cap Y = \phi \iff x \text{ is not adherent to } Y \iff x \notin \bar{Y} \iff x \in X \setminus \bar{Y}$. Thus as $x \in X \setminus Y \implies x \in X \setminus \bar{Y}$, 
+		Let $x \in X \setminus Y$, and as $X \setminus Y$ is open, there exists $r>0$ such that $B(x;r) \subset X \setminus Y \iff B(x;r)\cap Y = \phi \iff x \text{ is not adherent to } Y \iff x \notin \overline{Y} \iff x \in X \setminus \overline{Y}$. Thus as $x \in X \setminus Y \implies x \in X \setminus \overline{Y}$, it implies that $\overline{Y} \subset Y$. Thus $Y$ is closed in $X$.
 	\end{enumerate}
 \end{proof}
+
+Of course this has a lot of mathematical significance but another great thing about this is that it can somehow ease some cumbersome "is it open or closed?" questions by taking its complement over the total metric space. For example, (actually this is not that complicated)\\
+
+\begin{example}
+	$Y=[0,1]$ is closed in $\mathbb{R}$ as $\mathbb{R} \setminus Y = (-\infty,0)\cup(1,\infty)$ is open as it is a union of open sets.\\
+\end{example}
+
+\begin{theorem}
+For $Y\subset X$, where $X$ is a metric space,
+\begin{enumerate}
+	\item $int(Y)=int(int(Y))$ , which implies that \textbf{any interior is open}.
+	\item $\overline{(\overline{Y})}=\overline{Y}$, which implies that \textbf{any closure is closed}.\\
+\end{enumerate}
+
+\begin{remark}
+	This actually leads us to the fact that (of course with some additional proof), for a subset $Y $of a metric space, $int(Y)$ is the \textbf{largest open set} contained in $Y$ and $\overline{Y}$ is the \textbf{smallest closed set} containing $Y$. \\
+\end{remark}
+\end{theorem}
+
+Now knowing which are open and closed, and what kind of relations they have, as we've done with the union of open balls is open, we want to see when does the open and closedness is conserved under certain set operations. The following theorem states those certain conditions.\\
+
+\begin{theorem}
+\textbf{Very Important!} 
+\begin{enumerate}
+	\item A union of open sets of $X$ is open.
+	\item An \textbf{intersection of finitely many open sets} of $X$ is open.
+	\item An intersection of closed sets of $X$ is closed.
+	\item A \textbf{union of finitely many open sets} of $X$ is closed. \\
+\end{enumerate}
+\end{theorem}
+
+Proving 1 and 2 suffices to show 3 and 4 using the open and closed relation. \\
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}
+	\item Let $U=\bigcup\limits_{\alpha \in A} U_\alpha$ where each $U_\alpha$ is open in $X$. Suppose $x \in U$, then there exists some $\alpha_0\in A$ such that $x \in U_{\alpha_0}$. Since $U_{\alpha_0}$ is open, there exists $r>0$ such that $B(x;r) \subset U_{\alpha_0} \subset U$, which implies that $B(x;r) \subset U$. As $x \in int(U)$ for every $x$ in $U$, so $U \subset int(U)$. Thus $U$ is open.
+	\vskip 0.5ex
+	\item Let $U=\bigcap\limits^n_{i=1} U_i$ where each $U_i$ is open in $X$. Suppose $x \in U$. Then $x \in U_i$ for each $i=1,2,\dots,n$. Since each $U_i$ is open, there exists each $r_i>0$ such that $B(x;r_i)\subset U_i$. Take $r=min\{r_1, \dots ,r_n \} $, then $B(x;r) \subset B(x;r_i) \subset U_i$. Thus $B(x;r)\subset \bigcap\limits^n_{i=1}U_i = U$ which implies that $x \in int(U)$, and as it holds for any $x\in U$, $U$ is open.
+\end{enumerate}
+\end{proof}
+
+This sums up to the fact that open sets are still open after arbitrary union and closed sets are closed after arbitrary intersections, while for open sets adding a finite condition while intersecting gurantees being open and for closed sets vice versa. \\
+
+\begin{recall}
+	A sequence $\{a_n\}$ in $\mathbb{R}$ converging to $a$ implies that for given $\epsilon >0$ there exists $N>0$ such that $|a-a_n|<\epsilon$ for $\forall n\geq N$.\\
+\end{recall}
+
+\begin{definition}
+	Let $(X,d)$ be a metric space where $\{x_n\}^\infty_{n=0}$ is a sequence in $X$. We say that$\{x_n\}$ \textbf{converges} to $x \in X$ if for given $\epsilon>0$ there exists $N>0$ such that $d(x,x_n)<\epsilon$ for $\forall n\geq N$, i.e, $\lim\limits_{n \to \infty} d(x,x_n)=0$. In this case we denote it as $\lim\limits_{n \to \infty} x_n = x$ and say that $x$ is the \textbf{limit} of $\{x_n\}$.  \\
+\end{definition}
+
+Time to check super trivial shit. Of course lmao if some sequence has a limit it must be unique. The next theorem asserts it.\\
+
+\begin{theorem}
+	Let $(X,d)$ be a metric space and $\{x_n\}^\infty_{n=0}$ a sequence in $X$. If $\lim\limits_{n \to \infty} x_n = x$ and $\lim\limits_{n \to \infty} x_n = y$, then $x=y$. In other words, if a sequence converges, its limit uniquely exists.\\
+\end{theorem}
+
+\begin{proof}
+	Suppose that $x \neq y$. Let $r=\frac{1}{2} d(x,y) >0$. Since $x_n \to x$, $\exists N>0$ such that $x_n \in B(x;r)$ for $\forall n \geq N$. Also, at the same time as $x_n \to y$, $\exists M>0$ such that $x_n \in B(y,r)$ for $\forall n \geq M$. Then for $\forall n \geq max\{N,M\}$, $x_n \in B(x;r)\cap B(y,r)$. But $B(x;r)\cap B(y,r)=\phi$ as if $\exists z \in B(x;r)\cap B(y,r)$ ,
+	\begin{equation} \nonumber
+		d(x,y) \leq d(z,x) + d(y,z) < 2r = d(x,y)
+	\end{equation} 
+	which contradicts $\exists z \in B(x;r)\cap B(y,r)$, thus $x_n \in B(x;r)\cap B(y,r)=\phi$ which again contradicts the very first assumption we made. Thus $x=y$.\\
+\end{proof}
+
+\begin{theorem}
+	$x$ is adherent to $Y \iff \exists \{y_n\}^\infty_{n=0}$ in $Y$ such that $y_n \to x$.\\
+\end{theorem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}[label=(\roman*)]
+	\item $x$ is adherent to $Y \implies \exists \{y_n\}^\infty_{n=0}$ in $Y$ such that $y_n \to x$
+	\vskip 0.5ex
+	Since $x$ is adherent to $Y$, for each $n\in \mathbb{N}$, $B(x;\frac{1}{n}) \cap Y \neq \phi$. This implies that there exists $y_n \in Y$ such that also $y_n \in B(x;\frac{1}{n})$, i.e, $\exists y_n \in B(x;\frac{1}{n}) \cap Y$. We now claim that for this sequence, $y_n \to x$. Since $y_n \in B(x;\frac{1}{n})$, 
+	\begin{equation}\nonumber
+		d(y_n,x)<\frac{1}{n} \implies 0 \leq \lim\limits_{n \to \infty} d(x_n,y) \leq \lim\limits_{n \to \infty} \frac{1}{n} =0
+	\end{equation}
+	Thus as $d(y_n,x) \to 0$, $y_n \to x$ by definition.
+	\item $x$ is adherent to $Y \impliedby \exists \{y_n\}^\infty_{n=0}$ in $Y$ such that $y_n \to x$
+	\vskip 0.5ex
+	Since $y_n \to x$, there exists $N>0$ such that $d(y_n,x)<r$ for $\forall n\geq N$ and some $r>0$. In particular, as $y_N \in Y$ and $d(y_N,x)<r$, i.e, $y_N \in B(x;r) \cap Y$. Thus as $B(x;r) \cap Y \neq \phi$, $x$ is adherent to $Y$.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+	Let $X$ be a metric space equipped with a metric $d$, and $Y \subset X$, $x \in X$.
+	\begin{enumerate}
+		\item $x$ is said to be a \textbf{limit point} of $Y$ if $B(x;r) \cap Y$ is infinite for $\forall r>0 \iff \left(B(x;r)\setminus \{x\}\right)\cap Y \neq \phi$ for $\forall r>0$.
+		\item $x$ is said to be an \textbf{isolated point} of $Y$ if $\exists r>0$ such that $B(x;r)\cap Y = \{x\}$ $\iff \left(B(x;r)\setminus \{x\}\right)\cap Y = \phi$ for $\exists r>0$.\\
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	$x$ is a limit point of $Y$ $\iff$ $x$ is a limit of a sequence in $Y$.\\
+\end{remark}
+
+As you can see on \textbf{Def.7}, being a limit point is a stronger condition than being adherent to the same subset.\\
+
+\begin{example}
+$ $ \newline
+\vspace{-0.15in}
+	\begin{enumerate}[label=\arabic*)]
+		\item $Y=(0,1] \cup \{2\}$ in $\mathbb{R}$ with the standard metric.
+		\begin{itemize}
+			\item limit points : $[0,1]$
+			\item isolated points : $\{2\}$
+		\end{itemize}
+		\vskip 0.5ex
+		\item  Same $Y$ in $\mathbb{R}$ but with the discrete metric.
+		\begin{itemize}
+			\item limit points : $\phi$
+			\item isolated points : $Y$\\
+		\end{itemize}
+	\end{enumerate}
+
+\begin{theorem}
+	For $Y \subset X$ where $X$ is a metric space, $\overline{Y}= \mathcal{L} \bigsqcup \mathcal{I}$ where $\mathcal{L}$ is the set of limit points of $Y$ and $\mathcal{I}$ is the set of isolated points in $Y$.\\
+\end{theorem}
+
+\begin{remark}
+	By definition, $\mathcal{L}\cap\mathcal{I}=\phi$.\\
+\end{remark}
+
+\begin{definition}
+	Let $Y$ be a subset of a metric space $X$. The \textbf{boundary} of $Y$, denoted as $\partial Y$ is defined as $\partial Y = \overline{Y} \cap \overline{X \setminus Y}$.
+\end{definition}
+
+\end{example}
 
 \end{document}
