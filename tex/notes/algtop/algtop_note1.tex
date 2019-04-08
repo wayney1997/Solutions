@@ -167,7 +167,7 @@ That collection looks lonely without a proper operation between paths, so let's 
 \begin{definition}[Concatenation]  $ $ \newline
 	Let $\alpha \in P_X(a,b)$ and $\beta \in P_X(b,c)$. Then we define the \textbf{concatenation} of $\alpha$ and $\beta$ and denote it as $\alpha\beta : [0,1] \to X$ by,
 	\begin{equation}\nonumber
-		\alpha\beta(s) = https://tex.stackexchange.com/questions/9065/large-braces-for-specifying-values-of-variables-by-condition
+		\alpha\beta(s) = 
 		\begin{cases}
 		\alpha(2s)  & s \in [0,\frac{1}{2})\\
 		\beta(2s-1) & s \in [\frac{1}{2},1]
@@ -181,10 +181,57 @@ That collection looks lonely without a proper operation between paths, so let's 
 \end{lemma}
 
 \begin{proof}
-	We need to show that there exists $H:[0,1]\times[0,1]\to X$
+	We need to show that there exists $H:[0,1]\times[0,1]\to X$ such that $\alpha_0\beta_0 \simeq \alpha_1\beta_1$, $rel$ $\{0,1\}$. Let $F,G$ each be the homotopy such that $\alpha_0 \simeq \alpha_1$ and $\beta_0 \simeq \beta_1$ all $rel$ $\{0,1\}$. If we define $H(s,t)$ by, \\
+	\begin{equation}\nonumber
+		H(s,t) =
+		\begin{cases}
+		 F(2s,t) & s\in [0,\frac{1}{2})\\
+		 G(2s-1,t) & s \in [\frac{1}{2},1]
+		\end{cases}
+	\end{equation}\\
+	 we can easily check that this $H$ suffices to be a homotopy between $\alpha_0 \beta_0$ and $\alpha_1\beta_1$.\\
 \end{proof}
 
+\begin{remark}
+	Due to homotopy invariance, we can define $[\alpha][\beta]=[\alpha\beta]$.\\
+\end{remark}
+
+\begin{lemma}
+	Let $X$ be a topological space. For $\alpha\in P_X(a,b)$, $\beta \in P_X(b,c)$, and $\gamma \in P_X(c,d)$, \\
+	\begin{equation}\nonumber
+		([\alpha][\beta])[\gamma] = [\alpha]([\beta][\gamma]).
+	\end{equation}
+\end{lemma}
+\vspace{0.15in}
+This lemma states that such operation over homotopy classes is associative, and we also wish there is an identity like object for this class. We will later show that the homotopy class of constant paths actually acts as an identity element for such operation.\\
+\begin{remark}
+	$(\alpha\beta)\gamma$ and $\alpha(\beta\gamma)$ are different paths, but homotopic thanks to \textbf{Lem 2}. Do not regard them as identical 'paths'. \\
+\end{remark}
+
+\begin{lemma}
+	Let $\alpha \in P_X(a,b)$. Then $[a][\alpha]=[\alpha]$ and $[\alpha][b]=[\alpha]$ where,
+	\begin{equation}\nonumber
+		a\alpha(s) =
+		\begin{cases}
+		\alpha(2s) & \\
+		\alpha(2s-1)
+		\end{cases}
+	\end{equation}
+\end{lemma}
+
 \section{The Fundamental Group}
+\vspace{0.15in}
+Throughout the previous section, we defined many concepts that will be essential for us to define the fundamental group of a topological space. Now using the concepts from the previous section, now we define the concept of fundamental group.\\
+
+\begin{definition}
+	For a topological space $X$ with $b \in X$, we define the fundamental group of $X$ and denote it as $\pi_1(X,b)$ by 
+	\begin{equation}\nonumber
+		\begin{split}
+		\pi_1(x,b) &= L(X,b)/\simeq\\
+		&= \{[\alpha] \text{ }|\text{ } \alpha : [0,1] \to X \text{, s.t } \alpha(0)=\alpha(1)=b\}
+		\end{split}
+	\end{equation}
+\end{definition}
 
 \section{Induced Homomorphisms}
 
