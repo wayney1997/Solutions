@@ -1,6 +1,6 @@
 \documentclass[paper=a4, fontsize=11pt]{scrartcl}
 
-%\usepackage[T1]{fontenc} 
+\usepackage[T1]{fontenc} 
 \usepackage[english]{babel} 
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -36,7 +36,7 @@
 	\normalfont \normalsize 
 	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
 	\horrule{1pt} \\[0.4cm] 
-	\huge General Topology \\
+	\huge Algebraic Topology \\
 	\vspace{0.1in}
 	\Large 2019 Spring Semester
 	\horrule{1pt} \\[0.4cm] 
@@ -50,448 +50,144 @@
 %\newtheorem{examples}{Examples}
 \newtheorem{example}{Ex}
 \newtheorem{lemma}{Lem}
+\newtheorem{corollary}{Cor}
 \newtheorem*{remark}{Remark}
 \newtheorem*{recall}{Recall}
 \begin{document}
 	
 \maketitle	
 
-\section{Metric Spaces} 
-\vspace{2.5ex}
-\begin{definition}
-	A \textbf{metric} $d$ defined on a set $X$ is a mapping $d:X \times X \to \mathbb{R}$ which has the following properties.
-	\begin{enumerate}[label=(\subscript{m}{{\arabic*}})]
-		\item $\forall x,y \in X : d(x,y) \geq 0$ , $d(x,y)=0 \iff x=y$
-		\item $\forall x,y \in X: d(x,y)=d(y,x)$
-		\item $\forall x,y,z \in X : d(x,y)+d(y,z) \geq d(x,z)$\\
-	\end{enumerate}
-\end{definition}
-If such map is well defined on a certain set $X$, we can now introduce the notion of metric spaces, which is merely a set equipped with a well defined metric.
-\\
-\begin{definition}
-	A \textbf{metric space} $(X,d)$ is a set $X$ equipped with a metric $d:X\times X \to \mathbb{R}$.\\
-\end{definition}
-\begin{example} 
-	These are some simple examples of metric spaces.
-	\begin{enumerate}[label=\arabic*)]
-		\item $(\mathbb{R}^n,d)$ where $d(x,y)=$
-		\item $(X,d)$ where $d(x,y)=0$ if $x=y$ and $d(x,y)=1$ if $x\neq y$ \textbf{(discrete metric)}
-	\end{enumerate}
-\end{example}
+\section{Introduction}
 
-Now it is natural to think of how the metric would be affected under the subsets, and the following theorem states that the restriction of such metric is still a metric on the subsets. \\
-\begin{theorem}
-	Let $(X,d)$ be a metric space and let $Y\subset X$. Then $d\restriction_{Y\times Y} : Y \times Y \to \mathbb{R}$ is a metric on $Y$.
-\end{theorem}
-\begin{proof}
-	left as an exercise
-\end{proof}
-\vspace{2.5ex}
-\begin{definition}
-	Let $(X,d)$ be a metric space and $x\in X$, $r \in \mathbb{R}$ where $r>0$. The \textbf{open ball} \ball{x}{r} is defined as $\{y\in X : d(x,y)<r\}$ where $x$ is called the \textbf{center} of \ball{x}{r}, and $r$ is called the \textbf{radius} of \ball{x}{r}.\\
+\vspace{0.15in}
+
+If you ever had a course in topology before, you must have had assignments about whether some topological spaces are homeomorphic. For instance, the open interval $(0,1)$ in $\mathbb{R}$ is homeomorphic with $\mathbb{R}$. We can solve certain 'exercise problems' as they state us that they are 'homeomorphic' at first and all we have to do is just to find an adequate homeomorphism that maps one to another. But life is way much complicated than that, think of a situation where we have to actually check if two topological spaces are not homeomorphic. For instance, just with basic topological background it is very hard to show that $T^2$ and $S^2$ are not homeomorphic. \\
+
+Algebraic topology gains certain significance regarding these kinds of situations where some topological spaces are given and we have to show that they are not homeomorphic. We implement algebraic methods to show such properties. From now on we will show that a topological space can be 'mapped' into a certain group, and if two topological spaces are homeomorphic those groups are also isomorphic. Algebraic topology can be broadly classified into two main topics : Homotopy theory and Homology theory, and the main goal of this course is to understand the fundamental group of topological spaces and show that $\pi_1 (S^1) = \mathbb{Z}$. We will not go through homology and cohomology theory.\\
+
+\section{Homotopic Paths}
+
+\vspace{0.15in}
+
+We start our step by defining homotopic paths, which will later help us define fundamental groups. I skipped the documentation of the notes regarding basic group theory.\\
+
+\begin{definition}[Paths]$ $\newline
+	Let $X$ be a topological space. A \textbf{path} in $X$ is a continuous map $\gamma : [0,1] \to X$.\\
 \end{definition}
 
-\begin{example}
-	Some basic examples of open balls on different metric spaces.
-	\begin{enumerate}[label=\arabic*)]
-		\item On $(\mathbb{R},d)$ where $d$ is the usual metric, \ball{x}{r}$=(x-r,x+r)$.
-		\item On $(\mathbb{R},d)$ where $d$ is the discrete metric, \ball{x}{r}$=\{x\}$  if $r\in(0,1]$ and  \ball{x}{r}$=\mathbb{R}$  if $r>1$.\\
-	\end{enumerate}
-\end{example}
+There is nothing more than that. A path is simply a continuous map with the domain of $[0,1]$.\\
+
+\begin{definition}[Homotopic Paths and Homotopy]
+$ $\newline 
+Let $X$ be a topological space and $a,b \in X$. Also let $\gamma_0 , \gamma_1$ be paths from $a$ to $b$, i.e, $\gamma_0(0)=\gamma_1(0)=a$ and $\gamma_0(1)=\gamma_1(1)=b$. Then $\gamma_0$ is \textbf{homotopic} to $\gamma_1$ with end points fixed if there exists a continuous map $F:[0,1]\times[0,1]\to X$ such that,
+\vskip 0.5ex
+\begin{enumerate}
+	\item $F(s,0)=\gamma_0(s)$ for $s \in [0,1]$
+	\item $F(s,1)=\gamma_1(s)$ for $s \in [0,1]$
+	\item $F(0,t)=a$ for $t \in [0,1]$
+	\item $F(1,t)=b$ for $t \in [0,1]$
+\end{enumerate}
+\vskip 0.5ex
+where we call such $F$ a \textbf{homotopy}. We denote homotopic paths as $\gamma_0 \simeq \gamma_1$, $rel$ $\{0,1\}$.\\
+\end{definition}
+
+The third and fourth condition stated for such map being a homotopy is to emphasize that the end points are fixed and we even denote it as $rel$ $\{0,1\}$. Homotopy can be easily thought as some kind of continuous map deforming, or a 'movie' showing one path smoothly becoming the other one. \\
 
 \begin{lemma}
-	Let $(X,d)$ be a metric space, where $x\in X$ and $r>0$. Then,
-	\begin{enumerate}
-		\item $\bigcup\limits_{r>0}$\ball{x}{r}=$X$
-		\item $\bigcap\limits_{r>0}$\ball{x}{\frac{1}{r}}=$\{x\}$ \\
-	\end{enumerate}
+	Homotopic relations are equivalence relations.\\
 \end{lemma}
 
 \begin{proof}
-$ $\newline
-\vspace{-0.15in}
-	\begin{enumerate}
- 		\item $\bigcup\limits_{r>0}$\ball{x}{r}=$X$\\
-		\begin{enumerate}[label=(\roman*)]
-			\item As \ball{x}{r} $\subset X$ for any $r$ by definition, it is obvious that $\bigcup\limits_{r>0}$\ball{x}{r} $\subset X$.
-			\item Let $y \in X$, then $\exists n \in \mathbb{N}$ such that $d(x,y) < n$. Then $y \in$ \ball{x}{n} where \ball{x}{n} $\subset \bigcup\limits_{r>0}$\ball{x}{r}. Thus $y \in$ \ball{x}{n} $\subset \bigcup\limits_{r>0}$\ball{x}{r}, which implies that $\bigcup\limits_{r>0}$\ball{x}{r} $\supset X$.\\
-		\end{enumerate}
-		\item $\bigcap\limits_{r>0}$\ball{x}{\frac{1}{r}}=$\{x\}$ \\
-		\begin{enumerate}[label=(\roman*)]
-			\item As for $\forall r > 0$, $x \in$ \ball{x}{r} which makes $\{x\} \subset \bigcap\limits_{r>0}$\ball{x}{r} obvious.
-			\item Suppose $x \neq y$ for $y \in \bigcap\limits_{r>0}$\ball{x}{r}. Then since $d(x,y)>0$, there exists some $n\in \mathbb{N}$ such that $0<\frac{1}{n}<d(x,y)$. Then $y \notin$\ball{x}{\frac{1}{n}}, which contradicts our assumption that $x \neq y$. Thus $\forall y \in \bigcap\limits_{r>0}$\ball{x}{r} $:y=x$, which implies that $\{x\} \supset \bigcap\limits_{r>0}$\ball{x}{r}.
-		\end{enumerate}
-	\end{enumerate}
-\end{proof}
-
-\begin{definition}
-	Let $(X,d)$ be a metric space where $Y \subseteq X$ and $r \in \mathbb{R}$. We define, 
-	\begin{enumerate}
-		\item For $x \in Y$, $x$ is an \textbf{interior point} of $Y$ if $\exists r > 0$ such that \ball{x}{r} $\subset Y$.
-		\item The \textbf{interior of Y}, where we denote it as $int(Y)=\{y\in Y$ $|$ $\exists r > 0 :$ \ball{y}{r} $\subset Y \}$, which is the set of all interior points of $Y$.
-		\item If $int(Y)=Y$, we say that $Y$ is \textbf{open in X}, or an \textbf{open subset of X}. \\ 
-	\end{enumerate}
-\end{definition}
-
-\begin{remark}
-	By definition, $int(A) \subset A$.\\
-\end{remark}
-
-By defining the concept of open balls, we just introduced the concept of open subsets of a certain metric space. Let's take a look at some examples to get close with these concepts.\\ 
-
-\begin{example}
-$ $\newline
-\vspace{-0.15in}
-	\begin{enumerate}[label=\arabic*)]
-		\item $X \subseteq X $ : $int(X)=X$
-		\vskip 0.5ex
-		Then by the definition of open balls it is obvious that $int(X)=X$. To elabporate, for any $x \in X$ 
-		\item $Y=[0,1)\subset\mathbb{R}$ : $int(Y)=(0,1)$.
-		\vskip 0.5ex
-		This can be shown directly by using the definitions above. 0 is not an interior point as $\forall r>0$, \ball{0}{r}$=(-r,r)\not\subset [0,1)$. Also $\forall x \in (0,1)$, $x$ is an interior point. This is due to $\forall x, \exists r=min\{x,1-x\}$ such that \ball{x}{r} $\subset[0,1)$.
-		\item $Y=[0,1) \subset X=[0,\infty)$ : $int(Y)=[0,1)$.
-		\vskip 0.5ex
-		Compared to the previous case, the point $0$ is in $int(Y)$. This is because as for any $r>0$, \ball{0}{r} $= \{x\in[0,\infty) : d(0,x)<r \}=[0,r)$. 
-		\item $Y=\{(x,0):0<x<1\} \subset \mathbb{R}^2$ : $int(Y)=\phi$.\\
-		\end{enumerate}
-\end{example}
-
-The second and third example compared shows us that \textbf{whether such subset is open or not depends on the total metric space where the subset lies in.} After taking a look of some examples above, it's natural to have questions about which are open subsets, regardless of the choice of the total metric space. With some insight and the name itself, it seems as if every open balls should be open sets. The next theorem exactly states that every open ball is open. \textit{(very surprising)}\\
-
-\begin{theorem}
-	Let $(X,d)$ be a metric space where $x \in X , r>0$. The \textbf{open ball \ball{x}{r} is open} in $X$.\\
-\end{theorem}
-\begin{proof}
-	Let $ y \in$ \ball{x}{r}, and $ r' = r - d(x,y) > 0$. Also let $ z\in$ \ball{y}{r'}. We will show that $z \in$ \ball{x}{r} which is equivalent of showing $d(x,z)<r$. Using the triangular inequality,
+	We will just show that homotopic relations are transitive. Let $\gamma_0 \simeq \gamma_1$ by a homotopy $F$ and $\gamma_1 \simeq \gamma_2$ by a homotopy $G$ where all homotopy are $rel$ $\{0,1\}$. We will show that there exists a homotopy $H:[0,1]\times[0,1]\to X$ such that $\gamma_0 \simeq \gamma_2$, $rel$ $\{0,1\}$. We define such $H$ by,\\
 	\begin{equation}\nonumber
-		d(x,z) \leq d(x,y)+d(y,z)\\
-	\end{equation}
-	As $z \in$ \ball{y}{r'}, $d(y,z)<r'$. Using this relation we obtain, 
+		H(s,t) = 
+		\begin{cases}
+		F(s,2t) & t\in[0,\frac{1}{2})\\
+		G(s,2t-1) & t\in[\frac{1}{2},1]
+		\end{cases}
+	\end{equation} 
+	then we can show that,\\
 	\begin{equation}\nonumber
-	d(x,z) \leq d(x,y)+d(y,z)<d(x,y)+r'=r\\
-	\end{equation}
-	As $d(x,z)<r$, it implies that $z\in$ \ball{x}{r}. Thus, as $\forall z\in$ \ball{y}{r'} $\implies z \in$ \ball{x}{r}, we can conclude that \ball{y}{r'} $\subset$ \ball{x}{r}. Again this shows us that $\forall y \in$ \ball{x}{r} $\implies y \in int(B(x;r))$. Thus $B(x;r)=int(B(x;r))$.\\
+		\begin{split}
+		H(s,0) &= F(s,0) = \gamma_0(s)\\
+		H(s,1) &= G(s,1) = \gamma_2(s)
+		\end{split}
+	\end{equation}\\
+	and,
+	\begin{equation}\nonumber
+	\begin{split}
+	H(0,t) &= a\\
+	H(1,t) &= b
+	\end{split}
+	\end{equation}\\
+	which suffices all of the four conditions to be a homotopy between $\gamma_0$ and $\gamma_2$.\\
 \end{proof}
-
-\begin{example}
-	Consider a metric space $(X,d)$ where $X$ is a set and $d$ is the discrete metric. Open balls with radius 1 in this metric space, $B(x,1)=\{x\}$ are all open sets in $X$. In other words, every singleton subset are open sets in $X$ when discrete metric is given.\\ 
-\end{example}
-
-As we've seen that every open balls are open, now we will show that a union of open balls is also open. This lets us consider open balls as building blocks of open sets, which is quite acceptable.\\
-
-\begin{theorem}
-	Let $(X,d)$ be a metric space where $U \subset X$. Then $U$ is open in $X$ iff $U$ is an union of open balls in $X$. \\
-\end{theorem}
-
-\begin{proof}
-$ $\newline
-\vspace{-0.15in}	
-	\begin{enumerate}[label=(\roman*)]
-		\item $U$ is an union of open balls in $X$ $\implies$ $U$ is open in $X$.
-		\vskip 0.5ex
-		Let $U=\bigcup\limits_{x \in A} B(x;r_x)$ for some $A \subset U$. Let $y\in U$, so $y\in B(x;r_x)$ for some $x\in A$. Since $B(x;r_x)$ is open, there exists some $r>0$ for $y$ such that $B(y;r)\subset B(x;r_x)$\\
-		\item $U$ is an union of open balls in $X$ $\impliedby$ $U$ is open in $X$.
-		\vskip 0.5ex
-		Suppose $U$ is open in $X$, then for each $x \in U$ there exists $r_x>0$ such that $B(x;r_x)\subset U$. We claim that  $U=\bigcup\limits_{x \in U} B(x;r_x)$ which is a union of open balls. First, $U=\bigcup\limits_{x \in U} \{x\} \subset \bigcup\limits_{x \in U} B(x;r_x)$ as for every $x$, $\{x\}\subset B(x;r_x)$. The other side can be also shown as $B(x;r_x)\subset U \implies \bigcup\limits_{x \in U} B(x;r_x) \subset U$.
-	\end{enumerate}
-\end{proof}
-
-Yeah and why do we only have to think of open sets? Let us also define closed sets. Because that surely makes sense. I don't know, I feel so. And you should feel so too. That's how mathematics works. \textit{(I am majoring in Physics)}\\
-
-\begin{definition}
-	Let $(X,d)$ be a metric space, where $Y \subset X$ and $r\in\mathbb{R}$. We define,
-	\begin{enumerate}
-		\item $x \in X$ is said to be \textbf{adherent to Y} if for $\forall r>0$, $B(x;r)\cap Y\neq\phi$.
-		\item The \textbf{closure of Y} in $X$ is denoted as $\overline{Y}$, and defined as $\{x\in X$ $|$ $\forall r>0$, $B(x;r)\cap Y\neq\phi  \}$, which is the set of all points adherent to $Y$.
-		\item $Y$ is said to be \textbf{closed in X} if $Y=\overline{Y}$.\\
-	\end{enumerate}
-\end{definition}
-
-\begin{remark}
-	Again, by definition $Y \subset \overline{Y}$ always holds. Thus $int(Y)\subset Y\subset \overline{Y}$ also always holds.
-\end{remark}
-
-Again as we've introduced some new concepts let's get used to it by taking a close look to some simple examples.\\
-\begin{example}
-$ $ \newline
-\vspace{-0.15in}
-\begin{enumerate}[label=\arabic*)]
-	\item yeet
-	\item yeet
-	\item yeet\\
-\end{enumerate}
-\end{example}
-
-\begin{theorem}
-	For $x \in X$, a singleton subset $\{x\}$ is closed in $X$.\\
-\end{theorem}
-
-\begin{theorem}
-	 $X$ and $\phi$ are both open and closed in $X$.\\
-\end{theorem}
-
-\begin{example}
-	For a metric space where the discrete metric is given, every subset are open and closed in it. We've shown that every singleton subset is an open set as they are open balls, and \textbf{Thm.4} states that those are also all closed at the same time. Again we've also seen that a union of open sets are open, which makes every subset open as they can be expressed as a union of singleton subsets. \\
-\end{example}
-
-Open and closed sets are weird, not open doesn't imply that it is closed, and conversely not closed also doesn't imply that it is open. The next theorem kind of lets us make a connection to open and closed subsets.\\
-
-\begin{theorem}
-\textbf{Very Important!} \\
-$ $ \newline 
- For a metric space $X$ where $Y \subset X$, $Y$ is closed in $X$ iff $X\setminus Y$ is open in $Y$.\\
-\end{theorem}
-
-\begin{proof}
-$ $ \newline
-\vspace{-0.15in}
-	\begin{enumerate}[label=(\roman*)]
-		\item $Y$ is closed in $X$ $\implies$ $X\setminus Y$ is open in $Y$.
-		\vskip 0.5ex
-		Let $x \in X \setminus Y$ which implies that $x \notin Y$. Since $Y$ is closed, $Y=\overline{Y}$, thus $x \notin \overline{Y}$. In other words, $x$ is not adjacent to $Y$, which means that there exists some $r>0$ such that $B(x;r)\cap Y = \phi$. This again implies that $B(x;r) \subset X \setminus Y$. Thus $x \in int(X \setminus Y)$, and as this holds for $\forall x \in X \setminus Y$, we can conclude that $X\setminus Y \subset int(X \setminus Y)$. Thus $X \setminus Y$ is open in $Y$.\\
-		\item $Y$ is closed in $X$ $\impliedby$ $X\setminus Y$ is open in $Y$.
-		\vskip 0.5ex
-		Let $x \in X \setminus Y$, and as $X \setminus Y$ is open, there exists $r>0$ such that $B(x;r) \subset X \setminus Y \iff B(x;r)\cap Y = \phi \iff x \text{ is not adherent to } Y \iff x \notin \overline{Y} \iff x \in X \setminus \overline{Y}$. Thus as $x \in X \setminus Y \implies x \in X \setminus \overline{Y}$, it implies that $\overline{Y} \subset Y$. Thus $Y$ is closed in $X$.
-	\end{enumerate}
-\end{proof}
-
-Of course this has a lot of mathematical significance but another great thing about this is that it can somehow ease some cumbersome "is it open or closed?" questions by taking its complement over the total metric space. For example, (actually this is not that complicated)\\
-
-\begin{example}
-	$Y=[0,1]$ is closed in $\mathbb{R}$ as $\mathbb{R} \setminus Y = (-\infty,0)\cup(1,\infty)$ is open as it is a union of open sets.\\
-\end{example}
-
-\begin{theorem}
-For $Y\subset X$, where $X$ is a metric space,
-\begin{enumerate}
-	\item $int(Y)=int(int(Y))$ , which implies that \textbf{any interior is open}.
-	\item $\overline{(\overline{Y})}=\overline{Y}$, which implies that \textbf{any closure is closed}.\\
-\end{enumerate}
-
-\begin{remark}
-	This actually leads us to the fact that (of course with some additional proof), for a subset $Y $of a metric space, $int(Y)$ is the \textbf{largest open set} contained in $Y$ and $\overline{Y}$ is the \textbf{smallest closed set} containing $Y$. \\
-\end{remark}
-\end{theorem}
-
-Now knowing which are open and closed, and what kind of relations they have, as we've done with the union of open balls is open, we want to see when does the open and closedness is conserved under certain set operations. The following theorem states those certain conditions.\\
-
-\begin{theorem}
-\textbf{Very Important!} 
-\begin{enumerate}
-	\item A union of open sets of $X$ is open.
-	\item An \textbf{intersection of finitely many open sets} of $X$ is open.
-	\item An intersection of closed sets of $X$ is closed.
-	\item A \textbf{union of finitely many open sets} of $X$ is closed. \\
-\end{enumerate}
-\end{theorem}
-
-Proving 1 and 2 suffices to show 3 and 4 using the open and closed relation. \\
-
-\begin{proof}
-$ $ \newline
-\vspace{-0.15in}
-\begin{enumerate}
-	\item Let $U=\bigcup\limits_{\alpha \in A} U_\alpha$ where each $U_\alpha$ is open in $X$. Suppose $x \in U$, then there exists some $\alpha_0\in A$ such that $x \in U_{\alpha_0}$. Since $U_{\alpha_0}$ is open, there exists $r>0$ such that $B(x;r) \subset U_{\alpha_0} \subset U$, which implies that $B(x;r) \subset U$. As $x \in int(U)$ for every $x$ in $U$, so $U \subset int(U)$. Thus $U$ is open.
-	\vskip 0.5ex
-	\item Let $U=\bigcap\limits^n_{i=1} U_i$ where each $U_i$ is open in $X$. Suppose $x \in U$. Then $x \in U_i$ for each $i=1,2,\dots,n$. Since each $U_i$ is open, there exists each $r_i>0$ such that $B(x;r_i)\subset U_i$. Take $r=min\{r_1, \dots ,r_n \} $, then $B(x;r) \subset B(x;r_i) \subset U_i$. Thus $B(x;r)\subset \bigcap\limits^n_{i=1}U_i = U$ which implies that $x \in int(U)$, and as it holds for any $x\in U$, $U$ is open.
-\end{enumerate}
-\end{proof}
-
-This sums up to the fact that open sets are still open after arbitrary union and closed sets are closed after arbitrary intersections, while for open sets adding a finite condition while intersecting gurantees being open and for closed sets vice versa. \\
 
 \begin{recall}
-	A sequence $\{a_n\}$ in $\mathbb{R}$ converging to $a$ implies that for given $\epsilon >0$ there exists $N>0$ such that $|a-a_n|<\epsilon$ for $\forall n\geq N$.\\
+	By the gluing lemma, the continuity of $H$ is guranteed, but we won't elaborate it here.\\
 \end{recall}
 
+As we've seen that homotopy relation is actually an equivalence relation, it is natural to think of the equivalence classes that such relation makes.\\
+
 \begin{definition}
-	Let $(X,d)$ be a metric space where $\{x_n\}^\infty_{n=0}$ is a sequence in $X$. We say that$\{x_n\}$ \textbf{converges} to $x \in X$ if for given $\epsilon>0$ there exists $N>0$ such that $d(x,x_n)<\epsilon$ for $\forall n\geq N$, i.e, $\lim\limits_{n \to \infty} d(x,x_n)=0$. In this case we denote it as $\lim\limits_{n \to \infty} x_n = x$ and say that $x$ is the \textbf{limit} of $\{x_n\}$.  \\
-\end{definition}
-
-Time to check super trivial shit. Of course lmao if some sequence has a limit it must be unique. The next theorem asserts it.\\
-
-\begin{theorem}
-	Let $(X,d)$ be a metric space and $\{x_n\}^\infty_{n=0}$ a sequence in $X$. If $\lim\limits_{n \to \infty} x_n = x$ and $\lim\limits_{n \to \infty} x_n = y$, then $x=y$. In other words, if a sequence converges, its \textbf{limit uniquely exists.}\\
-\end{theorem}
-
-\begin{proof}
-	Suppose that $x \neq y$. Let $r=\frac{1}{2} d(x,y) >0$. Since $x_n \to x$, $\exists N>0$ such that $x_n \in B(x;r)$ for $\forall n \geq N$. Also, at the same time as $x_n \to y$, $\exists M>0$ such that $x_n \in B(y,r)$ for $\forall n \geq M$. Then for $\forall n \geq max\{N,M\}$, $x_n \in B(x;r)\cap B(y,r)$. But $B(x;r)\cap B(y,r)=\phi$ as if $\exists z \in B(x;r)\cap B(y,r)$ ,
+	For a topological space $X$, where $\gamma$ is a path defined in $X$, we define the \textbf{homotopy class} of $\gamma$ as\\
 	\begin{equation} \nonumber
-		d(x,y) \leq d(z,x) + d(y,z) < 2r = d(x,y)
-	\end{equation} 
-	which contradicts $\exists z \in B(x;r)\cap B(y,r)$, thus $x_n \in B(x;r)\cap B(y,r)=\phi$ which again contradicts the very first assumption we made. Thus $x=y$.\\
-\end{proof}
+		[\gamma] = \{\gamma ' : [0,1]\to X \text{ s.t }\ \gamma \simeq \gamma' \} 
+	\end{equation}
+\end{definition}
+\vspace{0.15in}
+Homotopy classes will be the basic notion for structuring fundamental groups.\\
 
-\begin{theorem}
-	$x$ is adherent to $Y \iff \exists \{y_n\}^\infty_{n=0}$ in $Y$ such that $y_n \to x$.\\
-\end{theorem}
+\begin{remark}
+	By definition, $\gamma_0 \simeq \gamma_1 \iff [\gamma_0]=[\gamma_1]$\\
+\end{remark}
+
+\begin{definition}
+	For a topological space $X$, where $a \in X$, we denote the constant path $\gamma:[0,1]\to X$ which maps $\gamma(s)=a$ for $\forall s \in [0,1]$, by just $a$.\\
+\end{definition}
+
+\begin{lemma}[Independence of Reparametrization] $ $\newline
+	Let $\gamma:[0,1]\to X$ be a path such that $\gamma(0)=a$ and $\gamma(1)=b$. Also let $\rho:[0,1]\to [0,1]$ be a continuous function such that $\rho(0)=0$ and $\rho(1)=1$. Then $[\gamma]=[\gamma \circ \rho]$.\\
+\end{lemma}
 
 \begin{proof}
-$ $ \newline
-\vspace{-0.15in}
-\begin{enumerate}[label=(\roman*)]
-	\item $x$ is adherent to $Y \implies \exists \{y_n\}^\infty_{n=0}$ in $Y$ such that $y_n \to x$
-	\vskip 0.5ex
-	Since $x$ is adherent to $Y$, for each $n\in \mathbb{N}$, $B(x;\frac{1}{n}) \cap Y \neq \phi$. This implies that there exists $y_n \in Y$ such that also $y_n \in B(x;\frac{1}{n})$, i.e, $\exists y_n \in B(x;\frac{1}{n}) \cap Y$. We now claim that for this sequence, $y_n \to x$. Since $y_n \in B(x;\frac{1}{n})$, 
+	Define $F:[0,1]\times[0,1] \to X$ by $F(s,t) = \gamma((1-t)\cdot s + t \cdot \rho(s))$. Then $F(s,0)=\gamma(s)$, $F(s,1)=\gamma(\rho(s))$, $F(0,t)=a$, and $F(1,t)=b$. Thus for any $\rho$, $F$ suffices to be a homotopy between $\gamma$ and $\gamma \circ \rho$ thus $[\gamma]=[\gamma \circ \rho]$.\\
+\end{proof}
+
+\begin{definition}
+	We define the collection of paths with fixed points and denote it as :
 	\begin{equation}\nonumber
-		d(y_n,x)<\frac{1}{n} \implies 0 \leq \lim\limits_{n \to \infty} d(x_n,y) \leq \lim\limits_{n \to \infty} \frac{1}{n} =0
+			P_X (a,b)=\{\gamma:[0,1]\to X :\gamma(0)=a,\gamma(1)=b\}
 	\end{equation}
-	Thus as $d(y_n,x) \to 0$, $y_n \to x$ by definition.
-	\item $x$ is adherent to $Y \impliedby \exists \{y_n\}^\infty_{n=0}$ in $Y$ such that $y_n \to x$
-	\vskip 0.5ex
-	Since $y_n \to x$, there exists $N>0$ such that $d(y_n,x)<r$ for $\forall n\geq N$ and some $r>0$. In particular, as $y_N \in Y$ and $d(y_N,x)<r$, i.e, $y_N \in B(x;r) \cap Y$. Thus as $B(x;r) \cap Y \neq \phi$, $x$ is adherent to $Y$.
-\end{enumerate}
-\end{proof}
-
-\begin{definition}
-	Let $X$ be a metric space equipped with a metric $d$, and $Y \subset X$, $x \in X$.
-	\begin{enumerate}
-		\item $x$ is a \textbf{limit point} of $Y$ if $B(x;r) \cap Y$ is infinite for $\forall r>0 \iff \left(B(x;r)\setminus \{x\}\right)\cap Y \neq \phi$ for $\forall r>0$.
-		\item $x$ is an \textbf{isolated point} of $Y$ if $\exists r>0$ such that $B(x;r)\cap Y = \{x\}$ $\iff \left(B(x;r)\setminus \{x\}\right)\cap Y = \phi$ for $\exists r>0$.\\
-	\end{enumerate}
 \end{definition}
+\vspace{0.15in}
 
-\begin{remark}
-	$x$ is a limit point of $Y$ $\iff$ $x$ is a limit of a sequence in $Y$.\\
-\end{remark}
+That collection looks lonely without a proper operation between paths, so let's define one.\\
 
-As you can see on \textbf{Def.7}, being a limit point is a stronger condition than being adherent to the same subset.\\
-
-\begin{example}
-$ $ \newline
-\vspace{-0.15in}
-	\begin{enumerate}[label=\arabic*)]
-		\item $Y=(0,1] \cup \{2\}$ in $\mathbb{R}$ with the standard metric.
-		\begin{itemize}
-			\item limit points : $[0,1]$
-			\item isolated points : $\{2\}$
-		\end{itemize}
-		\vskip 0.5ex
-		\item  Same $Y$ in $\mathbb{R}$ but with the discrete metric.
-		\begin{itemize}
-			\item limit points : $\phi$
-			\item isolated points : $Y$\\
-		\end{itemize}
-	\end{enumerate}
-\end{example}
-
-
-\begin{theorem}
-	For $Y \subset X$ where $X$ is a metric space, $\overline{Y}= \mathcal{L} \bigsqcup \mathcal{I}$ where $\mathcal{L}$ is the set of limit points of $Y$ and $\mathcal{I}$ is the set of isolated points in $Y$.\\
-\end{theorem}
-
-\begin{remark}
-	By definition, $\mathcal{L}\cap\mathcal{I}=\phi$. In other words, a point can't be a limited point while being an isolated point at the same time.\\
-\end{remark}
-
-\begin{definition}
-	Let $Y$ be a subset of a metric space $X$. The \textbf{boundary} of $Y$, denoted as $\partial Y$ is defined as $\partial Y = \overline{Y} \cap \overline{X \setminus Y}$.\\
-\end{definition}
-
-\begin{theorem}
-	Let $X$ metric space, where $U \subset Y \subset X$. Then,\\
-	\begin{equation} \nonumber
-		U \text{ is open in } Y \iff \text{there exists an open set } V \text{ of }X \text{ s.t. } U = Y \cap V \\
-	\end{equation}
-\end{theorem}
-
-\begin{proof}
-$ $ \newline
-\vspace{-0.15in}
-\begin{enumerate}[label=(\roman*)]
-	\item $(\implies)$
-	\vskip 0.5ex
-	For each $x \in U$ there exists $r_x>0$ such that $B(x;r_x)\cap Y \subset U$ since $U$ is open in $Y$. Let $V = \bigcup_{x\in U} B(x;r_x)$. Since such $V$ is an union of open balls of $X$, $V$ is open in $X$. Now we claim that $V \cap Y = U$.
-	\vskip 0.5ex
-	\begin{enumerate}
-		\item $ U \subset V \cap Y $ \vskip 0.5ex
-		By assumption, $U \subset Y$ holds and as
-		\begin{equation}\nonumber
-			U = \bigcup\limits_{x \in  U} \{x\} \subset  \bigcup\limits_{x \in  U} B(x;r_x) = V
-		\end{equation}
-		$U \subset V$ also holds. Thus $U \subset V \cap Y$.\\
-		
-		\item $V \cap Y \subset U$ 
-		\begin{equation}\nonumber
-			\begin{split}
-			V \cap Y &= \left( \bigcup\limits_{x \in U}  B(x;r_x)\right)\cap Y \\
-			&=  \bigcup\limits_{x \in U} \left(  B(x;r_x) \cap Y \right) \subseteq U.
-			\end{split}
-		\end{equation}
-	\end{enumerate} 
-	\item  $(\impliedby)$
-	\vskip 0.5ex
-	Let $x\in U$. Since $Y \cap V = U$, it also implies that $x \in V$. Since $V$ is open in $X$, there exists $r_x > 0 $ for each $x\in V$ that $B(x;r_x) \subset V$. Then $B(x;r_x) \cap Y \subset V \cap Y = U $. Thus as $\forall x \in U$, $\exists r_x > 0$ such that $B(x;r_x) \cap Y \subset U$, $U$ is open in $Y$.
-\end{enumerate}
-\end{proof}
-
-\begin{definition}
-Let $(X,d)$ be a metric space where $\{x_n\}$ is a sequence in $X$.
-\begin{enumerate}
-	\item A sequence $\{x_n\}$ is a \textbf{Cauchy sequence} if $\lim\limits_{n,m \to \infty} d(x_n,x_m) = 0$. \vskip 0.5ex
-	$\iff$ for a given $\epsilon > 0 $ there exists $N > 0$ s.t. $d(x_n,x_m)<\epsilon$ for $\forall n,m \geq N$.
-	\item $X$ is \textbf{complete} if every Cauchy sequence converges in $X$.\\
-\end{enumerate}
-\end{definition}
-
-\begin{remark}
-	$\mathbb{R}$ is complete, it is one of the well known properties of  $\mathbb{R}$.
-\end{remark}
-
-\begin{example}
-	Consider $A=(0,\infty)$ and $x_n = \frac{1}{n}$ as a sequence. Then $\{x_n\}$ is a Cauchy sequence in $A$. For a given $\epsilon >0$, there exists $N>0$ such that $0<\frac{1}{n}<\epsilon$ for any $n\geq N$. Then $d(x_n, x_m) = \big|\frac{1}{n}-\frac{1}{m}\big| < \epsilon$ for all $n,m \geq N$. However, while $\{x_n\}$ converges in $\mathbb{R}$, it doesn't converge in $A$ as $x_n \to 0 \notin A$. Thus we can conclude that $A$ is not complete, as there exists a Cauchy sequence in $A$ that does not converge in $A$.\\
-\end{example}
-
-\begin{theorem}
-Let $X$ be a metric space.
-\begin{enumerate}
-	\item A convergent sequence in $X$ is a Cauchy sequence.
-	\item If a Cauchy sequence in $X$ has a convergent subsequence, then the sequence converges in $X$.\\
-\end{enumerate}	
-\end{theorem}
-
-\begin{proof}
-$ $ \newline
-\vspace{-0.15in}
-\begin{enumerate}
-	\item Let $\{x_n\}$ be a sequence in $X$ where $x_n \to x$. Suppose $\epsilon >0$ is given. Since $x_n \to x$, there exists some $N>0$ such that $d(x,x_n)<\epsilon/2$ for all $n \geq N$. Then,
+\begin{definition}[Concatenation]  $ $ \newline
+	Let $\alpha \in P_X(a,b)$ and $\beta \in P_X(b,c)$. Then we define the \textbf{concatenation} of $\alpha$ and $\beta$ and denote it as $\alpha\beta : [0,1] \to X$ by,
 	\begin{equation}\nonumber
-		d(x_n.x_m) \leq d(x_n,x) + d(x,x_m) < \epsilon/2 + \epsilon/2 = \epsilon
+		\alpha\beta(s) = https://tex.stackexchange.com/questions/9065/large-braces-for-specifying-values-of-variables-by-condition
+		\begin{cases}
+		\alpha(2s)  & s \in [0,\frac{1}{2})\\
+		\beta(2s-1) & s \in [\frac{1}{2},1]
+		\end{cases} \\
 	\end{equation}
-	for any $n,m \geq N$, which makes $\{x_n\}$ a Cauchy sequence.
-	\item Let $\{x_{n_k}\}$ be the convergent subsequence of $\{x_n\}$, and let the limit as $x_{n_k} \to x$. Since $\{x_n\}$ is a Cauchy sequence, for a given $\epsilon/2 >0$ there exists $N_1>0$ such that $d(x_n,x_m)<\epsilon/2$ for all $n,m \geq N$. Also as $\{x_{n_k}\}$ converges, there also exists some $N_2>0$ such that $d(x,x_{n_k})<\epsilon/2$ for all $n_k \geq N_2$. Take $N=max\{N_1,N_2\}$. Then for $n\geq N$,
-	\begin{equation}\nonumber
-		d(x_n,x) \leq d(x_n,x_{n_k}) + d(x_{n_k},x) < \epsilon/2 + \epsilon/2 = \epsilon
-	\end{equation}
-	Thus $\{x_n\}$ converges in $X$.
-\end{enumerate}
-\end{proof}
+	where $\alpha\beta \in P_X(a,c)$.\\
+\end{definition}
 
-\begin{remark}
-	Note that being complete is independent of where it lies on, while being closed depends on its outer space.\\
-\end{remark}
-
-The next theorem lets us think about the relation between being closed and complete.\\
-
-\begin{theorem} Let $X$ be a metric space.
-$ $ \newline
-\vspace{-0.15in}
-	\begin{enumerate}
-		\item If $X$ is complete and $Y$ is a closed subset of $X$, then $Y$ is also complete.
-		\item If $Y$ is a complete subset of $X$ then it is closed.\\
-	\end{enumerate}
-\end{theorem}
+\begin{lemma}[Homotopy Invariance]
+	Let $\alpha_0,\alpha_1 \in P_X(a,b)$ such that $[\alpha_0]=[\alpha_1]$. Let $\beta_0,\beta_1 \in P_X(b,c)$ such that $[\beta_0]=[\beta_1]$. Then $[\alpha_0\beta_0]=[\alpha_1\beta_1]$.\\
+\end{lemma}
 
 \begin{proof}
-$ $ \newline
-\vspace{-0.15in}
-\begin{enumerate}
-	\item Let $\{y_n\}$ be a Cauchy sequence in $Y$. Then it is also a Cauchy sequence in $X$. Since $X$ is complete, $\{y_n\}$ converges in $X$. To elaborate, there exists $x \in X$ such that $y_n \to x$. Since $Y$ is closed in $X$ and $x$ is a limit of a sequence in $Y$, $x \in Y$. Thus as there exists a limit $x\in Y$ for every Cauchy sequences in $Y$, $Y$ is also complete. 
-	\item Suppose $\{y_n\}$ is a sequence in $Y$ which converges in $X$ such that $y_n \to x \in X$. Since $\{y_n\}$ is a convergent sequence in $X$, it is also a Cauchy sequence in $X$ due to \textbf{Thm 13}, hence it is also a Cauchy sequence in $Y$. Since $Y$ is complete, $\{y_n\}$ converges in $Y$, i.e, $\exists y\in Y$ such that $y_n \to y$. Due to \textbf{Thm 9}, the limit of $\{y_n\}$ uniquely exists, thus $x=y\in Y$. Thus $Y$ is closed.
-\end{enumerate}
+	We need to show that there exists $H:[0,1]\times[0,1]\to X$
 \end{proof}
 
-\begin{definition}
-	A subset $A$ of a metric space $X$ is \textbf{dense} in $X$ if $\overbar{A}=X$.
-\end{definition}
+\section{The Fundamental Group}
+
+\section{Induced Homomorphisms}
+
+\section{Covering Spaces}
 
 \end{document}
