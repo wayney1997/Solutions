@@ -310,7 +310,7 @@ This sums up to the fact that open sets are still open after arbitrary union and
 Time to check super trivial shit. Of course lmao if some sequence has a limit it must be unique. The next theorem asserts it.\\
 
 \begin{theorem}
-	Let $(X,d)$ be a metric space and $\{x_n\}^\infty_{n=0}$ a sequence in $X$. If $\lim\limits_{n \to \infty} x_n = x$ and $\lim\limits_{n \to \infty} x_n = y$, then $x=y$. In other words, if a sequence converges, its limit uniquely exists.\\
+	Let $(X,d)$ be a metric space and $\{x_n\}^\infty_{n=0}$ a sequence in $X$. If $\lim\limits_{n \to \infty} x_n = x$ and $\lim\limits_{n \to \infty} x_n = y$, then $x=y$. In other words, if a sequence converges, its \textbf{limit uniquely exists.}\\
 \end{theorem}
 
 \begin{proof}
@@ -345,8 +345,8 @@ $ $ \newline
 \begin{definition}
 	Let $X$ be a metric space equipped with a metric $d$, and $Y \subset X$, $x \in X$.
 	\begin{enumerate}
-		\item $x$ is said to be a \textbf{limit point} of $Y$ if $B(x;r) \cap Y$ is infinite for $\forall r>0 \iff \left(B(x;r)\setminus \{x\}\right)\cap Y \neq \phi$ for $\forall r>0$.
-		\item $x$ is said to be an \textbf{isolated point} of $Y$ if $\exists r>0$ such that $B(x;r)\cap Y = \{x\}$ $\iff \left(B(x;r)\setminus \{x\}\right)\cap Y = \phi$ for $\exists r>0$.\\
+		\item $x$ is a \textbf{limit point} of $Y$ if $B(x;r) \cap Y$ is infinite for $\forall r>0 \iff \left(B(x;r)\setminus \{x\}\right)\cap Y \neq \phi$ for $\forall r>0$.
+		\item $x$ is an \textbf{isolated point} of $Y$ if $\exists r>0$ such that $B(x;r)\cap Y = \{x\}$ $\iff \left(B(x;r)\setminus \{x\}\right)\cap Y = \phi$ for $\exists r>0$.\\
 	\end{enumerate}
 \end{definition}
 
@@ -372,19 +372,126 @@ $ $ \newline
 			\item isolated points : $Y$\\
 		\end{itemize}
 	\end{enumerate}
+\end{example}
+
 
 \begin{theorem}
 	For $Y \subset X$ where $X$ is a metric space, $\overline{Y}= \mathcal{L} \bigsqcup \mathcal{I}$ where $\mathcal{L}$ is the set of limit points of $Y$ and $\mathcal{I}$ is the set of isolated points in $Y$.\\
 \end{theorem}
 
 \begin{remark}
-	By definition, $\mathcal{L}\cap\mathcal{I}=\phi$.\\
+	By definition, $\mathcal{L}\cap\mathcal{I}=\phi$. In other words, a point can't be a limited point while being an isolated point at the same time.\\
 \end{remark}
 
 \begin{definition}
-	Let $Y$ be a subset of a metric space $X$. The \textbf{boundary} of $Y$, denoted as $\partial Y$ is defined as $\partial Y = \overline{Y} \cap \overline{X \setminus Y}$.
+	Let $Y$ be a subset of a metric space $X$. The \textbf{boundary} of $Y$, denoted as $\partial Y$ is defined as $\partial Y = \overline{Y} \cap \overline{X \setminus Y}$.\\
 \end{definition}
 
+\begin{theorem}
+	Let $X$ metric space, where $U \subset Y \subset X$. Then,\\
+	\begin{equation} \nonumber
+		U \text{ is open in } Y \iff \text{there exists an open set } V \text{ of }X \text{ s.t. } U = Y \cap V \\
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}[label=(\roman*)]
+	\item $(\implies)$
+	\vskip 0.5ex
+	For each $x \in U$ there exists $r_x>0$ such that $B(x;r_x)\cap Y \subset U$ since $U$ is open in $Y$. Let $V = \bigcup_{x\in U} B(x;r_x)$. Since such $V$ is an union of open balls of $X$, $V$ is open in $X$. Now we claim that $V \cap Y = U$.
+	\vskip 0.5ex
+	\begin{enumerate}
+		\item $ U \subset V \cap Y $ \vskip 0.5ex
+		By assumption, $U \subset Y$ holds and as
+		\begin{equation}\nonumber
+			U = \bigcup\limits_{x \in  U} \{x\} \subset  \bigcup\limits_{x \in  U} B(x;r_x) = V
+		\end{equation}
+		$U \subset V$ also holds. Thus $U \subset V \cap Y$.\\
+		
+		\item $V \cap Y \subset U$ 
+		\begin{equation}\nonumber
+			\begin{split}
+			V \cap Y &= \left( \bigcup\limits_{x \in U}  B(x;r_x)\right)\cap Y \\
+			&=  \bigcup\limits_{x \in U} \left(  B(x;r_x) \cap Y \right) \subseteq U.
+			\end{split}
+		\end{equation}
+	\end{enumerate} 
+	\item  $(\impliedby)$
+	\vskip 0.5ex
+	Let $x\in U$. Since $Y \cap V = U$, it also implies that $x \in V$. Since $V$ is open in $X$, there exists $r_x > 0 $ for each $x\in V$ that $B(x;r_x) \subset V$. Then $B(x;r_x) \cap Y \subset V \cap Y = U $. Thus as $\forall x \in U$, $\exists r_x > 0$ such that $B(x;r_x) \cap Y \subset U$, $U$ is open in $Y$.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+Let $(X,d)$ be a metric space where $\{x_n\}$ is a sequence in $X$.
+\begin{enumerate}
+	\item A sequence $\{x_n\}$ is a \textbf{Cauchy sequence} if $\lim\limits_{n,m \to \infty} d(x_n,x_m) = 0$. \vskip 0.5ex
+	$\iff$ for a given $\epsilon > 0 $ there exists $N > 0$ s.t. $d(x_n,x_m)<\epsilon$ for $\forall n,m \geq N$.
+	\item $X$ is \textbf{complete} if every Cauchy sequence converges in $X$.\\
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	$\mathbb{R}$ is complete, it is one of the well known properties of  $\mathbb{R}$.
+\end{remark}
+
+\begin{example}
+	Consider $A=(0,\infty)$ and $x_n = \frac{1}{n}$ as a sequence. Then $\{x_n\}$ is a Cauchy sequence in $A$. For a given $\epsilon >0$, there exists $N>0$ such that $0<\frac{1}{n}<\epsilon$ for any $n\geq N$. Then $d(x_n, x_m) = \big|\frac{1}{n}-\frac{1}{m}\big| < \epsilon$ for all $n,m \geq N$. However, while $\{x_n\}$ converges in $\mathbb{R}$, it doesn't converge in $A$ as $x_n \to 0 \notin A$. Thus we can conclude that $A$ is not complete, as there exists a Cauchy sequence in $A$ that does not converge in $A$.\\
 \end{example}
+
+\begin{theorem}
+Let $X$ be a metric space.
+\begin{enumerate}
+	\item A convergent sequence in $X$ is a Cauchy sequence.
+	\item If a Cauchy sequence in $X$ has a convergent subsequence, then the sequence converges in $X$.\\
+\end{enumerate}	
+\end{theorem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}
+	\item Let $\{x_n\}$ be a sequence in $X$ where $x_n \to x$. Suppose $\epsilon >0$ is given. Since $x_n \to x$, there exists some $N>0$ such that $d(x,x_n)<\epsilon/2$ for all $n \geq N$. Then,
+	\begin{equation}\nonumber
+		d(x_n.x_m) \leq d(x_n,x) + d(x,x_m) < \epsilon/2 + \epsilon/2 = \epsilon
+	\end{equation}
+	for any $n,m \geq N$, which makes $\{x_n\}$ a Cauchy sequence.
+	\item Let $\{x_{n_k}\}$ be the convergent subsequence of $\{x_n\}$, and let the limit as $x_{n_k} \to x$. Since $\{x_n\}$ is a Cauchy sequence, for a given $\epsilon/2 >0$ there exists $N_1>0$ such that $d(x_n,x_m)<\epsilon/2$ for all $n,m \geq N$. Also as $\{x_{n_k}\}$ converges, there also exists some $N_2>0$ such that $d(x,x_{n_k})<\epsilon/2$ for all $n_k \geq N_2$. Take $N=max\{N_1,N_2\}$. Then for $n\geq N$,
+	\begin{equation}\nonumber
+		d(x_n,x) \leq d(x_n,x_{n_k}) + d(x_{n_k},x) < \epsilon/2 + \epsilon/2 = \epsilon
+	\end{equation}
+	Thus $\{x_n\}$ converges in $X$.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+	Note that being complete is independent of where it lies on, while being closed depends on its outer space.\\
+\end{remark}
+
+The next theorem lets us think about the relation between being closed and complete.\\
+
+\begin{theorem} Let $X$ be a metric space.
+$ $ \newline
+\vspace{-0.15in}
+	\begin{enumerate}
+		\item If $X$ is complete and $Y$ is a closed subset of $X$, then $Y$ is also complete.
+		\item If $Y$ is a complete subset of $X$ then it is closed.\\
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}
+	\item Let $\{y_n\}$ be a Cauchy sequence in $Y$. Then it is also a Cauchy sequence in $X$. Since $X$ is complete, $\{y_n\}$ converges in $X$. To elaborate, there exists $x \in X$ such that $y_n \to x$. Since $Y$ is closed in $X$ and $x$ is a limit of a sequence in $Y$, $x \in Y$. Thus as there exists a limit $x\in Y$ for every Cauchy sequences in $Y$, $Y$ is also complete. 
+	\item Suppose $\{y_n\}$ is a sequence in $Y$ which converges in $X$ such that $y_n \to x \in X$. Since $\{y_n\}$ is a convergent sequence in $X$, it is also a Cauchy sequence in $X$ due to \textbf{Thm 13}, hence it is also a Cauchy sequence in $Y$. Since $Y$ is complete, $\{y_n\}$ converges in $Y$, i.e, $\exists y\in Y$ such that $y_n \to y$. Due to \textbf{Thm 9}, the limit of $\{y_n\}$ uniquely exists, thus $x=y\in Y$. Thus $Y$ is closed.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+	A subset $A$ of a metric space $X$ is \textbf{dense} in $X$ if $\overbar{A}=X$.
+\end{definition}
 
 \end{document}
