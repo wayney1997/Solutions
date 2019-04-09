@@ -257,6 +257,7 @@ This lemma states that such operation over homotopy classes is associative, and 
 \begin{definition}
 	Let $\alpha \in P_X(a,b)$, then we define the inverse homotopy class of $\alpha$ by $[\alpha]^{-1} = [\alpha^{-1}]$.\\
 \end{definition}
+\vspace{0.15in}
 
 %----------------------------------------
 
@@ -375,9 +376,195 @@ Then as we expect, does any convex subset becomes a simply connected space? The 
 \end{theorem}
 
 \begin{proof}
-	Let $b\in S$, and $\alpha:[0,1]\to S$ be a loop based at $b$. Define $F:[0,1]\times[0,1] \to S$ as $F(s,t)=t\cdot b + (1-t)\cdot \alpha$ which becomes a homotopy such that $\alpha \simeq b$. The existence of such homotopy is guranteed as $S$ is a convex subset. As for any loop based at $b$ becomes homotopic with $b$, $\pi_1(S)=0$ thus $S$ is simply connected.
+	Let $b\in S$, and $\alpha:[0,1]\to S$ be a loop based at $b$. Define $F:[0,1]\times[0,1] \to S$ as $F(s,t)=t\cdot b + (1-t)\cdot \alpha$ which becomes a homotopy such that $\alpha \simeq b$. The existence of such homotopy is guranteed as $S$ is a convex subset. As for any loop based at $b$ becomes homotopic with $b$, $\pi_1(S)=0$ thus $S$ is simply connected.\\
 \end{proof}
+
+\begin{remark}
+	If a subset of $\mathbb{R}^n$ is convex, it is also path connected.\\
+\end{remark}
+
+\begin{definition}
+	A subset $S$ of $\mathbb{R}^n$ is \textbf{star shaped} if there exists some $b\in S$ such that for each $x \in S$ the line between $b$ and $x$ is contained in $S$, i.e, for $\forall t\in[0,1]$ the line segment $t\cdot a + (1-t)\cdot b \in S$.\\
+\end{definition}
+
+\begin{theorem}
+	A star shaped subset is simply connected.
+\end{theorem}
+
+\begin{proof}
+	The proof is skipped.\\
+\end{proof}
+
+\begin{remark}
+	convex $\implies$ star shaped $\implies$ simply connected\\
+\end{remark}
+
+The homotopy concept can be actually extended to a more general one, as our definition of homotopy can be regarded a continuous function mapping one path which maps $[0,1]\to X$ to another path. Instead of $[0,1]$ we can similarly define homotopy with any topological space.\\ 
+
+\begin{definition}
+	Let $X,Y$ be topological spaces. Let $A\subset Y$ and $f_0,f_1:Y \to X$ be maps such that $f_0(a)=f_1(a)$ for $\forall a \in A$. Then $f_0$ is \textbf{homotopic} to $f_1$ \textbf{relative to} $A$ if there exists $F:Y\times[0,1]\to X$ such that $F(y,0)=f_0(y)$ and $F(y,1)=f_1(y)$ for $y\in Y$ and $F(a,t)=f_0(a)=f_1(a)$ and $F(a,t)=f_0(a)=f_1(a)$ for $\forall a \in A$. We denote such relation as $f_0 \simeq f_1$, $rel$ $A$.\\
+\end{definition}
+
+\begin{definition}
+	Let $X$ be a topological space where $x_0 \in X$. $X$ is \textbf{contractible to} $x_0 \in X$ with $x_0$ held fixed if there exists a map $F:X\times[0,1]\to X$ such that $F(x,0)=x$ and $F(x,1)=x_0$ for $\forall x \in X$ and $F(x_0,t)=x_0$ for $\forall t \in [0,1]$.\\
+\end{definition}
+
+\begin{theorem}
+	If $X$ is star shaped, then $X$ is contractible.
+\end{theorem}
+
+\begin{theorem}
+	If $X$ is contractible, then $\pi_1(X)=0$.\\
+\end{theorem}
+
+\begin{proof}
+	Let $\alpha:[0,1]\to X$ be a path such that $\alpha(0)=\alpha(1)=x_0$. Let $F:X\times[0,1]\to X$ be a map such that $F(x,0)=x$, $F(x,1)=x_0$, $F(x_0,t)=x_0$ as $X$ is contractible. Now let us define $G:[0,1]\times[0,1] \to X$ such that $G(s,t)=F(\alpha(s),t)$. Then, 
+	\begin{equation}\nonumber
+		\begin{cases}
+		G(s,0)=F(\alpha(s),0)=\alpha(s) & \\
+		G(s,1)=F(\alpha(s),1)=x_0 & \\
+		G(0,t)=F(x_0,t)=x_0 & \\
+		G(1,t)= F(x_0,t)=x_0
+		\end{cases}
+	\end{equation}\\
+	where we can check that $G$ becomes a homotopy between $\alpha$ and $x_0$, $rel$ $\{0,1\}$.\\
+\end{proof}
+
+Consider $S^n$, we know that when $n=1$ it isn't contractible, and we can show this both implicitly by taking arbitrary points in $S^1$ and showing that not all of the line segments are in $S^1$. 
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		$X$   & contractible? & $\pi_1(X)$   \\ \hline
+		$S^1$ & No            & $\mathbb{Z}$ \\ \hline
+		$S^n$ & ??            & $0$          \\ \hline
+	\end{tabular}\\
+\end{table}
+
+Only with homotopy theory we can't show whether $S^n$ are contractible or not for $n>1$. This question can be solved with homology theory but that is currently out of our scope.  
+\vspace{0.15in}
+
+%----------------------------------
+
 \section{Induced Homomorphisms}
+\vspace{0.15in}
+We can think of obtaining a fundamental group of a certain topological space as some kind of correspondence, or a map sending a topological space to a group. The main question we deal with in this section is about whether there would also be a homomorphism between the fundamental groups induced by homeomorphisms between the topological spaces. \\
+
+\begin{definition}
+ Let $X,Y$ be topological spaces where $f:X\to Y$ is a homeomorphism between them such that for $b \in X$ and $c \in Y$, $f(b)=c$. Then we define the \textbf{induced homomorphism} of $f$ as $f_* : \pi_1(X,b) \to \pi_1(X,c)$ which maps $f_*([\alpha])=[f \circ \alpha]$.\\
+\end{definition}
+
+We can first define such induced homomorphisms, and the next lemma states that such homomorphisms are well defined.\\
+
+\begin{lemma}
+	Let $X,Y$ be a topological space with $f:X\to Y$. For $[\alpha_0],[\alpha_1]\in\pi_1(X,b)$ such that $[\alpha_0]=[\alpha_1]$,  $[f \circ \alpha_0]=[f\circ \alpha_1]$ in $\pi_1(Y,c)$.\\	
+\end{lemma}
+
+\begin{proof}
+	Since $[\alpha_0]=[\alpha_1]$, there exists a homotopy between them and let it $F$. Define $G:[0,1]\times[0,1]\to Y$ by $G(s,t)=(f \circ F)(s,t)$. We can check that this becomes a homotopy between $f \circ \alpha_0$ and $f \circ \alpha_1$. \\
+\end{proof}
+
+\begin{theorem}
+	Let $X,Y,Z$ be a topological space.
+	\begin{enumerate}
+		\item If $id : X \to X$ is the identity map, then $(id)_* : \pi_1(X,b) \to \pi_1(x,b)$ is the identity homomorphism of $\pi_1(X,b)$.
+		\item If $f:(X,b)\to(Y,c)$ and $g:(Y,c)\to(Z,d)$, then $(g \circ f)_* = g_* \circ f_*$.\\
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+	\begin{enumerate}[label=\arabic*)]
+		\item For $\forall [\alpha] \in \pi_1(X,b)$, by definition $(id_*)([\alpha])=[id \circ \alpha]=[\alpha]$. Thus $(id)_*$ is the identity homomorphism of $\pi_1(X,b)$.
+		\item For $\forall [\alpha] \in \pi_1(X,b)$, the 
+		\begin{equation}\nonumber
+			\begin{split}
+				(g \circ f)_* ([\alpha]) &= [(g \circ f) \circ \alpha]\\
+				&= [g \circ (f \circ \alpha)] \\
+				&= g_* ([f \circ \alpha]) \\
+				&= g_* (f_* ([\alpha])) =  g_* \circ f_* ([\alpha])
+			\end{split}
+		\end{equation}
+	\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+	If $f:X\to Y$ is a homeomorphism, then $f_*:\pi_1(X) \to \pi_1(Y)$ is an isomorphism.\\
+\end{theorem}
+
+\begin{proof}
+	Since $f:X\to Y$ is a homeomorphism there exists a continuous map $f^{-1}:Y\to X$ such that $f^{-1} \circ f = id_X $ and $f \circ f^{-1} = id_Y$. Then,\\
+	\begin{equation}\nonumber
+		\begin{cases}
+		(f^{-1} \circ f)_*= (id_X)_* & : \pi_1(X) \to \pi_1(X)\\
+		(f \circ f^{-1} )_* = (id_Y)_* & : \pi_1(Y) \to \pi_1(Y)
+		\end{cases}
+	\end{equation}
+	Also, 
+	\begin{equation}\nonumber
+	\begin{cases}
+	(f^{-1} \circ f)_*= (f^{-1})_* \circ f_* & \\
+	(f \circ f^{-1} )_* = f_* \circ (f^{-1})_* &
+	\end{cases}
+	\end{equation}\\
+	and $(id_X)_* = id_{\pi_1(X)}$ and $(id_Y)_* = id_{\pi_1(Y)}$,
+	\begin{equation}\nonumber
+		\begin{cases}
+			(f^{-1})_* \circ f_* = id_{\pi_1(X)}& \\
+			f_* \circ (f^{-1})_* = id_{\pi_1(Y)}&
+		\end{cases}
+	\end{equation}
+	As there exists such $(f^{-1})_*$, we conclude that such $f_*$ is a bijective map. Also, as $f_*$ is an induced homomorphism, $f_*$ is a bijective homomorphism, which is an isomorphism. Thus $f_*$ is an isomorphism.\\
+\end{proof}
+
+\begin{corollary}
+	$X \cong Y \implies \pi_1(X) \simeq \pi_1(Y)$ which is, $\pi_1(X) \not\simeq \pi_1(Y) \implies X \not\cong Y$\\
+\end{corollary}
+
+This is a very useful corollary, because it directly tells us how to check if two topological spaces are non homeomorphic by comparing if their fundamental groups are isomorphic. This is how algebraic topology converts a topological problem into a purely algebraic situation.\\
+
+\begin{corollary}
+	If $X \cong Y$ and $X$ is simply connected, then $Y$ is also simply connected.\\
+\end{corollary}
+
+\begin{definition}
+	Let $A \subseteq X$ for a topological space $X$.
+	\begin{enumerate}
+		\item A map $r:X \to A$ is a \textbf{retraction} of $X$ into $A$ if $r(a)=a$ for $\forall a \in A$
+		\item For a retraction $r:X\to A$, we call $A$ the \textbf{retract} of $X$.\\
+	\end{enumerate}
+\end{definition}
+
+\begin{example}
+	Let $X=\mathbb{R}^2 \setminus \{0\}$, and $A=\{x \in \mathbb{R}^2 : |x|=1\}$. Define $r:X\to A$ as $r(x)=\frac{x}{|x|}$. Then as for $\forall a \in A$, $r(a)=a$ so $r$ becomes a retraction of $X$ into $A$ and $A$ becomes a retract of $X$. However, if we consider this map in $\mathbb{R}^2$ instead of $X$ it doesn't become a retraction and it is not easy to show directly.\\
+\end{example}
+
+\begin{theorem}
+	If $A$ is a retract of $X$ and $X$ is simply connected, then $A$ is also simply connected.\\
+\end{theorem}
+
+\begin{proof}
+	left as an exercise (check assignment sheet)\\
+\end{proof}
+
+Until now we defined and stated what are fundamental groups are, and the relation between them. But we haven't yet introduced how to calculate fundamental groups of a given topological space. There are two methods of calculating the fundamental group : one is to use the Seifert Van Kampen theorem, and the other is to deform the given topological space. The above theorem can be related to the second method, which was kind of a brief introduction. Now we also give a brief introduction  about the first method of calculating the fundamental group by stating a simple case of the Seifert Van Kampen theorem. \\
+
+\begin{theorem}Let $U,V \subseteq X$ for a topological space $X$. Suppose that,
+	\begin{enumerate}
+		\item $U,V $ are open in $X$ and both are simply connected.
+		\item $U \cap V = \phi$ and $U \cup V = X$.
+		\item $U \cap V$ is path connected. 
+	\end{enumerate}	
+	Then $\pi_1(X)=0$, i.e, $X$ is also simply connected.
+\end{theorem}
+
+In order to prove this theorem, we need to introduce a lemma we learned from general topology. \\
+
+\begin{lemma}
+	
+\end{lemma}
 
 \section{Covering Spaces}
 
