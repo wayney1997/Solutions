@@ -560,11 +560,15 @@ Until now we defined and stated what are fundamental groups are, and the relatio
 	Then $\pi_1(X)=0$, i.e, $X$ is also simply connected.
 \end{theorem}
 
-In order to prove this theorem, we need to introduce a lemma we learned from general topology. \\
+In order to prove this theorem, we need to introduce a lemma named Lebesguq number lemma, which we might have learned (or not) from general topology. \\
 
 \begin{lemma}
-	
+	Let $X$ be a compact metric space. Suppose $\{U_\alpha \}$ is a collection of open sets of $X$ such that $\bigcup U_\alpha = X$ ($\alpha \in I$), i.e, is an open cover of $X$. Then there exists some $\delta >0$ such that if $diam(A) < \delta$ for some $A \subseteq X$ , then there exists some $\alpha_0 \in I $ such that $A \subseteq U_{\alpha_0}$. \\
 \end{lemma}
+
+\begin{proof}
+	Let $b \in U \cap V$, and $\alpha : [0,1] \to X $ be a loop based at $b$. Since $U,V$ are open and $U \cup V = X$, $\alpha^{-1}(U)$ and $\alpha^{-1}(V)$ are open in $[0,1] $ and $\alpha^{-1}(U) \cup \alpha^{-1}(V) = [0,1]$, which implies that $\{ \alpha^{-1}(V) , \alpha^{-1}(U)\}$ becomes an open cover of $[0,1]$. Also we know that $[0,1]$ is a compact metric space, thus we can apply the Lebesgue number lemma we stated above. Thus, there exists $\delta > 0$ such that $A \subseteq [0,1]$ and $diam(A)\leq \delta$ such that $A \subseteq \alpha^{-1}(U)$ or $A \subseteq \alpha^{-1}(V)$. Choose $N \in \mathbb{N}$ such that $\frac{1}{N} < \delta$, and also choose $0= s_0 < s_1 < \dots < s_N=1$ such that $s_{i+1}-s_i=1/N$ for every $i$. Then for each $i$, $[s_i,s_{i+1}]$ becomes subsets of $U$ or $V$, i.e, $\alpha([s_i,s_{i+1}])\subset U$ or $\subset V$.
+\end{proof}
 
 \section{Covering Spaces}
 
