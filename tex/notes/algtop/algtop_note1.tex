@@ -219,20 +219,164 @@ This lemma states that such operation over homotopy classes is associative, and 
 	\end{equation}
 \end{lemma}
 
+\vspace{0.1in}
+
+\begin{definition}
+	Let $\alpha\in P_X(a,b)$. Then we define the inverse path of $\alpha$ as $\alpha^{-1}:[0,1]\to X$ which maps $\alpha^{-1}(s) = \alpha(1-s)$. \\
+\end{definition}
+
+\begin{remark}
+	We can see that for $\alpha\in P_X(a,b)$ the inverse of it $\alpha^{-1}\in P_X(b,a)$.\\
+\end{remark}
+
+\begin{lemma}
+	Let $\alpha\in P_X(a,b)$. Then $[\alpha][\alpha^{-1}]=[a]$ and $[\alpha^{-1}][\alpha]=[b]$.\\
+\end{lemma}
+
+\begin{proof}
+	We will just show the case that $[\alpha][\alpha^{-1}]=[a]$ by taking a homotopy $F$ as,
+	\begin{equation}\nonumber
+		F(s,t) =
+		\begin{cases}
+		\alpha(2s) & s \in [0,\frac{t}{2}) \\
+		\alpha(t) &  s \in [\frac{t}{2}, 1-\frac{t}{2})\\
+		\alpha(2-2s) & s \in [1-\frac{t}{2},1]
+		\end{cases}
+	\end{equation}
+	We can then check that $F$ becomes a homotopy between $a$ and $\alpha\alpha^{-1}$.\\
+\end{proof}
+
+\begin{lemma}
+	Let $\alpha_0,\alpha_1 \in P_X(a,b)$. If $\alpha_0 \simeq \alpha_1$, $rel$ $\{0,1\}$ then $\alpha_0^{-1}\simeq \alpha_1^{-1}$, $rel$ $\{0,1\}$.\\
+\end{lemma}
+
+\begin{proof}
+	Let $F$ be the homotopy between $\alpha_0$ and $\alpha_1$. We define $G(s,t)=F(1-s,t)$ and then this becomes a homotopy bewtween  $\alpha_0^{-1}$ and $\alpha_1^{-1}$. \\
+\end{proof}
+
+\begin{definition}
+	Let $\alpha \in P_X(a,b)$, then we define the inverse homotopy class of $\alpha$ by $[\alpha]^{-1} = [\alpha^{-1}]$.\\
+\end{definition}
+
+%----------------------------------------
+
 \section{The Fundamental Group}
 \vspace{0.15in}
 Throughout the previous section, we defined many concepts that will be essential for us to define the fundamental group of a topological space. Now using the concepts from the previous section, now we define the concept of fundamental group.\\
 
 \begin{definition}
-	For a topological space $X$ with $b \in X$, we define the fundamental group of $X$ and denote it as $\pi_1(X,b)$ by 
+	For a topological space $X$ with $b \in X$, we define a set named $\pi_1(X,b)$ of $X$ by
 	\begin{equation}\nonumber
 		\begin{split}
 		\pi_1(x,b) &= L(X,b)/\simeq\\
 		&= \{[\alpha] \text{ }|\text{ } \alpha : [0,1] \to X \text{, s.t } \alpha(0)=\alpha(1)=b\}
 		\end{split}
 	\end{equation}
+	where $L(X,b)$ is the set of loops in $X$ having $b \in X$ as a base point.\\
 \end{definition}
 
+\begin{theorem}
+	If we equip the set $\pi_1(x,b)$ with the operation $[\alpha][\beta]=[\alpha\beta]$, $\pi_1(X,b)$ becomes a group.\\
+\end{theorem}
+
+\begin{recall}
+	A topological space $X$ is \textbf{path connected} if for $\forall a,b \in X$, there exists a path $\gamma:[0,1]\to X$ such that $\gamma(0)=a$ and $\gamma(1)=b$.\\
+\end{recall}
+
+\begin{theorem}
+	Let $X$ be a path connected topological space. Then $\pi_1(X,b) \simeq \pi_1(X,c)$ for any $b,c\in X$.\\
+\end{theorem}
+
+\begin{proof}
+	Define $\gamma:[0,1]\to X$ be a path such that $\gamma(0)=c$ and $\gamma(1)=b$. Existence of such path is guranteed due to the fact that $X$ is path connected. Then define a mapping $\phi : \pi_1(X,b) \to \pi_1(X,c)$, such that 
+	\begin{equation}\nonumber
+		\phi([\alpha])=[\gamma][\alpha][\gamma]^{-1} = [\gamma\alpha\gamma^{-1}]
+	\end{equation}
+	We will then show that such $\phi$ is an isomorphism between $\pi_1(X,b)$ and $\pi_1(X,c)$.
+	\begin{enumerate}[label=\arabic*)]
+		\item $\phi$ is injective.
+		\vskip 0.5ex
+		Suppose $\phi([\alpha])$=$\phi([\beta]) \implies [\gamma][\alpha][\gamma]^{-1} = [\gamma][\beta][\gamma]^{-1}$ for any $[a]$ and $[\beta]$. Then,
+		\begin{equation}\nonumber
+			\begin{split}
+			[\gamma][\alpha][\gamma]^{-1} &= [\gamma][\beta][\gamma]^{-1} \\
+			[\gamma]^{-1}[\gamma][\alpha][\gamma]^{-1}[\gamma] &= [\gamma]^{-1}[\gamma][\beta][\gamma]^{-1}[\gamma] \\
+			[b][\alpha][c] &= [b][\beta][c] \\
+			[\alpha] &= [\beta]
+			\end{split}
+		\end{equation} 
+		\item $\phi$ is surjective.
+		\vskip 0.5ex
+		Let arbitrary $[\alpha']\in\pi_1(X,c)$. Consider $\phi([\gamma^{-1}\alpha'\gamma])$, 
+		\begin{equation}\nonumber
+			\begin{split}
+			\phi([\gamma^{-1}\alpha'\gamma]) &= [\gamma][\gamma^{-1}\alpha'\gamma][\gamma^{-1}]\\
+			&= [c][\alpha'][c] = [\alpha']
+			\end{split}
+		\end{equation}
+		\item $\phi$ is a homomorphism.
+		\vskip 0.5ex
+		For any $[\alpha],[\beta]\in\pi_1(X,b)$, 
+		\begin{equation}\nonumber
+		\begin{split}
+		\phi([\alpha][\beta]) &= [\gamma][\alpha][\beta][\gamma]^{-1}\\
+		&= [\gamma][\alpha][b][\beta][\gamma]^{-1} \\
+		&= [\gamma][\alpha][\gamma]^{-1}[\gamma][\beta][\gamma]^{-1} \\
+		&= \phi([\alpha])\phi([\beta])
+		\end{split}
+		\end{equation}
+	\end{enumerate}
+	As $\phi$ is a bijective homomorphism between $\pi_1(X,b)$ and $\pi_1(X,c)$, it is an isomorphism.
+\end{proof}
+
+\begin{definition}
+	As \textbf{Thm 2} states that for path connected topological spaces $\pi_1$ is independent of the choice of base point, we define the \textbf{fundamental group} of a path connected topological space as the isomorphic type of $\pi_1(X,b)$ and denote it as $\pi_1(X)$.\\
+\end{definition}
+
+\begin{definition}
+	A topolgical space $X$ is \textbf{simply connected} if $X$ is path connected and the fundamental group is trivial, i.e, $\pi_1(X)=0$. \\
+\end{definition}
+
+\begin{example} Here are some examples of simply connected and not simply connected spaces.
+	\begin{itemize}
+		\item Simply connected : $\pi_1(\mathbb{R}^n)=0$, $\pi_1(D^n)=0$, $\pi_1(S^n)=0$ (for $n>1$) ...
+		\item Not simply connected : $\pi_1(S^1)=\mathbb{Z}$, $\pi_1(\mathbb{R}\setminus\{0\})=\mathbb{Z}$ ...\\
+	\end{itemize}
+\end{example}
+
+\begin{example}
+	We will explicitly show that $\mathbb{R}^2$ is simply connected.\\ \vskip 0.2ex
+	Let the base point $b=(0,0)\in\mathbb{R}^2$. Also let $\alpha:(0,1]\to\mathbb{R}^2$ be a loop beased at $b$. Define $F:[0,1]\times[0,1]\to \mathbb{R}^2$ by\\
+	\begin{equation}\nonumber
+		F(s,t) = t \cdot b + (1-t) \cdot \alpha
+	\end{equation}\\
+	which eventually becomes a homotopy such that $\alpha \simeq b$ for any loop based at $b$. This implies that $\pi_1(X,b)=\{[b]\}$, which is the trivial group.\\
+\end{example}
+
+From the above example, we took advantage of the convex property of $\mathbb{R}^2$ when we constructed the homotopy $F$. This means that we could apply the same method of proof to any convex spaces. \\
+
+\begin{definition}
+	A subset $S$ of $\mathbb{R}^n$ is \textbf{convex} if for $\forall a,b \in S$, the line segment from $a$ to $b$ is contained in $S$, i.e, $\forall t \in [0,1]$ the line segment $t\cdot a + (1-t)\cdot b \in S$.\\
+\end{definition} 
+
+\begin{example}
+	Some basic examples of convex and non convex subsets of $\mathbb{R}^n$.
+	\begin{itemize}
+		\item $\mathbb{R}^n$ itself is convex.
+		\item $D^n=\{x\in \mathbb{R}^n : |x|\leq 1 \}$ is convex.
+		\item $S^1=\{x\in \mathbb{R}^2 : |x|=1\}$ is not convex.\\
+	\end{itemize}
+\end{example}
+
+Then as we expect, does any convex subset becomes a simply connected space? The next theorem states that it is true.\\
+
+\begin{theorem}
+	A convex subset $S$ of $\mathbb{R}^n$ is simply connected.\\
+\end{theorem}
+
+\begin{proof}
+	Let $b\in S$, and $\alpha:[0,1]\to S$ be a loop based at $b$. Define $F:[0,1]\times[0,1] \to S$ as $F(s,t)=t\cdot b + (1-t)\cdot \alpha$ which becomes a homotopy such that $\alpha \simeq b$. The existence of such homotopy is guranteed as $S$ is a convex subset. As for any loop based at $b$ becomes homotopic with $b$, $\pi_1(S)=0$ thus $S$ is simply connected.
+\end{proof}
 \section{Induced Homomorphisms}
 
 \section{Covering Spaces}
