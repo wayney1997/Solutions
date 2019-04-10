@@ -45,14 +45,13 @@
 
 \author{Youngwan Kim} 
 \date{\normalsize\today} 
-
 %\newtheorem{theorem}{Thm}
 %\newtheorem{definition}{Def}
 %\newtheorem{examples}{Examples}
 %\newtheorem{example}{Ex}
 %\newtheorem{lemma}{Lem}
 %\newtheorem{corollary}{Cor}
-%\newtheorem*{remark}{Remark}
+\newtheorem*{remark}{Remark}
 \newtheorem*{recall}{Recall}
 \newtheorem{problem}{Problem}
 
@@ -61,7 +60,7 @@
 \maketitle	
 
 \begin{recall}
-	Recall that a map $f:X \to Y $ is \textbf{homotopic} to a map $g:X\to Y$ if there is a map $F:X\times[0,1]\to Y$ such that $F(x,0)=f$ and $F(x,1)=g$ for $\forall x\in X$.\\
+	Recall that a map $f:X \to Y $ is \textbf{homotopic} to a map $g:X\to Y$ if there is a map $F:X\times[0,1]\to Y$ such that $F(x,0)=f$ and $F(x,1)=g$ for $\forall x\in X$. (no relative conditions)\\
 \end{recall}
 
 \begin{problem}
@@ -70,12 +69,31 @@
 
 
 \begin{proof}
-	If $X \cong Y $ then $\pi_1(X) \simeq \pi_i(Y)$. As $\pi_1(X) \simeq 0$ and $\pi_1(X) \simeq \pi_i(Y)$\, it implies that $\pi_1(Y) \simeq 0$.\\
+	If $X \cong Y $ then $\pi_1(X) \simeq \pi_1(Y)$. As $\pi_1(X) = 0$ and $\pi_1(X) \simeq \pi_1(Y)$\, it implies that $\pi_1(Y) = 0$.\\
 \end{proof}
 
 \begin{problem}
 	Let $n$ be a positive integer. Let $f:X\to S^n$ and $g:X\to S^n$ be maps. Suppose that $f(x)\neq -g(x)$ for any $x \in X$. Show that $f$ is homotopic to $g$.\\
 \end{problem}
+
+\begin{proof}
+	Define a map $ F:X \times [0,1] \to S^n$ such that \\
+	\begin{equation}\nonumber
+		F(x,t) = \frac{(1-t)\cdot f(x)+t \cdot g(x)}{|(1-t)\cdot f(x)+t \cdot g(x)|}
+	\end{equation}
+	then we can check that\\
+	\begin{equation}\nonumber
+		\begin{cases}
+		F(x,0)=\frac{f(x)}{|f(x)|}=f(x) & \\
+		F(x,1)=\frac{g(x)}{|g(x)|}=g(x)
+		\end{cases}
+	\end{equation}\\
+	as $f(x),g(x)\in S^n$. Also as $f(x)\neq -g(x)$ for all $x \in X$, such $F(x,t)$ is well defined as $|(1-t)\cdot f(x)+t \cdot g(x)| \neq 0$ for all $(x,t) \in X \times [0,1]$.\\
+\end{proof}
+
+\begin{remark}
+	The trick of normalizing line segments are well used as a method of constructing a homotopy between maps which maps to $S^n$, due to its property.\\
+\end{remark}
 
 \begin{problem}
 	Let $X=\{x\in \mathbb{R}^n:1\leq |x| \leq 2\}$. Let $f:X\to X$ be a map defined by $f(x)=x/|x|$. Show that $f$ is homotopic to the identity map $id:X\to X$.\\
@@ -86,8 +104,12 @@
 	\begin{equation}\nonumber
 		F(x,t) = (1-t) \cdot \frac{x}{|x|} + t \cdot x
 	\end{equation}
-	Then $F(x,0)=f$ and $F(x,1)=id$, thus as there exists a homotopy $F$, $f \simeq id$.\\
+	Then $F(x,0)=f$ and $F(x,1)=id$, thus as there exists such homotopy $F$, $f \simeq id$.\\
 \end{proof}
+
+\begin{remark}
+	For the above problem, $F(x,t)=\frac{x}{|x|^t}$ is also a homotopy.\\
+\end{remark}
 
 \begin{problem}
 	Show that $\pi_1(X\times Y,(x_0,y_0))$ is isomorphic to the direct product $\pi_1(X,x_0)\times\pi_1(Y,y_0)$.\\
@@ -96,38 +118,41 @@
 \begin{proof}
 	Let $p_X:X\times Y \to X$ and $p_Y:X \times Y \to Y$ be projections, i.e, for $\forall (x,y) \in X\times Y$, the maps are defined as $p_X(x,y)=x$ and $p_Y(x,y)=y$. Now let $\phi : \pi_1(X\times Y,(x_0,y_0)) \to \pi_1(X,x_0)\times\pi_1(Y,y_0)$ for all $[\alpha] \in \pi_1(X\times Y,(x_0,y_0))$ which maps as,
 	\begin{equation}\nonumber
-		\phi([\alpha]) = ({p_X}_*([\alpha]),{p_Y}_*([\alpha]))
+		\phi([\alpha]) = ([p_X \circ \alpha],[p_Y \circ \alpha])
 	\end{equation}
-	Such $\phi$ is obviously a bijection, as it is a product of two projections, which are both bijections. We just have to show that it is a homomorphism. For any $[\beta],[\gamma]\in\pi_1(X\times Y,(x_0,y_0))$  \\
+	$\phi$ is well defined.
+	Such $\phi$ is obviously a bijection, as we can define $\phi^{-1}:\pi_1(X,x_0)\times\pi_1(Y,y_0) \to \pi_1(X\times Y,(x_0,y_0))$. We just have to show that it is a homomorphism. For any $[\beta],[\gamma]\in\pi_1(X\times Y,(x_0,y_0))$  \\
 	\begin{equation}\nonumber
 		\begin{split}
-			\phi([\alpha][\beta]) = \phi([\alpha\beta]) &=({p_X}_*([\alpha\beta]),{p_Y}_*([\alpha\beta])) \\
-			&= d
+			\phi([\alpha][\beta]) = \phi([\alpha\beta]) &= ([p_X \circ \alpha \beta] ,[p_Y \circ \alpha \beta]) \\
+			&= ([p_X \circ \alpha][p_X \circ \beta],[p_Y \circ \alpha][p_Y \circ \beta]) \\
+			&= ([p_X \circ \alpha],[p_Y \circ \alpha])([p_X \circ \beta],[p_Y \circ \beta]) \\
+			&= \phi([\alpha]) \phi([\beta])			
 		\end{split}
-	\end{equation}
+	\end{equation}\\
 \end{proof}
 
 \begin{problem}
 	Prove that the product of simply connected spaces is simply connected.\\
 \end{problem}
 
+
+
 \begin{proof}
-	Using the results of \textbf{Problem 4}, if $\pi_1(X) \cong 0$ and $\pi_1(Y) \cong 0$ then $\pi_1(X \times Y) \cong \pi_1(X) \times \pi_1(Y) \cong 0$. Thus as $\pi_1(X\times Y)\cong 0$, it is simply connected.\\
+	Using the results of \textbf{Problem 4}, if $\pi_1(X) = 0$ and $\pi_1(Y) = 0$ then $\pi_1(X \times Y) \cong \pi_1(X) \times \pi_1(Y) = 0$. Also as both $X,Y$ are path connected, $X\times Y$ is also path connected, as there exists any path $\gamma(s)=(\alpha(s),\beta(s))$ for all $(x_0,y_0),(x_1,y_1)\in X$ such that $\gamma(0)=(x_0,y_0)$ and $\gamma(1)=(x_1,y_1)$, where the existence of $\alpha$ and $\beta$ is guranteed as $X,Y$ are path connected. Thus as $\pi_1(X\times Y) = 0$ and $X \times Y$ is path connected, it is simply connected.\\
 \end{proof}
 
 \begin{problem}
-	Prove that if $n \geq 3$, then $\mathbb{R}^n \setminus \{0\}$ is simply connected.\\
+	Prove that if $n \geq 3$, then $\mathbb{R}^n \setminus \{0\}$ is simply connected. (Hint : use the fact that $S^{n-1}$ is simply connected.)\\
 \end{problem}
 
 \begin{proof}
-	Consider the stereographic map $\sigma : S^{n-1} \to \mathbb{R}^n \setminus \{0\}$ such that \\
-%	\begin{equation}\nonumber
-%		\sigma(x_1, x_2, \dots , x_{n-1})=\left( \frac{x_n}{uhhhhhhhhhhhhhhhhhhhhh}\right)
-%	\end{equation} 
+%	Consider a map $p : \mathbb{R}^n \setminus \{0\} \to S^{n-1}  $ such that \\
+	For any $[\alpha] \in \mathbb{R}^n \setminus \{0\}$, by some homotopy, let it $F$, $\alpha \simeq \frac{\alpha}{|\alpha|}\in S^{n-1}$. In $S^{n-1}$, $ \alpha/|\alpha| \simeq 1$ by a homotopy, let it $G$ as $S^{n-1}$ is simply connected. As $S^{n-1} \subset \mathbb{R}^n$, $F,G$ are both a homotopy in  \\
 \end{proof}
 
 \begin{problem}
-	Let $A$ be a subspace of $X$ and $j:A\xhookrightarrow{}X$ be the inclusion map. Let a map $r:X\to A$ be a retraction of $X$ onto  $A$, that is $r \circ j = id_A$. Prove the following,
+	Let $A$ be a subspace of $X$ and $j:A\xhookrightarrow{}X$ be the inclusion map. Let a map $r:X\to A$ be a retraction of $X$ onto  $A$, that is $r \circ j = id_A$. Prove the following,\\
 	\begin{enumerate}[label=(\alph*)]
 		\item $j_*:\pi_1(A,b)\to \pi_1(X,b)$ is one-to-one.		
 		\item $r_*:\pi_1(X,b)\to \pi_1(A,b)$ is onto.
@@ -136,7 +161,7 @@
 \end{problem}
 
 \begin{proof}
-	As $r \circ j = id_A$, $(r \circ j)_* = (id_A)_* \implies r_* \circ j_* = id_{\pi_1(A)}$. This implies (a) and (b). Also assuming $X$ is simply connected, i.e, $\pi_1(X,b) \cong 0$ then due to (a) and (b), so does $\pi_1(A) \cong 0$.\\
+	As $r \circ j = id_A$, $(r \circ j)_* = (id_A)_* \implies r_* \circ j_* = id_{\pi_1(A)}$. This implies (a) and (b). Also assuming $X$ is simply connected, i.e, $\pi_1(X,b) = 0$ then due to (a) and (b), so does $\pi_1(A) = 0$. Path connectedness of $A$ is also guranteed as $r:X\to A$ is a continuous map and $X$ is simply connected.\\
 \end{proof}
 
 \end{document}
