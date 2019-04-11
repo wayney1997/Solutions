@@ -4,8 +4,8 @@
 \usepackage[english]{babel} 
 \usepackage{amsmath}
 \usepackage{amsfonts}
-\usepackage{braket}
 \usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{changepage}
 \usepackage{titlesec}
 \usepackage{sectsty} 
@@ -23,21 +23,136 @@
 \renewcommand{\footrulewidth}{0pt} 
 \setlength{\headheight}{13.6pt} 
 
+\usepackage{mathtools}
+\usepackage{enumitem}
+\newcommand{\subscript}[2]{$#1 _ #2$}
+
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+\newcommand{\ball}[2]{$B({#1};{#2})$}
+\newcommand{\overbar}[1]{
+	\mkern 1.5mu \overline{\mkern-1.5mu\raisebox{0pt}[\dimexpr\height+0.5mm\relax]{$#1$}\mkern-1.5mu}\mkern 1.5mu
+}
 
 \title{	
 	\normalfont \normalsize 
 	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
 	\horrule{1pt} \\[0.4cm] 
-	\huge General Topology Exercises
+	\huge General Topology, Exercises 1 \\
+	\vspace{0.1in}
+	\Large 2019 Spring Semester
 	\horrule{1pt} \\[0.4cm] 
 }
 
 \author{Youngwan Kim} 
 \date{\normalsize\today} 
+%\newtheorem{theorem}{Thm}
+%\newtheorem{definition}{Def}
+%\newtheorem{examples}{Examples}
+%\newtheorem{example}{Ex}
+%\newtheorem{lemma}{Lem}
+%\newtheorem{corollary}{Cor}
+\newtheorem*{remark}{Remark}
+\newtheorem*{recall}{Recall}
+\newtheorem{problem}{Problem}
 
 \begin{document}
 	
 \maketitle	
+
+\begin{problem}
+	Show that $[0,1)$ is neither close dnor open in $\mathbb{R}$.\\
+\end{problem}
+
+\begin{proof}
+	As $int([0,1))=(0,1)$ and $\overbar{[0,1)} = [0,1]$ thus it is neither close or open in $\mathbb{R}$.\\
+\end{proof}
+
+\begin{problem}
+	Let $A=\{0\}\cup\{\frac{1}{n} | n \in \mathbb{N}\}$. Consider $A$ as a subspace of $\mathbb{R}$. Is it closed or open?\\
+\end{problem}
+
+\begin{proof}
+	Consider $\mathbb{R}\setminus A$, which becomes
+	\begin{equation}\nonumber
+		\mathbb{R}\setminus A = (-\infty,0) \cup \left( \bigcup\limits_{n \in \mathbb{N}} \left(\frac{1}{n+1} , \frac{1}{n}\right) \right) \cup (1.\infty)
+	\end{equation}
+	which is an union of open sets, implying that $\mathbb{R}\setminus A$ is also open. As $\mathbb{R}\setminus A$ is open, $A$ is closed.\\
+\end{proof}
+
+\begin{problem}
+	Show that for $p \in X$, the singleton $\{p\}$ is closed in $X$. Also show that a finite subset of $X$ is closed in $X$. \\
+\end{problem}
+
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}
+	\item The singleton is closed in $X$.
+	\vskip 0.5ex
+	Consider $q \in X \setminus \{p\}$, then there exists $B(q,r)$ where $r=d(p,q)>0$. Then $p \notin B(q,r)$ which implies that $B(q,r)\subset X\setminus \{p\}$. Thus $X \setminus \{p\}$ is open, and $\{p\}$ is thus closed.
+	\item A finite subset of $X$ is closed in $X$.
+	\vskip 0.5ex
+	For any finite subset, let it $P$, it could be expressed as $P=\bigcup\limits_{p \in  P} \{p\}$, which is a finite union of closed sets. As any finite subset is such a finite union of closed sets, it is closed.
+\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Let us consider $A=\{0,1,2,3\}$ and $B=\{0,1\}$ both as subspaces of $\mathbb{R}$.
+	\begin{enumerate}[label=(\alph*)]
+		\item Prove that $A$ is closed in $\mathbb{R}$.
+		\item Is $B$ open in $\mathbb{R}$?
+		\item Is $B$ open in $A$?
+		\item Find all open subsets of $A$.\\
+	\end{enumerate}
+\end{problem}
+
+\begin{proof}
+	content...
+\end{proof}
+
+\begin{problem}
+	A set of the form $\{y \in X | d(x,y) \leq r \}$ is called a closed ball. Show that a closed ball is a closed set. Is the closed ball $\{ y \in X | d(x,y) \leq r \}$ always the closure of the open ball $B(x,r)$?\\
+\end{problem}
+
+\begin{proof}
+	$ $ \newline
+	\vspace{-0.15in}
+	\begin{enumerate}
+		\item Closed ball is closed. 
+		\vskip 0.5ex
+		
+		\item Is it always the closure of the open ball? (No)
+		\vskip 0.5ex
+		Consider $\mathbb{R}$ which is equipped with a discrete metric. The open ball $B(0,1)$ under this metric space is the singleton $\{0\}$. So the closure is, $\overbar{B(0,1)}=\overbar{\{0\}} = \{0\}$. Meanwhile the closed ball with the same center and radius gives us, $B'(0,1)=\mathbb{R}$. Thus as this counterexample exists we can say that not always the closed ball becomes the closure of the open ball.
+	\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Let $A \subset B \subset X$. Show that $int(A) \subset int(B)$ and $\overbar{A} \subset \overbar{B}$. \\
+\end{problem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}
+	\item $int(A) \subset int(B)$
+	\vskip 0.5ex 
+	Consider $x \in int(A)$ which implies that there exists $r>0$ such that $B(x,r)\subset A$. But as $A \subset B$, it is also true that $B(x,r)\subset B$. Thus $x \in int(B)$ holds.
+	\item  $\overbar{A} \subset \overbar{B}$
+	\vskip 0.5ex
+	Consider $x \in \overbar{A}$, which implies that for any $r>0$, $B(x,r)\cap A \neq \phi$. Again as $A \subset B$, the previous statement implies that $B(x,r)\cap A \subset B(x,r)\cap B $. Thus $x \in \overbar{B}$ also holds.
+\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Let $A \subset Y \subset X$. Show the following:
+	\begin{enumerate}[label=(\alph*)]
+		\item 
+		\item 
+		\item 
+		\item
+	\end{enumerate}
+\end{problem}
 
 \end{document}

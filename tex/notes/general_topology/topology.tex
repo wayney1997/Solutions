@@ -58,6 +58,11 @@
 
 \section{Metric Spaces} 
 \vspace{2.5ex}
+
+\subsection{Open and Closed Sets}
+
+\vspace{2.5ex}
+
 \begin{definition}
 	A \textbf{metric} $d$ defined on a set $X$ is a mapping $d:X \times X \to \mathbb{R}$ which has the following properties.
 	\begin{enumerate}[label=(\subscript{m}{{\arabic*}})]
@@ -299,6 +304,9 @@ $ $ \newline
 
 This sums up to the fact that open sets are still open after arbitrary union and closed sets are closed after arbitrary intersections, while for open sets adding a finite condition while intersecting gurantees being open and for closed sets vice versa. \\
 
+\subsection{Completeness}
+\vspace{2.5ex}
+
 \begin{recall}
 	A sequence $\{a_n\}$ in $\mathbb{R}$ converging to $a$ implies that for given $\epsilon >0$ there exists $N>0$ such that $|a-a_n|<\epsilon$ for $\forall n\geq N$.\\
 \end{recall}
@@ -343,10 +351,10 @@ $ $ \newline
 \end{proof}
 
 \begin{definition}
-	Let $X$ be a metric space equipped with a metric $d$, and $Y \subset X$, $x \in X$.
+	Let $X$ be a metric space equipped with a metric $d$, and $Y \subset X$.
 	\begin{enumerate}
-		\item $x$ is a \textbf{limit point} of $Y$ if $B(x;r) \cap Y$ is infinite for $\forall r>0 \iff \left(B(x;r)\setminus \{x\}\right)\cap Y \neq \phi$ for $\forall r>0$.
-		\item $x$ is an \textbf{isolated point} of $Y$ if $\exists r>0$ such that $B(x;r)\cap Y = \{x\}$ $\iff \left(B(x;r)\setminus \{x\}\right)\cap Y = \phi$ for $\exists r>0$.\\
+		\item $x \in X$ is a \textbf{limit point} of $Y$ if $B(x;r) \cap Y$ is infinite for $\forall r>0 \iff \left(B(x;r)\setminus \{x\}\right)\cap Y \neq \phi$ for $\forall r>0$.
+		\item $x \in Y$ is an \textbf{isolated point} of $Y$ if $\exists r>0$ such that $B(x;r)\cap Y = \{x\}$ $\iff \left(B(x;r)\setminus \{x\}\right)\cap Y = \phi$ for $\exists r>0$.\\
 	\end{enumerate}
 \end{definition}
 
@@ -491,7 +499,36 @@ $ $ \newline
 \end{proof}
 
 \begin{definition}
-	A subset $A$ of a metric space $X$ is \textbf{dense} in $X$ if $\overbar{A}=X$.
+	A subset $A$ of a metric space $X$ is \textbf{dense} in $X$ if $\overbar{A}=X$.\\
 \end{definition}
+
+\begin{remark}
+	The above definition is also equivalent to, 
+	\begin{enumerate}
+		\item $U \cap Y \neq \phi$ for every open set $U$ of $X$.
+		\item $B(x;r) \cap Y \neq \phi$ for every $x \in X, r>0$.\\
+	\end{enumerate}
+\end{remark}
+
+For the first statement of the above remark, we state a proof below.\\
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+	\begin{enumerate}[label=(\roman*)]
+		\item $(\implies)$ 
+		\vskip 0.5ex
+		Let $x \in X$ and $r>0$. Since $\overbar{A}=X$, $x \in \overbar{A}$, which implies that $x$ is adherent to $A$. So by definition of adherent points, for any $r>0$ $B(x;r)\cap Y \neq \phi$
+		\item  $(\impliedby)$
+		\vskip 0.5ex
+		Let $x \in X$. By our assumption, it implies that $x$ is adherent to $A$. Thus $x \in \overbar{A}$
+	\end{enumerate}	
+\end{proof}
+
+\begin{definition}
+	For $A \subset X$, $A$ is \textbf{nowhere dense} in $X$ if $int(\overbar{A})=\phi$.
+\end{definition}
+
+
 
 \end{document}

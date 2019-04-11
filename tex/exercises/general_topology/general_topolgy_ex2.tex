@@ -1,0 +1,146 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{changepage}
+\usepackage{titlesec}
+\usepackage{sectsty} 
+\sectionfont{\centering \normalfont \scshape}
+\subsectionfont{\normalfont}
+\subsubsectionfont{\normalfont}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancyplain} 
+\fancyhead{} 
+\fancyfoot[L]{} 
+\fancyfoot[R]{} 
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt} 
+\setlength{\headheight}{13.6pt} 
+
+\usepackage{mathtools}
+\usepackage{enumitem}
+\newcommand{\subscript}[2]{$#1 _ #2$}
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+\newcommand{\ball}[2]{$B({#1};{#2})$}
+\newcommand{\overbar}[1]{
+	\mkern 1.5mu \overline{\mkern-1.5mu\raisebox{0pt}[\dimexpr\height+0.5mm\relax]{$#1$}\mkern-1.5mu}\mkern 1.5mu
+}
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
+	\horrule{1pt} \\[0.4cm] 
+	\huge General Topology, Exercises 1 \\
+	\vspace{0.1in}
+	\Large 2019 Spring Semester
+	\horrule{1pt} \\[0.4cm] 
+}
+
+\author{Youngwan Kim} 
+\date{\normalsize\today} 
+%\newtheorem{theorem}{Thm}
+%\newtheorem{definition}{Def}
+%\newtheorem{examples}{Examples}
+%\newtheorem{example}{Ex}
+%\newtheorem{lemma}{Lem}
+%\newtheorem{corollary}{Cor}
+\newtheorem*{remark}{Remark}
+\newtheorem*{recall}{Recall}
+\newtheorem{problem}{Problem}
+
+\begin{document}
+	
+\maketitle	
+
+\begin{problem}
+	Let $A=\{ (x,y) \in \mathbb{R}^2 | 1 < x^2+y^2 \leq 2 \}$. Find $int(A) , \overbar{A}$ and $\partial A$.\\
+\end{problem}
+
+\begin{proof}
+$ $ \newline
+
+
+\end{proof}
+
+\begin{problem}
+	Let $A=\{0\}\cup\{1/n : n \in \mathbb{N}\}$ be a subspace of $\mathbb{R}$. Find the limit points and the isolated points of $A$.\\
+\end{problem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}
+	\item limit points : $\phi$
+	\vskip 0.5ex
+	
+	\item isolated points : $A$
+	\vskip 0.5ex
+	
+\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Let $X$ be a finite metric space. Prove that $X$ has no limit points.\\
+\end{problem}
+
+\begin{proof}
+	As $X$ is finite, we can denote its elements as $X=\{x_i\}$ for some $i\in I \subset \mathbb{N}$. Let $\epsilon>0$ be the smallest distance among all of the finite points of $X$, i.e, we will let $\epsilon = min\{ d(x_i,x_j) \}$. Now for $\forall x_i \in X$, consider the open ball $B(x_i,\epsilon)$. As for $\forall x_i$, there exists such $\epsilon$ that $B(x_i, \epsilon) \cap X = \{x_i\}$, every point of such finite metric space $X$ is an isolated point. As every point in $X$ is an isolated point, it implies that $X$ has no limit points. \\
+\end{proof}
+
+\begin{problem}
+	Let $p,q\in X$. Show that there exists open subsets $U,V$ of $X$ such that $p\in U$ and $q \in V$ and $U \cap V = \phi$.\\
+\end{problem}
+
+\begin{proof}
+	Let $\epsilon = \frac{1}{N} d(p,q) >0$ for sufficiently big $N>0$. Consider two open balls $B(p,\epsilon)$ and $B(q,\epsilon)$. As open balls are open, let each open balls as $U,V$. Then by definition it is obvious that $p\in U$ and $q \in V$. Now we claim that $U \cap V = \phi$. If there was such element in $U \cap V$, let it $z$, then by the trinagular identity of $d$, $d(p,q)\leq d(p,z) + d(z,q)$. But as $d(p,z)$ and $d(q,z)$ are smaller thatn $\epsilon < d(p,q)$ it leads to a contradiction that $d(p,q) < d(p,q)$. Thus such $z$ should not exist, and thus we conclude that for such $U,V$, $U \cap V = \phi$.\\
+\end{proof}
+
+\begin{problem}
+	Consdier $\mathbb{Q}$ as a subspace of $\mathbb{R}$. Find the interior, the closure, the limit points and the isolated points of $\mathbb{Q}$.\\
+\end{problem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}
+	\item $int(\mathbb{Q}) = \phi$ 
+	\vskip 0.5ex
+	For any $q\in \mathbb{Q}$, for any $r>0$, as the open ball $B(q,r)$ itself is consisted with real numbers, it never gets to be $B(q,r)\subset \mathbb{Q}$. Thus $int(\mathbb{Q})$ is the empty set.
+	\item  $\overbar{\mathbb{Q}} = \mathbb{R}$
+	\vskip 0.5ex
+	For any $x \in \mathbb{R}$, there exists some $r>0$ such that $B(x,r)\cap \mathbb{Q} \neq \phi$ due to the property of $\mathbb{Q}$. To elaborate, for any $(a,b)\subset \mathbb{R}$ due to the density of rationals, there exists some $r \in \mathbb{R}$ such that $r \in (a,b)$. Also due to the Archimedean property, there exists some $n \in \mathbb{N}$ such that $a < r+ \frac{1}{n} < b$. 
+	\item  limit points : $\mathbb{R}$
+	\vskip 0.5ex
+	
+	\item  isolated points : $\phi$
+	\vskip 0.5ex	 
+	For any $q \in \mathbb{Q}$, 
+\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Prove that the set of irrational numbers $\mathbb{I}$ is dense in $\mathbb{R}$. \\
+\end{problem}
+
+\begin{proof}
+	It suffices to show that $\bar{\mathbb{I}} = \mathbb{R}$ by the definition of dense subsets, which is same to show that for $\forall x \in \mathbb{R}$, there exists some $r'>0$ such that $B(x,r')\cap \mathbb{I} \neq \phi$. Then showing that for any $(a,b)\subset \mathbb{R}$, there exists some $k \in \mathbb{I}$ that is in $(a,b)$ would suffice it. Due to the density of rationals, there exists some $r \in \mathbb{R}$ such that $r \in (a,b)$. Using the Archimedean property, as $\frac{b-r}{2}>0$, there exists some $n \in \mathbb{N}$ such that $\frac{b-r}{2}> \frac{1}{n}$, which implies that $r+\frac{2}{n}<b$. As there exists some $k \in \mathbb{I}$ such that $a < k = r+\frac{\sqrt{2}}{n} < r+ \frac{2}{n} < b$ for any $(a,b) \in \mathbb{R}$, the closure of $\mathbb{I}$ is $\mathbb{R}$. \\
+\end{proof}
+
+\begin{problem}
+	Let $A=\{0,1,2,3\}$ and $d_1$ be the usual metric on $A$ as a subspace of $\mathbb{R}$, and $d_2$ be the discrete metric on $A$. Are $d_1$ and $d_2$ equivalent? \\
+\end{problem}
+
+\begin{proof}
+	First let us consider the open sets of $(A,d_2)$. As $d_2$ is a discrete metric, any singleton subset of $A$ is an open ball. That is because for any $x \in A$, $B(x,1)=\{x\}$. And using the fact that open balls are open and any arbitrary union of open sets are open, we can conclude that every subset of $A$ is actually open in $A$. Now let us consider the open sets of $(A,d_1)$. As
+\end{proof}
+
+
+
+\end{document}
