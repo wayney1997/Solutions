@@ -37,7 +37,7 @@
 	\normalfont \normalsize 
 	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
 	\horrule{1pt} \\[0.4cm] 
-	\huge General Topology, Exercises 1 \\
+	\huge General Topology, Exercises 2 \\
 	\vspace{0.1in}
 	\Large 2019 Spring Semester
 	\horrule{1pt} \\[0.4cm] 
@@ -58,15 +58,22 @@
 \begin{document}
 	
 \maketitle	
+\vspace{0.25in}
 
 \begin{problem}
-	Let $A=\{ (x,y) \in \mathbb{R}^2 | 1 < x^2+y^2 \leq 2 \}$. Find $int(A) , \overbar{A}$ and $\partial A$.\\
+	Let $A=\{ (x,y) \in \mathbb{R}^2 : 1 < x^2+y^2 \leq 2 \}$. Find $int(A) , \overbar{A}$ and $\partial A$.\\
 \end{problem}
 
 \begin{proof}
 $ $ \newline
-
-
+\vspace{-0.15in}
+\begin{enumerate}
+	\item $int(A)$
+	\vskip 0.5ex 
+	\item $\overbar{A}$
+	\vskip 0.5ex
+	\item $\partial A $
+\end{enumerate}
 \end{proof}
 
 \begin{problem}
@@ -118,7 +125,7 @@ $ $ \newline
 	For any $x \in \mathbb{R}$, there exists some $r>0$ such that $B(x,r)\cap \mathbb{Q} \neq \phi$ due to the property of $\mathbb{Q}$. To elaborate, for any $(a,b)\subset \mathbb{R}$ due to the density of rationals, there exists some $r \in \mathbb{R}$ such that $r \in (a,b)$. Also due to the Archimedean property, there exists some $n \in \mathbb{N}$ such that $a < r+ \frac{1}{n} < b$. 
 	\item  limit points : $\mathbb{R}$
 	\vskip 0.5ex
-	
+	As the disjoint union of limit points and isolated points should be $\overbar{\mathbb{Q}}$ and as 
 	\item  isolated points : $\phi$
 	\vskip 0.5ex	 
 	For any $q \in \mathbb{Q}$, 
@@ -138,9 +145,15 @@ $ $ \newline
 \end{problem}
 
 \begin{proof}
-	First let us consider the open sets of $(A,d_2)$. As $d_2$ is a discrete metric, any singleton subset of $A$ is an open ball. That is because for any $x \in A$, $B(x,1)=\{x\}$. And using the fact that open balls are open and any arbitrary union of open sets are open, we can conclude that every subset of $A$ is actually open in $A$. Now let us consider the open sets of $(A,d_1)$. As
+	First let us consider the open sets of $(A,d_2)$. As $d_2$ is a discrete metric, any singleton subset of $A$ is an open ball. That is because for any $x \in A$, $B(x,1)=\{x\}$. And using the fact that open balls are open and any arbitrary union of open sets are open, we can conclude that every subset of $A$ is actually open in $A$. Now let us consider the open sets of $(A,d_1)$. As $d_1$ is given as the usual metric of $\mathbb{R}$ and $A$ is a finite subset of such metric space, we know that every singleton subset of $A$ is closed in $A$. Thus using the fact that any finite intersection of closed sets are still closed, again we lead to the conclusion that every subset of $A$ is closed. Also using the fact that the complement of a closed set is open, we finally conclude that also in $(A,d_1)$ every subset of $A$ is also an open set. Thus we can say that $d_1$ and $d_2$ are equivalent. \\
 \end{proof}
 
+\begin{problem}
+	Let $A=\{ (x,y) \in \mathbb{R}^2 | x^2 + y^2 < 1 \}$ be a subspace of $\mathbb{R}^2$. Show that it is not a complete space by giving an example of a Cauchy sequence in $A$ that doesn't converge in $A$.\\
+\end{problem}
 
+\begin{proof}
+	Consider a sequence $\{ x _n \}_{n=1}^\infty$ where we define $x_n = (1-\frac{1}{n},0)$. As $x_n \to (1,0)$ it doesn't converge in $A$. Also $x_n$ is a Cauchy sequence as there exists $\epsilon>0$ and $N>0$ such that $d(x_n,x_m)=\left| \frac{1}{n} - \frac{1}{m} \right|$ for every $n,m \geq N$. Thus as there exists such $x_n$ is a Cauchy sequence in $A$ that doesn't converge in $A$, we can conclude that $A$ is not complete.  \\
+\end{proof}
 
 \end{document}
