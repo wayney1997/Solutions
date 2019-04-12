@@ -8,6 +8,9 @@
 \usepackage{amssymb}
 \usepackage{changepage}
 \usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usetikzlibrary{positioning}
 \usepackage{sectsty} 
 \sectionfont{\centering \normalfont \scshape}
 \subsectionfont{\normalfont}
@@ -283,7 +286,35 @@ $ $ \newline
 		For every finite groups with order 3 are also all isomorphic.
 		\item  $|G|=4$ 
 		\vskip .5ex
-		Now we can't say that every finite groups with order 4 are isomorphic, as there exists two different kind of group tables. We will elaborate later but one of them are isomorphic to $\mathbb{Z}_4$ and the other one is to $V \simeq \mathbb{Z}_2 \times \mathbb{Z}_2$ also known as the Vierergruppe.
+		Now we can't say that every finite groups with order 4 are isomorphic, as there exists two different kind of group tables. We will elaborate later but one of them are isomorphic to $\mathbb{Z}_4$ and the other one is to $V \simeq \mathbb{Z}_2 \times \mathbb{Z}_2$ also known as the Vierergruppe, or the Klein 4 group. \\
+		\begin{table}[!htb]
+		%	\caption{Global caption}
+			\begin{minipage}{.5\linewidth}
+				%\caption{}
+				\centering
+					\begin{tabular}{|c|c|c|c|c|}
+					\hline
+					$\ast$ & $e$ & $a$ & $b$ & $c$ \\ \hline
+					$e$    & $e$ & $a$ & $b$ & $c$ \\ \hline
+					$a$    & $a$ & $b$ & $c$ & $e$ \\ \hline
+					$b$    & $b$ & $c$ & $e$ & $a$ \\ \hline
+					$c$    & $c$ & $e$ & $a$ & $b$ \\ \hline
+					\end{tabular}
+				\caption{$\Zn{4}$}
+			\end{minipage}%
+			\begin{minipage}{.5\linewidth}
+				\centering
+				\begin{tabular}{|c|c|c|c|c|}
+					\hline
+					$\ast$ & $e$ & $a$ & $b$ & $c$ \\ \hline
+					$e$    & $e$ & $a$ & $b$ & $c$ \\ \hline
+					$a$    & $a$ & $e$ & $c$ & $b$ \\ \hline
+					$b$    & $b$ & $c$ & $e$ & $a$ \\ \hline
+					$c$    & $c$ & $b$ & $a$ & $e$ \\ \hline
+				\end{tabular}
+				\caption{$V\simeq \Zn{2}\times\Zn{2}$}
+			\end{minipage} 
+		\end{table}
 	\end{enumerate}
 \end{example}
 
@@ -303,10 +334,49 @@ $ $ \newline
 \end{definition}
 
 \begin{example}
-	We can draw subgroup diagrams for some simple cases.
-	\begin{enumerate}
-		\item i hate tikz \\
-	\end{enumerate}
+	We can draw subgroup diagrams for some simple cases.\\
+	\begin{figure}[ht]
+		\centering
+		\begin{subfigure}[b]{0.16\textwidth}
+			\centering
+			\begin{tikzpicture}[node distance=1.25cm,line width=1pt]
+				\node(Z4) at (0,0)     {$\Zn{4}$};
+				\node(02)       [below of =Z4] {$\{0,2\}$};
+				\node(0)      [below of =02]  {$\{0\}$};
+				\draw(Z4) -- (02);
+				\draw(02) -- (0);
+			\end{tikzpicture}
+			\caption{$\Zn{4}$}
+		\end{subfigure}%
+		%\quad
+		\begin{subfigure}[b]{0.25\textwidth}
+			\centering
+			\begin{tikzpicture}[node distance=1.25cm,line width=1pt]
+				\node(V) at (0,0)     {$V$};
+				\node(eb)       [below of =V] {$\{e,b\}$};
+				\node(ea)       [left of =eb] {$\{e,a\}$};
+				\node(ec)       [right of =eb] {$\{e,c\}$};
+				\node(e)      [below of =eb]  {$\{e\}$};
+			 	\draw(V) -- (eb);
+			 	\draw(eb) -- (e);
+			 	\draw(V) -- (ea);
+			 	\draw(V) -- (ec);
+			 	\draw(ea) -- (e);
+			 	\draw(ec) -- (e);
+			\end{tikzpicture}
+			\caption{$V$}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.1\textwidth}
+			\centering
+			\begin{tikzpicture}[node distance=2.5cm,line width=1pt]
+				\node(Z3) at (0,0)     {$\Zn{3}$};
+				\node(0)      [below of =Z3]  {$\{0\}$};
+			 	\draw(Z3) -- (0);
+			\end{tikzpicture}
+				\caption{$\Zn{3}$}
+		\end{subfigure}
+		\caption{Subgroup diagrams for $\Zn{4}$, $V$, and $\Zn{3}$}
+	\end{figure}
 \end{example}
 
 \begin{definition}
@@ -541,13 +611,21 @@ We abused the notation of $gcd(n,m)$ without defining it, and even assuming that
 	Let $r,s \in \mathbb{Z}$.
 	\begin{enumerate}
 		\item $gcd(r,s) \mid r$ and $gcd(r,s) \mid s$.
-		\item If $d' \mid r$ and $d' \mid s$, then $d' \mid d$.
+		\item If $d' \mid r$ and $d' \mid s$, then $d' \mid gcd(r,s)$.
 		\item $gcd(r,s)=1$ and $r\mid sm \implies r \mid m$.\\
 	\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-	content...
+\nextline
+\begin{enumerate}
+	\item As $\cyc{gcd(r,s)}=\{nr+ms : n,m\in \mathbb{Z} \} , \implies gcd(r,s) \mid nr+ms$. Let $n=0 , m=1$ then $gcd(r,s) \mid nr+ms \implies gcd(r,s) \mid s$. Also if we let $n=1, m=0$ then $gcd(r,s) \mid nr+ms \implies gcd(r,s) \mid r$.
+	\item $gcd(r,s)=nr+ms$ for some $n,m \in \mathbb{Z}$. As $d' \mid r$ and $d' \mid s$, for such $n,m$, $d' \mid nr+ms =d$. Thus $d' \mid d$.
+	\item Since $gcd(r,s)=1 \implies \exists n_0 , m_0 \in \mathbb{Z}: n_0 r + m_0 s = gcd(r,s)=1$. Then $mn_0 r + mm_0 s =m$. Since $r \mid n_0 m r$ and $r \mid sm \implies r\mid m_0 sm$, we can see that $r \mid mn_0 r + mm_0 s = m$. Thus $r \mid m$.
+\end{enumerate}
 \end{proof}
 
+\begin{remark}
+	Since  $\cyc{gcd(r,s)}=\{nr+ms : n,m\in \mathbb{Z} \} $ the problem of finding the greatest common divisor can be viewed in a different perspective, of finding two integers. This can sometimes ease the computational complexity of using prime factorization for calculating greatest common divisors, as finding prime itself is also a quite not so easy problem.
+\end{remark}
 \end{document}
