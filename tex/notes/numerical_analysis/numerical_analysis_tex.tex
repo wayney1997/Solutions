@@ -12,6 +12,8 @@
 \usepackage{xspace}
 \newcommand{\MATLAB}{\textsc{Matlab}\xspace}
 \usepackage{sectsty} 
+\usepackage{graphicx} 
+
 \sectionfont{\centering \normalfont \scshape}
 \subsectionfont{\normalfont}
 \subsubsectionfont{\normalfont}
@@ -37,24 +39,22 @@
 	\mkern 1.5mu \overline{\mkern-1.5mu\raisebox{0pt}[\dimexpr\height+0.5mm\relax]{$#1$}\mkern-1.5mu}\mkern 1.5mu
 }
 
+%------------------------------
 \title{	
 	\normalfont \normalsize 
-	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
+	\textsc{Konkuk University Dept. of Physics} \\ [25pt] %Konkuk University Dept. of Physics
 	\horrule{1pt} \\[0.4cm] 
 	\huge Numerical Analysis \\
 	\vspace{0.1in}
 	\Large 2019 Spring Semester
 	\horrule{1pt} \\[0.4cm] 
 }
-
 \author{Youngwan Kim} 
 \date{\normalsize\today} 
+%------------------------------
 
 \newtheorem{theorem}{Thm}
-\newtheorem{definition}{Def}
-%\newtheorem{examples}{Examples}
-\newtheorem{example}{Ex}
-\newtheorem{lemma}{Lem}
+\newtheorem{claim}{Claim}
 \newtheorem*{remark}{Remark}
 \newtheorem*{recall}{Recall}
 
@@ -97,8 +97,8 @@
 \vspace{0.25in}
 
 \section{Root Finding Methods}
-\vspace{0.15in}
-For some kind of real problems, it can be reduced into a problem of finding zeros of a certain function, and such problem can be considered as the very basic of numerical analysis. We introduce some root finding algorithms and apply it for finding solutions of a single variable equation, and if it is available we will also extend it for solving simultaneous equations. \\ 
+\vspace{0.25in}
+Finding roots for a given function in various situation can be considered as the very essential problem of numerical analysis. We introduce some root finding algorithms and apply it for finding solutions of a single variable equation, and if it is available we will also extend it for solving simultaneous equations. \\ 
 
 \subsection{Bisection Method}
 \vspace{0.15in}
@@ -236,7 +236,9 @@ note that the LHS is the $x_1$ term of the Newton method so we can again simplif
 
 which implies that the error $e_i=|r-x_i|$ will keep decrease, but in a quadratic sense as $e_1 \leq M {e_0}^2$. So for $\forall n \in \mathbb{N}$, we can say that $|x_{n+1}-r|\leq|x_n - r|^2$. This shows us that the Newton method converges quadratically, but as we stated before it has high dependence on the initial value which implies that this method isn't very stable.  \\
 
-As we keep mention it let us see how the slight difference in initial values can result in a very unexpected variance to the convergence, and how out of grasp this is for us. \\
+As we keep mention it let us see how the slight differences in initial values can result in a very unexpected variance to the convergence, and how out of grasp this kind of problem is for us. The following \MATLAB code \texttt{newton\_fractal.m} plots a Newton fractal for $f(x)=x^3-2x-5$. \\
+
+To elaborate how this \texttt{newton\_fractal.m} works, it first starts by generating a $n \times n$ matrix, which can be thought as a lattice included in $\mathbb{C}$, the region where we want to plot the Newton fractal. In this case we assigned $n=250$, and the region to be $I\subset \mathbb{C}$ where $I=\{z\in\mathbb{C} : \Re(z)\in(-1.5,2.5) , \Im(z) \in (-1.5,1.5) \}$ which is specified in line \texttt{9}. Then for the main routine, each elements of the matrix will go through a Newton method routine and save a value differed by the value of the most adjacent root among the three known roots with the tolerance given $\epsilon \sim \mathcal{O}(10^{-6})$. Then after all the routines, we will obtain a $n \times n$ matrix filled with the values of $0,1,2$ and $3$. Note that not all values get assigned with $1,2,3$. We then use internal functions to plot the given matrix, which will be an approximate version -\textit{ low resolution version, I would say }- of the real Newton fractal structure. \\
 
 \begin{lstlisting}[label=test.m,caption=newton\_fractal.m]
 f=inline('x.^3-2*x-5');
@@ -245,6 +247,7 @@ df=inline('3*x^2-2');
 xt(1)= 2.094551481542327;   
 xt(2)=-1.047275740771163 + 1.135939889088928i;
 xt(3)=-1.047275740771163 - 1.135939889088928i;
+% three complex roots for f(x)
 
 n=250; rx=linspace(-1.5,2.5,n); ix=linspace(-1.5,1.5,n);
 
@@ -269,9 +272,25 @@ figure; imagesc(z)
 colormap([0 0 0; 1 0 0; 0 1 0; 0 0 1]) 
 % each colors : black , R , G , B
 \end{lstlisting}
-\vspace{0.15in}
+\vspace{0.1in}
 
+This code certainly has some heavy calculational complexity, approximately $\mathcal{O}(n^2)$ for the input value $n$, the wanted resolution of the Newton fractal plot. \\
 
+\begin{figure}[htb]
+\centering
+\begin{subfigure}{0.25\textwidth}
+	\includegraphics[width=\linewidth]{fractal_50}
+	\caption{$n=50$}
+\end{subfigure}\hfil % <-- added
+\begin{subfigure}{0.25\textwidth}
+	\includegraphics[width=\linewidth]{fractal_100}
+	\caption{$n=100$}
+\end{subfigure}\hfil % <-- added
+\begin{subfigure}{0.25\textwidth}
+	\includegraphics[width=\linewidth]{fractal_500_25}
+	\caption{$n=500$}
+\end{subfigure}
+\end{figure}
 
 \subsubsection{Two Variable Equations}
 \vspace{0.15in}
@@ -307,7 +326,7 @@ We can extend this method to two variable problems. Let $f_1(x,y)$ and $f_2(x,y)
 	\item END \\
 \end{enumerate} 
 
-The equation is again derived by using linear approximations of $f_1$ and $f_2$. We'll let those approximated functions near $p_0$ as 
+The equation is again derived by using linear approximations of $f_1$ and $f_2$. We'll let those approximated functions near $p_0$ as \\
 
 \begin{equation}\nonumber
 	\begin{cases}
@@ -316,7 +335,7 @@ The equation is again derived by using linear approximations of $f_1$ and $f_2$.
 	\end{cases}
 \end{equation}\\
 
-This approximation is available as $f_i(p_0)=l_i(p_0)$ and $\nabla f_i(p_0) = \nabla l_i (p_0)$ for all $i=1,2$. Thus we can reduce the problem of getting $(x,y) : f_1(x,y)=f_2(x,y)=0$ to a rather less complicated computation of finding $(x,y) : l_1(x,y) = l_2(x,y)=0$. The following \MATLAB code is an example where $f_1 = 2x^3 + y^3 +xy -6$ and $f_2 = x^3 - y^3 +xy -4$.\\
+This approximation is available as $f_i(p_0)=l_i(p_0)$ and $\nabla f_i(p_0) = \nabla l_i (p_0)$ for all $i=1,2$. Thus we can reduce the problem of getting $(x,y) : f_1(x,y)=f_2(x,y)=0$ to a rather less complicated computation of finding $(x,y) : l_1(x,y) = l_2(x,y)=0$ between two linear functions.The following \MATLAB code is an example of applying the above method letting $f_1 = 2x^3 + y^3 +xy -6$ and $f_2 = x^3 - y^3 +xy -4$.\\
 
 \begin{lstlisting}[label=test.m,caption=newton2d.m]
 function newton2d=newton2d(n)
@@ -346,17 +365,303 @@ fval = 1.77635683940025e-15   0.00000000000000e+00
 
 \end{verbatim}
 
-\vspace{0.25in}
+\subsubsection{Single Variable Equations : Roots with Multiplicity}
+\vspace{0.15in}
+
+Not every case the Newton method acts fast, even if its convergence is guranteed. If a certain root has multiplicity, i.e $f(r)=f'(r)= \dots = f^{(m)}(r)=0$ the convergence is slower than when it has no multiplicity. So we tweak our Newton method for roots with multiplicity : when we know the exact multiplicity of a certain root, or else when we actually have no info about the multiplicity but only know that it is not a single root.\\
+
+First let us start with the case where the multiplicity is unknown. We denote the multiplicity $m \geq 2$ of $r:f(r)=0$. Then, for some $g(x)$ such that $g(r)\neq 0$, \\
+
+\begin{equation}\nonumber
+	\begin{split}
+	f(x) &= (x-r)^m g(x) \\[2.5ex]
+	\implies \frac{f(x)}{f'(x)} &= \frac{(x-r)^m g(x)}{m (x-r)^{m-1} g(x) + (x-r)^m g'(x)} \\[2.5ex]
+	&= (x-r) \left( \frac{g(x)}{mg(x)+(x-r)g'(x)} \right) \\
+	\end{split}
+\end{equation}\\
+
+then this $f/f'$ has a simple root in $x=r$, which makes us available to apply Newton method. Then if we let $\{x_n\}$ be the Newton sequence of $f/f'$,\\
+
+\begin{equation}\nonumber
+	\begin{split}
+	x_{n+1}&=x_n - \left( \frac{f(x_n)}{f'(x_n)} \right) \Big/ \left( \frac{f(x_n)}{f'(x_n)}  \right)' \\[2.5ex]
+	& = x_n - \left( \frac{f}{f'} \right) \Big/ \left( \frac{f'f' - f f''}{f'^2}  \right) \\[2.5ex]
+	&= x_n - \left( \frac{ff'}{f'^2 - ff''} \right)
+	\end{split}
+\end{equation}\\
+
+would be the modified version for roots with unknown multiplicity. The Newton sequence has a second derivative, which isn't a very delightful situation as it brings us some calculational disadvantage. \\
+
+Now we will consider the cases where the multiplicity is known, again we will let the multiplicity $m$, i.e, $f(r)=f'(r)= \cdots = f^{(m)}(r)=0$. This condition implies that $f^{(m-1)}(x)$ has $x=r$ as a single root. Then we will use the unmodified Newton method to $f^{(m-1)}(x)$. In this process, we use a useful approximation presented by Ralston \& Rabinowitz (1978), \\
+
+\begin{equation}\nonumber
+	\frac{f^{(m-1)}(x)}{f^{(m)}(x)} \simeq m \cdot \frac{f(x)}{f'(x)}
+\end{equation} \\
+
+As we claimed that we will apply Newton method to $f^{(m-1)}(x)$, let us consider the Newton sequence $\{x_n\}$ for it. Then, \\
+
+\begin{equation}\nonumber
+	\begin{split}
+	x_{n+1} &= x_n - \frac{f^{(m-1)}(x)}{f^{(m)}(x)} \\[2.5ex]
+	&\simeq x_n - m \frac{f(x)}{f'(x)} \qquad \text{[Ralston (1978)]}
+	\end{split}
+\end{equation}\\
+
+becomes the Newton sequence to iterate, and thanks to the approximation of Ralston \& Rabinowitz we derived a method with no high computational disadvantage. We will show that this approximation works, by showing it has quadratic convergence. \\
+
+First we can expand $f(x_n)$ around the root $x=r$, for $\exists \xi,\eta \in (r,x_n)$ :\\
+
+\begin{equation}\nonumber
+	\begin{split}
+		f(x_n) &= \sum^{m-1}_{n=0} \frac{f^{(n)}(r)}{n!}(x_n-r)^n + \frac{f^{(m)}(\xi)}{m!}(x_n - r)^m  \\[2.5ex]
+		&= \frac{f^{(m)}(\xi)}{m!}(x_n - r)^m \\[3.5ex]
+		f'(x_n) &= \sum^{m-1}_{n=1} \frac{f^{(n)}(r)}{(n-1)!}(x_n-r)^{n-1} + \frac{f^{(m)}(\eta)}{(m-1)!}(x_n - r)^{m-1} \\[2.5ex]
+		&= \frac{f^{(m)}(\eta)}{(m-1)!}(x_n - r)^{m-1} 
+	\end{split}
+\end{equation}\\
+
+where we used the multiplicity condition to reduce terms. This implies that \\
+
+\begin{equation}\nonumber
+	\exists \eta,\xi \in (r,x_n) \quad : \quad m \frac{f(x_n)}{f'(x_n)} = \frac{f^{(m)}(\xi)}{f^{(m)}(\eta)} (x_n - r)
+\end{equation}\\
+
+Now we use the approximation of Ralson (1978) : \\
+
+\begin{equation}\nonumber
+	\begin{split}
+	x_{n+1} = x_n - m \frac{f(x_n)}{f'(x_n)} &= x_n - \frac{f^{(m)}(\xi)}{f^{(m)}(\eta)} (x_n - r) \\[2.5ex]
+	x_{n+1} -r &= (x_n - r) - \frac{f^{(m)}(\xi)}{f^{(m)}(\eta)} (x_n - r) \\[2.5ex]
+	 &= (x_n - r)  \left[ 1- \frac{f^{(m)}(\xi)}{f^{(m)}(\eta)} \right] \\[2.5ex]
+	 &= (x_n - r)  \left[ \frac{ f^{(m)}(\eta)- f^{(m)}(\xi)  }{f^{(m)}(\eta)}\right] \\[2.5ex]
+	\exists \nu \in (r,x_n) \quad : \quad &\leq  (x_n - r) (\eta - \xi) \left[\frac{f^{(m+1)}(\nu)}{f^{(m)}(\eta)}\right]\\
+	\end{split}
+\end{equation}\\
+
+And as $\exists \xi, \eta \in (r,x_n) \implies |\xi - \eta|\leq |x_n -r|$, and there exists some $M>0$ such that \\
+
+\begin{equation}\nonumber
+	| x_{n+1}-r | \leq M |x_n - r| |\eta - \xi|  \implies | x_{n+1}-r | \leq M |x_n - r|^2
+\end{equation}\\
+
+which implies that the error for such sequence quadratically converges to 0.\\
+
+ Now we will use $f(x)=\sin^2(x)$ as an example which has multiplicity of 2 for its root $x=0$, and will apply all the three kinds of Newton method we introduced : the \textit{vanilla} Newton, the unknown multiplicity modification, and the Raston Newton method. We will compare the amount of time for each method to break the iteration with identical tolerance with $\epsilon\sim \mathcal{O}(10^{-15})$. We used the internal time function \texttt{tic} and \texttt{toc} of \MATLAB to measure how much time each methods used. Also for the initial value, we used the \texttt{rand} function, which outputs a random number in $(0,1)$. \\
+
+\begin{lstlisting}[caption='newton\_modifications.m']
+f=inline('sin(x)^2'); df=inline('sin(2*x)'); 
+ddf=inline('2*cos(2*x)'); % for unknown multiplicity
+
+x=rand;
+
+tic 
+for i=1:20 % Non-modified Newton
+ x = x - f(x)/df(x);
+ if(f(x) < 10^(-15)) break; end
+end 
+toc
+
+tic 
+for i=1:20 % Unknown multiplicity modification
+ x = x - f(x)*df(x)/(df(x)*df(x)-f(x)*ddf(x));
+ if(f(x) < 10^(-15)) break; end
+end 
+toc
+
+tic 
+for i=1:20 % Known multiplicity, Raston 1978 modification
+ x=x-2*f(x)/df(x); % known multiplicity = 2  
+ if(abs(df(x)) < 10^(-15)) break; end 
+end 
+
+\end{lstlisting}
+\vspace{0.15in}
+
+As we expected, the Raston-Newton method shows up to be the fastest method.
+
+\begin{verbatim}
+octave:1> format long
+octave:2> newton_modifications
+Elapsed time is 0.001894 seconds.
+Elapsed time is 0.000106096 seconds.
+Elapsed time is 5.00679e-05 seconds.
+\end{verbatim}
+\vspace{0.15in}
 
 \subsection{Secant Method}
+\vspace{0.15in}
+The secant method is somehow a negotiation between the bisection and Newton method. It also uses linear approximation but not via the derivative concept. If the Newton method was using a single point to obtain the linear approximation of a certain function which can be thought of obtaining the instantaneous \textit{slope}, the secant method uses the fact that we can also approximate such instant derivative by substituting it with the slope of the secant line between necessarily adherent points. Thus it eases derivational burden for obtaining a linear approximation while getting a somehow reasonable accuracy, and at the same time gains stability better than the Newton method. \\
+
+Let a function $f(x):\mathbb{R}\to\mathbb{R}$ with two given points as an initial value, let it $(x_0,f(x_0))$ and $(x_1, f(x_1))$. Then we approximate $f$ to a linear function $l(x): deg(l)=1$ which satisfies $f(x_0)=l(x_0)$ and $f(x_1)=l(x_1)$ at the same time. Obtaining such $l(x)$ is a quite elementary problem, \\
+
+\begin{equation}\nonumber
+	l(x) = \frac{f(x_0)-f(x_1)}{x_0 - x_1}(x-x_0)+ f(x_0)
+\end{equation}\\
+
+and we can easily show that it suffices the conditions we stated above. Using the root of this $l(x)$ we implement such algorithm :
+
+\begin{enumerate}[label=\arabic*)]
+	\item Get initial points $x_0,x_1$
+	\item Let $i=0$ and iterate until $N$
+	\begin{enumerate}[label=(\arabic*)]
+		\item Get $x = x_0 - f(x_0)\frac{(x_0-x_1)}{f(x_0)-f(x_1)}$
+		\item \texttt{temp}$= x_1$
+		\item $x1=x$
+		\item $x_0=$\texttt{temp}
+		\item if $f(x)=0$ or $f(x) < \epsilon$ break loop;
+	\end{enumerate}
+	\item END
+\end{enumerate} 
+
+where we used a temporary variable \texttt{temp} to circulate the variables for the sequence to iterate through. The following \MATLAB code implemented the above algorithm where $f(x)=x^3-2x-5$ and the initial values are given as $x_0=0$ and $x_1=i$. \\
+
+\begin{lstlisting}[caption = secant.m]
+f=inline('x^3-2*x-5');
+
+x0=0; x1=i;
+
+for k=1:20
+  x = x1 - f(x1)*(x0-x1)/(f(x0)-f(x1));
+  temp=x1;
+  x1=x;
+  x0=temp;
+  if(abs(f(x))<10^(-15)) break; end
+  
+iter = k
+
+end
+
+\end{lstlisting}
+\vspace{0.15in}
+
+Here we used $\epsilon \sim 10^{-15}$ as the tolerance for this algorithm. The output shows us how much iterations lead us to errors with $\epsilon$ tolerance. 
+
+\begin{verbatim}
+octave:1> secant
+iter =  14
+x = -1.04727574077116 + 1.13593988908893i
+Elapsed time is 0.000838041 seconds.
+\end{verbatim}
+
+We can check that not even iterating until $k=20$, the loop broke at $k=14$. \\
+
+Now we will calculate how this method converges towards the root. To recall, the bisection method had linear convergence, and the Newton method had quadratic convergence. To tell the results first, the secant method has $(1+\sqrt{5})/2$ convergence. Let us check how. \\
+
+\begin{claim}
+	$|x_2 - r| \leq M |x_1 - r | |x_0 - r|$
+\end{claim}
+
+\begin{proof}
+	The secant method states that : \\
+	
+	\begin{equation}\nonumber
+		x_2 = x_1 - \frac{f(x_1)(x_1 - x_0)}{f(x_1)-f(x_0)}
+	\end{equation}\\
+	
+	which implies that \\
+	
+	\begin{equation}\nonumber
+	\begin{split}
+		x_2 - r &=  x_1 - \frac{f(x_1)(x_1 - x_0)}{f(x_1)-f(x_0)} -r \\[2.5ex]
+		&= \frac{x_0 f(x_1) - x_1 f(x_0)}{f(x_1)-f(x_0)} -r \\[2.5ex]
+		&= \frac{(x_0-r) f(x_1) - (x_1-r) f(x_0)}{f(x_1)-f(x_0)}  \\[2.5ex]
+		&= \left(\frac{\frac{f(x_1)}{x_1 - r} - \frac{f(x_0)}{x_0 - r}}{f(x_1)-f(x_0)}\right) (x_0 -r)(x_1 - r)\\[2.5ex]
+	\end{split}
+	\end{equation}\\
+	
+	Thus to prove the \textbf{Claim 1} is identical of showing that the coefficient in front of $(x_0 -r)(x_1 - r)$ is bounded. Let $g(t) = f(t)/(t-r)$. Then, \\
+	
+	\begin{equation}\nonumber
+		\begin{split}
+		x_2 -r &= \frac{g(x_1)-g(x_0)}{f(x_1)-f(x_0)} (x_1 - r) (x_0 -r) \\[2.5ex]
+		&= \frac{g'(\xi)}{f'(\xi)} (x_1 -r)(x_0 - r)
+		\end{split}
+	\end{equation}\\
+	
+	for some $\xi \in (x_0,x_1)$ due to Cauchy mean value theorem. We again use the Cauchy mean value theorem for $g'(\xi)$. By definition of $g(t)$ we explicitly get \\
+	
+	\begin{equation}\nonumber
+		g'(\xi) = \frac{f'(\xi)(\xi - r) - f(\xi)}{(\xi - r )^2} = \frac{g_2(\xi)}{g_1(\xi)}
+	\end{equation}\\
+	
+	where we let $g_2(\xi)= f'(\xi)(\xi - r) - f(\xi)$ and $g_1(\xi)=(\xi - r )^2$. For such $g_1,g_2$ we know that $g_1(r)=g_2(r)=0$ so we again apply Cauchy, for some $\zeta \in (\xi,r)$ \\
+	
+	\begin{equation}\nonumber
+		\begin{split}
+		g'(\xi) &= \frac{g_2(\xi)}{g_1(\xi)} = \frac{g_2(\xi) - g_2(r)}{g_1(\xi)- g_1(r)} = \frac{g_2'(\zeta)}{g_1'(\zeta)} \\[2.5ex]
+		&= \frac{f''(\zeta)(\zeta - r)}{2(\zeta - r)} = \frac{1}{2} f''(\zeta)
+		\end{split}
+	\end{equation}\\
+	
+	Thus, the coefficient is bounded as \\
+	
+	\begin{equation}\nonumber
+		\frac{g'(\xi)}{f'(\xi)} = \frac{f''(\zeta)}{2 f'(\xi)} \quad \text{ for } \quad ^\exists \xi \in (x_0,x_1)\text{ and } ^\exists\zeta \in (\xi,r) 
+	\end{equation}\\
+\end{proof}
+
+Following the above method we can conclude that for any $n \in \mathbb{N}$, $|x_{n+2} - r| \leq M |x_{n+1} - r | |x_n - r| \implies e_{n+2} \leq M e_{n+1} e_{n}$ for some $M>0$. We then claim that\\
+
+\begin{claim}
+	$e_{n+1} \leq M e_n^{\frac{1+\sqrt{5}}{2}}$, where $e_i = |x_i -r|$.
+\end{claim}
+
+\begin{proof}
+	Let $s=\max\{e_0,e_1\}$, which implies that $e_0 \leq s$ and also $e_1 \leq s$. Then using the relation $ e_{n+2} \leq  e_{n+1} e_{n}$ we can derive that $e_2 \leq s^2$. Doing this inductively, we get an inequality \\
+	
+	\begin{equation}\nonumber
+		e_n \leq s^{\lambda_n} \quad \text{ where } \quad \lambda_{n+1} = \lambda_n + \lambda_{n-1} \quad (\lambda_0 = 0 \text{ , } \lambda_1 = 1) 
+	\end{equation}\\
+	
+	with an exponential Fibonacci term. We know that we can express the general terms of $\lambda_n$ as \\
+	
+	\begin{equation}\nonumber
+		\lambda_n = c_1 \left(\frac{1+\sqrt{5}}{2}\right)^n + c_2 \left(\frac{1-\sqrt{5}}{2}\right)^n  
+	\end{equation}\\
+	
+	where we will denote $\frac{1+\sqrt{5}}{2}$ as $\alpha$ and the other one as $\beta$. Note that $\alpha + \beta = 1$ and $\alpha \beta = -1$. Then, \\
+	
+	\begin{equation}\nonumber
+		e_{n+1} \leq  e_{n-1} e_{n} =  e_{n-1} e_{n}^{\alpha + \beta} = (e_{n-1} e_n^\beta) e_n^\alpha
+	\end{equation}\\
+	
+	and we will show that $e_{n-1} e_n^\beta$ is bounded.\\
+	
+	\begin{equation} \nonumber
+		\begin{split}
+		 e_{n-1} e_n^\beta \leq s^{\lambda_{n-1}} s^{\beta \lambda_n} &= s^{c_1 \alpha^{n-1} + c_2 \beta^{n-1}} \cdot s^{\beta(c_1 \alpha^{n} + c_2 \beta^{n})}\\ 
+		 &= s^{c_2(\beta^{n-1}+\beta^{n+1})} = s^{c_2 \beta^n(\beta^{-1}+\beta)}
+		\end{split}
+	\end{equation}\\
+	
+	As $|\beta| < 1$ , the $\beta_n$ term goes to 0 when $n \to \infty$, which implies that $ e_{n-1} e_n^\beta$ is bounded for some $N>0$. Thus, \\
+	
+	\begin{equation}\nonumber
+		e_{n+1} \leq N e_n^\alpha = N e_n^{\frac{1+\sqrt{5}}{2}}
+	\end{equation}\\
+ \end{proof}
+
+As $\alpha \simeq 1.62$, we can conclude that this method has efficiency somewhere between Newton $(n=2)$ and bisection $(n=1)$. Let's compare the convergence of all of the methods we introduced.\\
+
+\begin{itemize}
+	\item Bisection : $e_{n+1} \leq M e_n^1$ 
+	\item Secant :  $e_{n+1} \leq M e_n^\frac{1+\sqrt{5}}{2} \simeq M e_n^{1.6} $ 
+	\item Newton : $e_{n+1} \leq M e_n^2$ \\
+\end{itemize}
+
+Also do not forget about how to modify Newton method with functions with roots that have multiplicity, as regarding the multiplicity and modifying the method would enhance computation speed.
 
 \vspace{0.25in}
+
 \section{The Floating Number System}
+\vspace{0.25in}
+
+Numerical analysis is useful not because we know there exists a convergent series towards some root or value we need to derive, but rather there exists high speed computational machines that makes us available to implement such numerical algorithms, and finally output the value we want with very little error. So it is important to understand how the machines percieve real numbers, and how they process and save them as binary data.
+
 \vspace{0.15in}
 
 \subsection{IEEE 754 Standard}
 \vspace{0.15in}
-Numerical analysis is useful not because we know there exists a convergent series towards some root or value we need to derive, but rather there exists high speed computational machines that makes us available to implement such numerical algorithms, and finally output the value we want with very little error. So it is important to understand how the machines percieve real numbers, and how they process and save them as binary data. 
 
 Most of the machine these days are 64-bit, so we will consider 64-bit real number representation, which means that for a real number we correspond an array of 64 binary numbers. The IEEE 754 standard for machine numbers is given as the following rule :\\
 
@@ -380,7 +685,7 @@ end
 \end{lstlisting} 
 \vspace{0.15in}
 
-It is a rather simple code to understand : add 0.1 ten times, and if it is 1 print a string. Of course $10 \times 0.1 = 1$ for us, but the following result says that it isn't so for machines.\\
+It is a rather simple code to understand : add 0.1 ten times, and if it is 1 print a string. Of course $10 \times 0.1 = 1$ for us, but the following result says that it isn't so for machines.
 
 \begin{verbatim}
 octave:1> ridicule
@@ -391,11 +696,6 @@ This is because the representation of $0.1$ for binary machines doesn't actually
 
 \begin{lstlisting}[label=printmem, caption=print\_memory.m]
 function [total64bits,sign,exponent,mantissa]=print_memory(x)
-
-%    [total64bits,sign,exponent,mantissa]=read_memory(x)
-%    for double precision number x, 
-%    gives IEEE binary representation 
-%    as string of 64 characters (each is 0 or 1)
 
 s = sprintf('%bx',x);
 s = reshape(dec2bin(hex2dec(s'),4)',1,4*16);
@@ -420,7 +720,7 @@ ans = 0011111110111001100110011001100110011001100110011001100110011010
 
 We can check that $a=0.1 + \dots + 0.1$ is not percieved as 1 for binary machines, but rather a slightly smaller value than 1.  \\
  
-Also another thing we need to consider is that we need to assign $\infty$ and $0$ for certain representations, or in other words we need to set certain boundaries for \textit{very small} and \textit{very big} numbers. We define the smallest number representation as \texttt{realmin} and the bigest number representation as \texttt{realmax}. To elaborate, we let $s=0$, $e=1$, and $b=0$ for \texttt{realmin} ,\\
+We also need to consider which representations will correspond to $\infty$ and $0$, or in other words we need to assign certain boundaries for \textit{very small} and \textit{very big} numbers. We define the smallest number representation as \texttt{realmin} and the bigest number representation as \texttt{realmax}. To elaborate, we let $s=0$, $e=1$, and $b=0$ for \texttt{realmin} ,\\
 
 \begin{equation}\nonumber
 	\texttt{realmin} = 2^{-1022} \cdot (1.0) \sim 0.22 \times 10^{-307}
@@ -432,8 +732,9 @@ and for representations between 0 and \texttt{realmin} we call it \textbf{underf
 	\texttt{realmax} = 2^{1023} \cdot (2 - 2^{-52}) \sim 0.17 \times 10^{309}
 \end{equation}\\
 
-and for representations between \texttt{realmax} and \texttt{inf} we call it \textbf{overflow} and let all of it represent as a breaking point value for programs. Again using \texttt{print\_memory.m}, we explicitly see the 64-bit representation for \texttt{realmax},\texttt{realmin},\texttt{inf}, and 0.\\
+and for representations between \texttt{realmax} and \texttt{inf} we call it \textbf{overflow} and let all of it represent as a breaking point value for programs. Again using \texttt{print\_memory.m}, we explicitly see the 64-bit representation for \texttt{realmax},\texttt{realmin},\texttt{inf}, and 0.
 
+\vspace{0.15in}
 \begin{verbatim}
 octave:1> print_memory(realmin)
 ans = 0000000000010000000000000000000000000000000000000000000000000000
@@ -444,9 +745,72 @@ ans = 0111111111101111111111111111111111111111111111111111111111111111
 octave:3> print_memory(inf)
 ans = 0111111111110000000000000000000000000000000000000000000000000000
 \end{verbatim}
+\vspace{0.15in}
 
-\subsubsection{Division Algorithm}
-yeet
+The \texttt{IEEE 754} Standard representation is very useful, for two main reasons. It has a very wide range of real numbers available to represent, and also has a very small amount of relative error. To see how small the relative error is, consider two floating numbers\\
+
+\begin{equation}\nonumber
+\begin{split}
+	\texttt{x1} &= (1.b_1b_2\dots b_{51} b_{52})_{(2)} \times 2^d  \\
+	\texttt{x2} &= (1.b_1b_2\dots b_{51} 0)_{(2)} \times 2^d
+\end{split}
+\end{equation}\\
+
+Then the relative error $\epsilon$ is, \\
+
+\begin{equation}\nonumber
+	\epsilon = \frac{(0.0\dots0b_{52})_{(2)} \cdot 2^d}{(1.b_1\dots b_{51}b_{52})_{(2)} \cdot 2^d} \leq 2^{-52}
+\end{equation}\\
+
+Thus the relative error has a magnitude of $2^{-52}$, which is really small. We can't make the full set of $\mathbb{R}$ to be percieved by machines which only speaks with 64 binary digits, but the double precision method is a way at least we can make them understand $\mathbb{R}$ as a set of numbers with very dense intervals between them, for a very large range.
+
+\vspace{0.15in}
+
+\subsection{Division Algorithm}
+\vspace{0.15in}
+
+For machines, understanding operations except addition and subtraction is quite a hard task to do. Subtraction and multiplication  between floating numbers can be implemented by modifying the addition method, and it is the best we can do. But think of multiplying a floating number by another one.  A process of getting an inverse of a certain floating number gets involved, which makes it very complicated. So the very problem of divising floating numbers eventually boils down to a problem of deriving inverses of $1\leq b <2$. \\
+
+We know one way to find an inverse $b^{-1}$ of some floating number $b$ \textit{numerically}, if we regard it as a root of the function $f(x)=b-1/x$. As we know how this function looks like, without considering the initial value dependent stability of the Newton method, we can implement a quadratically converging algorithm of deriving inverse numbers. Also the derivation of the function $f(x)$ can be pre-calculated before plugging it into the algorithm, which also eases a step of computational burden of calculating the derivative of $f$.\\
+
+Consider the Newton sequence $\{x_n\}$ for such $f(x)$, \\
+
+\begin{equation}\nonumber
+\begin{split}
+		x_{n+1} &= x_n - \frac{f(x_n)}{f'(x_n)} = x_n - \left( \frac{b- 1/x_n}{1/x_n^2}\right) \\[1.5ex]
+		&= x_n - (bx_n^2 -x_n) = 2x_n - bx_n^2
+\end{split}
+\end{equation}\\
+
+we will set the initial value $x_0=3/4$ as $1\leq b <2$ we can assert convergence in this region - as it holds bisection conditions, a root must be there. Letting such initial value we can derive that the initial error has its maximum around $1/4$, and as the error converges quadratically we can have certainty that the method will let us converge real close to the real value.
+
+\vspace{0.15in}
+\begin{lstlisting}[caption=division.m]
+function division=division(n) 
+b=sqrt(2); % 1 < sqrt(2) < 2
+x=3/4; err=0;
+
+for k=1:n
+ x=2*x-b*x*x ; % Newton sequence iteration
+end
+err=abs(x-1/b)
+\end{lstlisting}
+\vspace{0.15in}
+
+The above \MATLAB code is the implementation of the division algorithm we introduced. It fastly converges to the real value, and the following output shows it :
+
+\begin{verbatim}
+octave:1> format long
+octave:2> division(1)
+err =  0.00260191002141352
+octave:3> division(2)
+err =  9.57413496749382e-06
+octave:4> division(5)
+err = 0
+\end{verbatim}
+
+\vspace{0.15in}
+
 \section{Polynomials}
 
 \subsection{Polynomial Interpolation}
