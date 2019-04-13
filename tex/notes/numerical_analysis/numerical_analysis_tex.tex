@@ -9,6 +9,8 @@
 \usepackage{changepage}
 \usepackage{titlesec}
 \usepackage{subcaption}
+\usepackage{xspace}
+\newcommand{\MATLAB}{\textsc{Matlab}\xspace}
 \usepackage{sectsty} 
 \sectionfont{\centering \normalfont \scshape}
 \subsectionfont{\normalfont}
@@ -27,7 +29,7 @@
 \usepackage{enumitem}
 \newcommand{\subscript}[2]{$#1 _ #2$}
 
-
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}   
 \newcommand{\nextline}{$ $ \newline \vspace{-0.15in}}
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
 
@@ -64,6 +66,7 @@
 \usepackage{listings}
 \usepackage{inconsolata}
 \usepackage{xcolor}
+%\usepackage{courier}
 \usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
 \definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
 \definecolor{mylilas}{RGB}{170,55,241}
@@ -91,41 +94,359 @@
 	
 \maketitle	
 
+\vspace{0.25in}
+
 \section{Root Finding Methods}
+\vspace{0.15in}
+For some kind of real problems, it can be reduced into a problem of finding zeros of a certain function, and such problem can be considered as the very basic of numerical analysis. We introduce some root finding algorithms and apply it for finding solutions of a single variable equation, and if it is available we will also extend it for solving simultaneous equations. \\ 
 
 \subsection{Bisection Method}
+\vspace{0.15in}
+The first method we introduce as a root finding algorithm is the bisection method. For a smooth function $f:I\subset\mathbb{R}\to \mathbb{R}$ which we need to get its roots, an interval $[a,b]\subset I$ is given where $f(a)f(b)<0$ which states that there is a zero point $p\in [a,b] : f(p) =0$. For such initial value given, we then :
 
-look at this code
+\begin{enumerate}[label=\arabic*)]
+	\item Get $a,b$ and $N,\epsilon$.
+	\item Let $i=1$ and iterate until $i=N$
+	\begin{enumerate}[label=(\arabic*)]
+		\item Get $p=(a+b)/2$.
+		\item if $f(p)=0$ or $f(p)<\epsilon$: break loop, output $p$
+		\item if $f(p)f(a) >0$ : let $a=p$
+		\item if $f(p)f(a) <0$ : let $b=p$
+		\item $i=i+1$
+	\end{enumerate}
+	\item END \\
+\end{enumerate}
 
-\begin{lstlisting}[label=test.m,caption=test.m]
-%clear all
+The $\epsilon$ used here is the tolerance, the amount of error that we could tolerate. So unless the method fails to find a point which $f(p) < \epsilon$ even with $N$ iterations, the algorithm must stop at 2). The following \MATLAB code is an example depicting the application of bisection method where $f(x)=\cos(x)-x$ and the initial interval is given as $[0,\pi / 2]$.\\
 
-f=inline('exp(-x.^2)*2/sqrt(pi)');
-true=[erf(1) erf(1) erf(1)];
+\begin{lstlisting}[label=test.m,caption=bisec.m]
+function bisec=bisec(n)
 
-n=1000; 
-x=linspace(0,1,n+1);
-
-sum=[0 0 0];
+f=inline('cos(x)-x');
+a=0; b=pi/2;
 for k=1:n
-	a=x(k); b=x(k+1); m=(a+b)/2;
-	sum(1)=sum(1)+(b-a)*(f(a)+f(b))/2; %trapezoidal rule
-	sum(2)=sum(2)+(b-a)*f(m); %midpoint rule
-	sum(3)=sum(3)+(b-a)*(f(a)+4*f(m)+f(b))/6; %Simpson rule
+  c=(a+b)/2;
+   if(f(c)>0) a=c;  % we know that f(a)=f(0)>0 
+   else b=c;
+   end
 end
 
-err=abs(sum-true)
-err_r=[1 err(2)/err(1) err(3)/err(1)]
+fval=f(c)
 \end{lstlisting}
+\vspace{0.15in}
 
-yes this is a code
+The code gets the iterating numbers as the only input and outputs the final value of $f(p)$, which is actually the error $|f(p)-0|$, without the sign. Also for the given function as we know the sign of $f(0)$, we slightly modified the comparing condition. The following output of $n=10,$ $50$ $,100$ shows that this method converges well if the inital value is given right.
+
+\begin{verbatim}
+octave:1> format long
+octave:2> bisec(10)
+fval = 0.00207533648652292
+octave:3> bisec(50)
+fval = 3.33066907387547e-16
+octave:4> bisec(100)
+fval = 0
+\end{verbatim}
+
+%Let us consider the convergence of the bisection method.
 
 \subsection{Newton Method}
+\vspace{0.15in}
+\subsubsection{Single Value Equation : No Multiplicity}
+\vspace{0.15in}
+The previous bisection method was rather simple as an algorithm as it just used evaluation and comparision. The Newton method we introduce at this section uses the fact that \textbf{any function can be approximated linearly near any point}, which is the idea of differentiation, to find roots numerically. We can't assert the convergence of this method, compared to the bisection method which always converges to the root when right initial values were given, but when it converges it shows up to be a very efficient method, which means that it fastly converges to its root. Also this method requires differentiation of the given function, which is quite a computational burden, but we'll talk about it later. The algorithm goes like this :
+\vspace{0.15in}
+
+\begin{enumerate}[label=\arabic*)]
+	\item Choose the initial point $x_0$.
+	\item Let $i=1$ and iterate until $i=N$
+	\begin{enumerate}[label=(\arabic*)]
+		\item $x=x_0 - f(x_0)/f'(x_0)$
+		\item if $|x-x_0|<\epsilon$ break loop ;
+		\item let $x_0=x$
+	\end{enumerate}
+	\item  END\\
+\end{enumerate}
+
+The term $x_0 - f(x_0)/f'(x_0)$ is the gist of this method, which is derived from the linear approximation of $f(x)$ near $x_0$. For points near $x_0$,
+
+\begin{equation}\nonumber
+	\begin{split}
+		f(x) &= f(x_0) + f'(x_0)(x-x_0)+ \frac{f''(\xi)}{2!}(x-x_0)^2 \\
+		&\simeq f(x_0) + f'(x_0)(x-x_0)
+	\end{split}
+\end{equation}\\
+
+where we ignored $\mathcal{O}((x-x_0)^2)$ terms and solving this for $x$ where $f(x)=0$ gives us 
+\vspace{0.15in}
+\begin{equation}\nonumber
+x\simeq x_0 - \frac{f(x_0)}{f'(x_0)}
+\end{equation}
+\vspace{0.15in}
+
+So we might question that \textit{" If this is method that great why don't we just find 'good' initial values that would eventually converge? "} for the non guranteed convergence that differs by the initial value of this method, but actually that question itself is also a very \textit{chaotic} problem. For instance we can extend this method for analytic functions $f:\mathbb{C}\to\mathbb{C}$, and the convergence of each points result in a fractal, where we call such fractal a \textbf{Newton fractal}. Nothing is strange about extending the method to complex functions, as \textbf{linear approximation is the main idea of the method}. This idea will be used again and again for many other cases, with multiple variables and so on.\\
+
+The following \MATLAB code implements the Newton method to $f(x)=x^3 - 2ix -5 $ which is a complex function, $ f: \mathbb{C} \to \mathbb{C}$. We used $x_0=i$ as the initial value, and the single input to see how fast it converges.\\
+
+\begin{lstlisting}[label=test.m,caption=newton1d.m]
+function newton1d=newton1d(n)
+
+f=inline('x.^3-2*i*x-5');
+df=inline('3*x^2-2*i');
+
+x=i;
+
+for k=1:n
+x1=x-f(x)/df(x);
+x=x1;
+end
+
+fval=f(x)
+\end{lstlisting}
+\vspace{0.15in}
+
+And the below is the outputs for quite low number of iterations, starting from absolutely no iteration $n=1$ to nearly 10 iterations. Note that the needed steps to approximately get to the point where $f(x) \sim 10^{-16}$ decreased remarkably compared to the case of bisection method which nearly needed 50 iterations.
+
+\begin{verbatim}
+octave:1> format long
+octave:2> newton1d(1)
+fval =  0.700955848884844 + 2.471552116522530i
+octave:3> newton1d(5)
+fval = -5.14255305006373e-12 - 9.24993415196695e-12i
+octave:4> newton1d(10)
+fval =  0.00000000000000e+00 + 2.22044604925031e-16i
+\end{verbatim}
+
+Now let us see how fast this method converges. We haven't explicitly shown it but the bisection method converged linearly, and now we will show that the Newton method converges quadratically. As we assumed no multiplicity of the root we will converge to, we can assume that $f(r)=0$ and $f'(r)=0$. Then for $f(r)$, we can expand it near the initial point $x_0$ as \\
+
+\begin{equation}\nonumber
+	0=f(r) \simeq f(x_0) + f'(x_0)(r-x_0) + \frac{f''(\xi)}{2!} (r-x_0)^2 \quad \text{where} \quad \exists\xi\in(r,x_0)
+\end{equation}\\
+
+and simplifying some terms, we derive :\\
+
+\begin{equation}\nonumber
+	x_0 - \frac{f(x_0)}{f'(x_0)} = r + \frac{f''(\xi)}{2f'(x_0)} (r-x_0)^2
+\end{equation} \\
+
+note that the LHS is the $x_1$ term of the Newton method so we can again simplify : \\
+
+\begin{equation}\nonumber
+		| x_1 - r | = \Bigg| \frac{f''(\xi)}{2f'(x_0)} \Bigg|  (r-x_0)^2 \leq M (r-x_0)^2
+\end{equation}\\
+
+which implies that the error $e_i=|r-x_i|$ will keep decrease, but in a quadratic sense as $e_1 \leq M {e_0}^2$. So for $\forall n \in \mathbb{N}$, we can say that $|x_{n+1}-r|\leq|x_n - r|^2$. This shows us that the Newton method converges quadratically, but as we stated before it has high dependence on the initial value which implies that this method isn't very stable.  \\
+
+As we keep mention it let us see how the slight difference in initial values can result in a very unexpected variance to the convergence, and how out of grasp this is for us. \\
+
+\begin{lstlisting}[label=test.m,caption=newton\_fractal.m]
+f=inline('x.^3-2*x-5');
+df=inline('3*x^2-2');
+
+xt(1)= 2.094551481542327;   
+xt(2)=-1.047275740771163 + 1.135939889088928i;
+xt(3)=-1.047275740771163 - 1.135939889088928i;
+
+n=250; rx=linspace(-1.5,2.5,n); ix=linspace(-1.5,1.5,n);
+
+z=zeros(n,n);
+
+for m=1:n
+ for j=1:n
+  x=rx(m)+ix(j)*i;
+   for k=1:25
+    x=x-f(x)/df(x);
+   end
+
+  if(abs(x-xt(1))<10^(-6)) z(m,j)=1;
+  elseif(abs(x-xt(2))<10^(-6)) z(m,j)=2;
+  elseif(abs(x-xt(3))<10^(-6)) z(m,j)=3;
+  end
+ end
+end
+
+z=rot90(z);
+figure; imagesc(z)
+colormap([0 0 0; 1 0 0; 0 1 0; 0 0 1]) 
+% each colors : black , R , G , B
+\end{lstlisting}
+\vspace{0.15in}
+
+
+
+\subsubsection{Two Variable Equations}
+\vspace{0.15in}
+
+We can extend this method to two variable problems. Let $f_1(x,y)$ and $f_2(x,y)$ be two variabled functions. We want to obtain $(x,y)$ such that $f_1(x,y)=0$ and $f_2(x,y)=0$ at the same time. Using the linear approximating idea of Newton method, we can design an algorithm as following :\\
+
+\begin{enumerate}[label=\arabic*)]
+	\item Get initial point $p_0=(x_0,y_0)$
+	\item Let $i=1$ and iterate until given $N$ :
+	\begin{enumerate}[label=(\arabic*)]
+		\item The following equation \\
+		\begin{equation}\nonumber
+			p =
+			\begin{pmatrix}
+			 x \\ y
+			\end{pmatrix}
+			= 
+			\begin{pmatrix}
+			x_0 \\ y_0
+			\end{pmatrix}
+			-
+			\begin{pmatrix}
+			\partial_x f_1 & \partial_x f_2\\
+			\partial_y f_1 & \partial_y f_2 
+			\end{pmatrix}^{-1}_{p_0}
+			\begin{pmatrix}
+			f_1 \\ f_2
+			\end{pmatrix}_{p_0}
+		\end{equation}
+		\item let $p_0=p$
+		\item if $f_1(p) < \epsilon$ and $f_2(p) < \epsilon$ break loop;
+	\end{enumerate}
+	\item END \\
+\end{enumerate} 
+
+The equation is again derived by using linear approximations of $f_1$ and $f_2$. We'll let those approximated functions near $p_0$ as 
+
+\begin{equation}\nonumber
+	\begin{cases}
+	l_1 &= \partial_x f_1(p_0) (x-x_0)+ \partial_y f_1(p_0) (y-y_0) + f_1(p_0)\\
+	l_2 &= \partial_x f_2(p_0) (x-x_0)+ \partial_y f_2(p_0) (y-y_0) + f_2(p_0) \\
+	\end{cases}
+\end{equation}\\
+
+This approximation is available as $f_i(p_0)=l_i(p_0)$ and $\nabla f_i(p_0) = \nabla l_i (p_0)$ for all $i=1,2$. Thus we can reduce the problem of getting $(x,y) : f_1(x,y)=f_2(x,y)=0$ to a rather less complicated computation of finding $(x,y) : l_1(x,y) = l_2(x,y)=0$. The following \MATLAB code is an example where $f_1 = 2x^3 + y^3 +xy -6$ and $f_2 = x^3 - y^3 +xy -4$.\\
+
+\begin{lstlisting}[label=test.m,caption=newton2d.m]
+function newton2d=newton2d(n)
+
+f=inline('[2*x^3+y^3+x*y-6; x^3-y^3+x*y-4]');
+df=inline('[6*x^2+y 3*y^2+x; 3*x^2+y -3*y^2+x]');
+x=[1 2]';
+
+for k=1:n
+ x=x-inv(df(x(1),x(2)))*f(x(1),x(2));
+end
+
+fval=f(x(1),x(2))'
+\end{lstlisting}
+\vspace{0.15in}
+
+Again this gets a single input of amount of iteration, and outputs the final value after such number of iterations. The following is a set of outputs with $10$, $25$, and $50$ iterations.
+
+\begin{verbatim}
+octave:1> format long
+octave:2> newton2d(10)
+fval = 1.62917432964171e-03   5.71500960422355e-06
+octave:3> newton2d(25)
+fval = 8.88178419700125e-16   8.88178419700125e-16
+octave:4> newton2d(50)
+fval = 1.77635683940025e-15   0.00000000000000e+00
+
+\end{verbatim}
+
+\vspace{0.25in}
 
 \subsection{Secant Method}
 
+\vspace{0.25in}
 \section{The Floating Number System}
+\vspace{0.15in}
 
+\subsection{IEEE 754 Standard}
+\vspace{0.15in}
+Numerical analysis is useful not because we know there exists a convergent series towards some root or value we need to derive, but rather there exists high speed computational machines that makes us available to implement such numerical algorithms, and finally output the value we want with very little error. So it is important to understand how the machines percieve real numbers, and how they process and save them as binary data. 
+
+Most of the machine these days are 64-bit, so we will consider 64-bit real number representation, which means that for a real number we correspond an array of 64 binary numbers. The IEEE 754 standard for machine numbers is given as the following rule :\\
+
+\begin{equation}\nonumber
+	\underbar{$s$} \text{ } \underbar{$e_1 e_2 \cdots e_{11} $} \text{ }  \underbar{$b_1 b_2 \cdots b_{52} $}  = (-1)^{s} \cdot (1.b_1 b_2 \dots b_{52})_{(2)} \cdot 2^{(e_1 \cdots e_{11})_{(2)}-1023}
+\end{equation} \\
+
+where the first $s$ is the \textbf{sign indictor}, the following 11 digits are called the \textbf{characteristic} which denotes the exponent term, and the last 52 digits are called the \textbf{mantissa} which denotes the fractional term. 
+
+This shows how different binary machines percieve real numbers compared to humans. The following \MATLAB code is a very good example showing such discrepancy.\\
+
+\begin{lstlisting}[label=ridicule.m,caption=ridicule.m]
+a=0;
+
+for i=1:10
+ a=a+0.1  
+end
+
+if (a==1) display('ok')
+end
+\end{lstlisting} 
+\vspace{0.15in}
+
+It is a rather simple code to understand : add 0.1 ten times, and if it is 1 print a string. Of course $10 \times 0.1 = 1$ for us, but the following result says that it isn't so for machines.\\
+
+\begin{verbatim}
+octave:1> ridicule
+octave:2> 
+\end{verbatim} 
+
+This is because the representation of $0.1$ for binary machines doesn't actually represent the real number $0.1$. The following \MATLAB code is implemented to show the 64-bit representation of the input value.\\
+
+\begin{lstlisting}[label=printmem, caption=print\_memory.m]
+function [total64bits,sign,exponent,mantissa]=print_memory(x)
+
+%    [total64bits,sign,exponent,mantissa]=read_memory(x)
+%    for double precision number x, 
+%    gives IEEE binary representation 
+%    as string of 64 characters (each is 0 or 1)
+
+s = sprintf('%bx',x);
+s = reshape(dec2bin(hex2dec(s'),4)',1,4*16);
+
+total64bits=s;
+sign=s(1:1);
+exponent=s(2:12);
+mantissa=s(13:end);
+\end{lstlisting}
+\vspace{0.15in}
+
+Now using the above code let us speculate what happened in the perspective of the machine.
+
+\begin{verbatim}
+octave:1> print_memory(a)
+ans = 0011111111101111111111111111111111111111111111111111111111111111
+octave:2> print_memory(1)
+ans = 0011111111110000000000000000000000000000000000000000000000000000
+octave:3> print_memory(0.1)
+ans = 0011111110111001100110011001100110011001100110011001100110011010
+\end{verbatim}
+
+We can check that $a=0.1 + \dots + 0.1$ is not percieved as 1 for binary machines, but rather a slightly smaller value than 1.  \\
+ 
+Also another thing we need to consider is that we need to assign $\infty$ and $0$ for certain representations, or in other words we need to set certain boundaries for \textit{very small} and \textit{very big} numbers. We define the smallest number representation as \texttt{realmin} and the bigest number representation as \texttt{realmax}. To elaborate, we let $s=0$, $e=1$, and $b=0$ for \texttt{realmin} ,\\
+
+\begin{equation}\nonumber
+	\texttt{realmin} = 2^{-1022} \cdot (1.0) \sim 0.22 \times 10^{-307}
+\end{equation}\\
+
+and for representations between 0 and \texttt{realmin} we call it \textbf{underflow} and let all of it represent $0 \in \mathbb{R}$. For \texttt{realmax} we let $s=0$, $e=2046$, and $b=1-2^{-52}$,\\
+
+\begin{equation}\nonumber
+	\texttt{realmax} = 2^{1023} \cdot (2 - 2^{-52}) \sim 0.17 \times 10^{309}
+\end{equation}\\
+
+and for representations between \texttt{realmax} and \texttt{inf} we call it \textbf{overflow} and let all of it represent as a breaking point value for programs. Again using \texttt{print\_memory.m}, we explicitly see the 64-bit representation for \texttt{realmax},\texttt{realmin},\texttt{inf}, and 0.\\
+
+\begin{verbatim}
+octave:1> print_memory(realmin)
+ans = 0000000000010000000000000000000000000000000000000000000000000000
+octave:2> print_memory(0)
+ans = 0000000000000000000000000000000000000000000000000000000000000000
+octave:3> print_memory(realmax)
+ans = 0111111111101111111111111111111111111111111111111111111111111111
+octave:3> print_memory(inf)
+ans = 0111111111110000000000000000000000000000000000000000000000000000
+\end{verbatim}
+
+\subsubsection{Division Algorithm}
+yeet
 \section{Polynomials}
 
 \subsection{Polynomial Interpolation}
