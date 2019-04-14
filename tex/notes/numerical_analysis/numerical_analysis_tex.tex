@@ -52,7 +52,7 @@
 \author{Youngwan Kim} 
 \date{\normalsize\today} 
 %------------------------------
-
+\newtheorem{example}{Ex}
 \newtheorem{theorem}{Thm}
 \newtheorem{claim}{Claim}
 \newtheorem*{remark}{Remark}
@@ -89,6 +89,7 @@
 	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
 %	%emph=[2]{word1,word2}, emphstyle=[2]{style},   
 }
+
 %---------------------------------
 \begin{document}
 	
@@ -812,9 +813,236 @@ err = 0
 \vspace{0.15in}
 
 \section{Polynomials}
+\vspace{0.25in}
 
+The main goal of this section is to \textit{interpolate} polynomials, which is to construct new data from discrete given values. If we have $n$ points to interpolate, the result would be a $deg(p) < n$ polynomial $p$. For instance, consider a following situation where we need to construct a polynomial $p$ from a given data, let it $(x_i,p(x_i))$ for $i=1,2,3,4$. The simplest way to perform this is to let \\
+
+\begin{equation}\nonumber
+	p(x) = ax^3 + bx^2 + c^x + d 
+\end{equation}\\
+
+and get the coefficients by solving \\
+
+\begin{equation}\nonumber
+	\begin{pmatrix}
+	x_1^3 & x_1^2 & x_1^1 & x_1^0 \\
+	x_2^3 & x_2^2 & x_2^1 & x_2^0 \\
+	x_3^3 & x_3^2 & x_3^1 & x_3^0 \\
+	x_4^3 & x_4^2 & x_4^1 & x_4^0 \\
+	\end{pmatrix}
+	\begin{pmatrix}
+	a \\ b\\ c \\ d\\
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	p(x_1) \\ p(x_2) \\ p(x_3) \\ p(x_4)
+	\end{pmatrix}
+\end{equation}\\
+
+which is a matrix equation, which we need to calculate an inverse. Such matrix is called a \textbf{Vandermonde matrix}, and \MATLAB has an internal function \texttt{vander} which calculates it. The following script is an example of calculating the coefficients of the interpolated polynomials for $(1,\log(1))$, $(2,\log(2))$, $(3,\log(3))$, and $(4,\log(4))$.
+
+\begin{verbatim}
+octave:1> v = [1 2 3 4] ;
+octave:2> c = vander(v) \ log(v)' ;
+octave:3> c'
+ans = 0.028317  -0.313740   1.436152  -1.150728
+\end{verbatim}
+
+Certainly this requires high computational power as matrix inversion of a $n \times n$ matrix has complexity at least of $\mathcal{O}(n^{2.373})$ with optimized CW-like algorithms, or $\mathcal{O}(n^3)$ with the well known Gauss-Jordan elimination. Thus we introduce various polynomial interpolation methods from now on. Before interpolation methods, we introduce polynomial evaluation methods first, as we will use them later again and again.
+\vspace{0.15in}
+\subsection{Polynomial Evaluation}
+\vspace{0.15in}
+Evaluating polynomials is to get $p(x_0)$ for some $x_0$. Evaluation might seem simple, but as polynomials are linear combinations of different powers, and when the degree gets bigger, sometimes it requires a big amount of computation just to evaluate by \textit{brute forcing}, i.e, by direct calculation. \\
+
+Consider a polynomial $p(x)$ with $deg(p)=n$. Evaluating such polynomial with direct calculation has at most $\mathcal{O}(n^2)$. A simple way to ease this is to use the memory property of machines, where we save $x_0^i$ as \texttt{v(i)} for some variable and then do the summation later. But during the saving process, again at most $\mathcal{O}(n^2)$ complexity is required.\\
+
+ Thus we use \textbf{Horner's method} for evaluating polynomials. Any polynomial can be expressed in its \textbf{nested form}, for instance let $deg(p)=4$ then \\
+ 
+ \begin{equation}\nonumber
+ 	p(x) = ax^4 + bx^3 + cx^2 + dx +e = \left( \left(\left(\left(x+a\right)x+b\right)x+c\right)x +d\right)x + e
+ \end{equation}\\
+ 
+ which can be applied to any kind of polynomials. The main point is that there is only $n$ times of multiplication occured in this method, reducing the complexity of evaluation which was at most $\mathcal{O}(n^2)$ to at most $\mathcal{O}(n)$. We will use this evaluation method very often. The following \MATLAB code depicts such method.\\
+
+\begin{lstlisting}[caption='horner.m']
+function horner_real=horner_real(c,x)
+y=x+c(size(c,2))
+
+for k=size(c,2)-1:-1:1
+ y=y*x+c(k) 
+end
+
+\end{lstlisting}
+
+ 
+\vspace{0.15in}
 \subsection{Polynomial Interpolation}
+\vspace{0.15in}
 
+For a given $n+1$ distinct points $\{x_k\}_{k=0}^n$, the interpolation problem is to find the unique polynomial $P(x)$ with $deg(P) \leq n$, such that for a function $f(x)$ the following holds : \\
+
+\begin{equation}\nonumber
+	P(x_i) = f(x_i) \quad \text{for} \quad \forall i = 1,2 , \dots n
+\end{equation}\\
+
+We will introduce two interpolation methods, Lagrange and Newton. 
+
+\vspace{0.15in}
+\subsubsection{Lagrange Form}
+\vspace{0.15in}
+Let $L_k(x)$ be a polynomial as :\\
+
+\begin{equation}\nonumber
+	L_k(x) = \frac{(x - x_0)(x - x_1) \cdots (x - x_{k-1})(x - x_{k+1}) \cdots (x - x_n)}{(x_k - x_0)(x_k - x_1) \cdots (x_k - x_{k-1})(x_k - x_{k+1}) \cdots (x_k - x_n)}
+\end{equation}\\
+
+which also satisfies $L_k(x_i) = \delta_{ik}$. We can see that $deg(L_k) = n$ for any $L_k$. Now we define our interpolated result $P(x)$ as :\\
+
+\begin{equation}\nonumber
+	P(x) = \sum^{n}_{k=0} f(x_k) L_k(x)
+\end{equation}\\
+
+which has $deg(P) \leq n$. This method also requires a lot of computation.\\
+
+\vspace{0.15in}
+\subsubsection{Newton Form}
+\vspace{0.15in}
+The first step of this method is to let our interpolation $P(x)$ in such form :\\
+
+\begin{equation}\nonumber
+	P(x) = a_0 + a_1 (x-x_0)+  \cdots + a_n (x-x_0)(x-x_1) \cdots (x-x_{n-1})
+\end{equation}\\
+
+And we follow such recursive method to get the coefficients $\{a_i\}$.\\
+
+\begin{enumerate}[label=(\arabic*)]
+	\item $P_0(x)=f(x_0)$
+	\item $P_1(x)=P_0(x)+a_1 (x-x_0) \text{ , } P_1(x_1) = f(x_1) $
+	\vskip 0.5ex $\implies a_1 = (f(x_1) - P_0(x_1))/(x_1 - x_0)$
+	\item $P_2(x)=P_1(x)+a_2 (x-x_0)(x-x_1) \text{ , } P_2(x_2) = f(x_2) $
+	\vskip 0.5ex $\implies a_2 = (f(x_2) - P_1(x_2))/(x_2 - x_0)(x_2 - x_1)$ 
+	\item $P_3(x)=P_2(x)+a_3 (x-x_0)(x-x_1)(x-x_2) \text{ , } P_3(x_3) = f(x_3) $
+	\vskip 0.5ex $\implies a_3 = (f(x_3) - P_2(x_3))/(x_3 - x_0)(x_3 - x_1)(x_3 - x_2)$
+	\\
+	\vdots \\
+\end{enumerate}
+
+Where the each evaluation of $P_i(x_i)$ is implemented by Horner's method to minimize computation. Then generalizing the coefficient with step $j$, we get \\
+
+\begin{equation} \nonumber
+	a_j = \frac{f(x_j) - P_{j-1}(x_j)}{(x_j - x_0)(x_j - x_1) \cdots (x_j - x_{j-1})}
+\end{equation}\\
+
+From the above relation, we can implement a \MATLAB code which will input interpolation points, and evaluate a value for the interpolated polynomial. We will define two functions, one is the \texttt{horner(c,p,x)} function which will be used to evaluate a polynomial with Horner's method and the main \texttt{newton(p,v,x)} function.\\
+
+\begin{lstlisting}[caption='newton\_horner.m']
+function y=newton_horner(c,p,x) 
+
+y=c(size(c,2)); 
+
+for k = size(c,2)-1:-1:1 
+ y = y*(x-p(k))+c(k);
+end
+\end{lstlisting}
+\vspace{0.15in}
+
+This Horner's method is slightly modified in order to directly apply to the Newton form we introduced, thus it needs another vector like variable \texttt{p} which denotes the $x_0,x_i \cdots x_{n-1}$ from the Newton form. The other variable \texttt{c} is also a vector input for the coefficients of a polynomial, and \texttt{x} is a scalar input to denote the point to evaluate the Newton form. This will act as a subroutine for our main \texttt{newton(p,v,x)} function. \\
+
+\begin{lstlisting}[caption = 'newton.m']
+function y=newton(p,v,x)
+c=v(1);
+
+for i=2:1:size(p,2)
+ Q = 1;
+  for m=1:1:i-1
+   Q = Q*(p(i)-p(m));
+  end
+ c(i) = (v(i) - newton_horner(c,p,p(i))) / Q ;
+end
+
+y=newton_horner(c,p,x)
+\end{lstlisting}
+\vspace{0.15in}
+
+The function \texttt{newton(p,v,x)} gets two $n$ vectors \texttt{p} and \texttt{v}, and a scalar \texttt{x} as an input, which each denotes an array of the interpolation points $x_i$ and interpolation values $P(x_i)$ and the point to evaluate the resulting interpolation. Using the routine we introduced, it gets the coefficients and save it as a vector \texttt{c}. We can see that during such routine the modified Horner evaluation \texttt{horner(c,p,p(i))} is used. After fully obtaining \texttt{c}, we then evaluate the value of $P(x)$ using \texttt{horner(c,p,x)} which is the final output of \texttt{newton(p,v,x)}. 
+
+\vspace{0.15in}
+\subsubsection{Interpolation Error}
+\vspace{0.15in}
+
+For the previous interpolation problem, now let us consider the error at a certain point $x$ which is $|f(x)-P(x)|$, we claim that : \\
+
+\begin{claim}
+For the unique interpolation $P(x)$ of $f(x)$, there exists $\xi$ such that\\
+
+\begin{equation}\nonumber
+	f(x)-P(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x-x_0)(x-x_1) \cdots (x-x_n)
+\end{equation}\\
+
+where $\xi$ exists in $\min\{x_0, x_1, \dots , x_n\} < \xi < \max\{ x_0, x_1, \dots , x_n \}$.
+\end{claim}
+
+\begin{proof}
+	Let $x \neq x_k$ for any $k=0,1,\dots n$ and define \\
+	
+	\begin{equation}\nonumber
+		K = \frac{f(x)-P(x)}{(x-x_0)(x-x_1) \cdots (x-x_n)}
+	\end{equation}\\
+	
+	Consider a function $g:\mathbb{R} \to \mathbb{R}$ as \\
+	
+	\begin{equation}\nonumber
+		g(t) = f(t) - P(t) - K (t-x_0)(t-x_1) \cdots (t-x_n)
+	\end{equation}\\
+	
+	then $g(x)=0$ and $g(x_k)=0$ for $k=0,1, \dots n$, which implies that $g$ vanishes at $n+2$ distinct points, and applying the mean value theorem recursively, there $^\exists \xi : \min\{x_0, x_1, \dots , x_n\} < \xi < \max\{ x_0, x_1, \dots , x_n \}$ such that \\
+	
+	\begin{equation}\nonumber
+		g^{(n+1)}(\xi) = 0
+	\end{equation}\\
+	
+	and by definition of $g(t)$,\\
+	
+	\begin{equation}\nonumber
+	\begin{split}
+		g^{(n+1)}(\xi) &= f^{(n+1)}(\xi) - P^{(n+1)}(\xi) - K \frac{d^{n+1}}{dt^{n+1}}(t-x_0)(t-x_1) \cdots (t-x_n) \Big|_{t = \xi} \\[2.5ex]
+		&= f^{(n+1)}(\xi) - K (n+1)! =0
+	\end{split}
+	\end{equation}\\
+	
+	where we erased $P^{(n+1)}(\xi)$ as we know that $deg(P) \leq n$, and thus we can conclude that\\
+	
+	\begin{equation}\nonumber
+	K = \frac{f(x)-P(x)}{(x-x_0)(x-x_1) \cdots (x-x_n)} = \frac{f^{(n+1)}(\xi) }{(n+1)!}
+	\end{equation}\\
+	
+	for some $\xi$.\\
+\end{proof}
+
+\begin{example}
+Some cases of considering interpolation errors, let $\epsilon(x)=f(x)-P(x)$ :\\
+\begin{enumerate}[label=(\arabic*)]
+	\item $f(a)=P(a), f'(a)=P'(a)$ and $f(b)=P(b)$, $f(c)=P(c)$.
+	\vskip 1.5ex
+	$\implies \epsilon(x) = \frac{f^{(4)}(\xi)}{4!}(x-a)^2(x-b)(x-c)$
+	\item $f(a)=P(a), f'(a)=P'(a), f''(a)=P''(a)$ and $f(b)=P(b)$.
+	\vskip 1.5ex
+	$\implies \epsilon(x) = \frac{f^{(4)}(\xi)}{4!}(x-a)^3(x-b)$
+	\item $f(a)=P(a), f'(a)=P'(a), f''(a)=P''(a),f'''(a)=P'''(a)$.
+	\vskip 1.5ex
+	$\implies \epsilon(x) = \frac{f^{(4)}(\xi)}{4!}(x-a)^4$
+	
+\end{enumerate}
+\end{example}
+
+\vspace{0.15in}
 \subsection{Integration Methods}
+\vspace{0.15in}
+
+\subsubsection{Trapezoidal}
+
+\subsubsection{Midpoint}
+
+\subsubsection{Simpson}
 
 \end{document}
