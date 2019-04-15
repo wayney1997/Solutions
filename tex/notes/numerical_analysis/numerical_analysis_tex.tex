@@ -30,7 +30,7 @@
 
 \usepackage{enumitem}
 \newcommand{\subscript}[2]{$#1 _ #2$}
-
+\newcommand*\dif{\mathop{}\!\mathrm{d}}
 \newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}   
 \newcommand{\nextline}{$ $ \newline \vspace{-0.15in}}
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
@@ -973,7 +973,7 @@ The function \texttt{newton(p,v,x)} gets two $n$ vectors \texttt{p} and \texttt{
 For the previous interpolation problem, now let us consider the error at a certain point $x$ which is $|f(x)-P(x)|$, we claim that : \\
 
 \begin{claim}
-For the unique interpolation $P(x)$ of $f(x)$, there exists $\xi$ such that\\
+For the unique interpolation $P(x)$ of $f(x)$ where $deg(P) \leq n$, there exists $\xi$ such that\\
 
 \begin{equation}\nonumber
 	f(x)-P(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x-x_0)(x-x_1) \cdots (x-x_n)
@@ -1039,9 +1039,104 @@ Some cases of considering interpolation errors, let $\epsilon(x)=f(x)-P(x)$ :\\
 \subsection{Integration Methods}
 \vspace{0.15in}
 
-\subsubsection{Trapezoidal}
+Using the interpolation methods and the concept of interpolation we've introduced we can numerically evaluate definite integrations of certain functions by \textit{slicing} the interval we want to integrate, and interpolating each intervals as polynomials with certain degrees that will differ by the various methods we will introduce. For the following, we will denote $f:[a,b]\to\mathbb{R}$ and $m=\frac{a+b}{2}$.
 
+\vspace{0.15in}
+\subsubsection{Trapezoidal Rule}
+\vspace{0.15in}
+
+Trapezoidal rule, as it name states is to interpolate the sliced intervals as trapezoidals, or to interpolate the function in the interval as a simple line between to points. We claim that certain approximation has cubic error respect to the size of the slice we chop up the interval.\\
+
+\begin{claim}
+	Let $T(f)$ be a functional of $f$ such that \\
+	
+	\begin{equation}\nonumber
+		T(f) = (b-a)\frac{f(a)+f(b)}{2}
+	\end{equation}\\
+	
+	Then the following holds : \\
+	
+	\begin{equation}\nonumber
+		\left|\int_{a}^{b} f(x) \dif x  - T(f) \right| \leq \frac{1}{12} \max_{a\leq\xi\leq b} f''(\xi)(b-a)^3
+	\end{equation}\\
+\end{claim}
+
+\begin{proof}
+	First we interpolate using $(a,f(a))$ and $(b,f(b))$ which will result into a $deg(p) \leq 1$ polynomial. Then for such interpolation $p(x)$, $p(a)=f(a)$ and $p(b)=f(b)$ holds, which implies that \\
+	
+	\begin{equation}\nonumber
+		T(f) = \int_{a}^{b} p(x) \dif x
+	\end{equation}\\
+	
+	and for $^\forall t \in [a,b]$ and $^\exists \xi \in [a,b]$,\\
+	
+	\begin{equation}\nonumber
+		f(t)-p(t) = \frac{f''(\xi)}{2!}(t-a)(t-b)
+	\end{equation}\\
+	
+	which is the interpolation error of $p(x)$, and using this relation we can derive :\\
+	
+	\begin{equation}\nonumber
+		\begin{split}
+		\left|\int_{a}^{b} f(t) \dif t  - T(f) \right| &= \left|\int_{a}^{b} (f(t) - p(t)) \dif t \right| \\[2.5ex]
+		&= \left|\int_{a}^{b} \frac{f''(\xi)}{2!}(t-a)(t-b)\dif t \right| \\[2.5ex]
+		&\leq \frac{1}{2}  \max_{a\leq\xi\leq b} f''(\xi) \int_{a}^{b} \left|(t-a)(t-b) \right| \dif t \\[2.5ex]
+		&= \frac{1}{12} \max_{a\leq\xi\leq b} f''(\xi)(b-a)^3 
+		\end{split}
+	\end{equation}
+\end{proof}
+
+\vspace{0.15in}
 \subsubsection{Midpoint}
+\vspace{0.15in}
+
+The midpoint rule is to use the middle point of the interval rather than the end points of the interval as interpolation data. This method again uses a $deg(P)\leq 1$ interpolation, which implies that we will use two points of data for interpolation, which will be the function value and the first derivative value of the middle point. We will then claim that again this method yields a cubic error respect to the interval width. \\
+
+\begin{claim}
+	Let $M(f)$ be a functional of $f$ such that : \\
+	
+	\begin{equation}\nonumber
+		M(f) = (b-a) f(m) = (b-a) f(\frac{a+b}{2})
+	\end{equation}\\
+	
+	Then the following holds : \\
+	
+	\begin{equation}\nonumber
+		\left| \int_{a}^{b} f(x) \dif x - M(f) \right| \leq \frac{1}{24} \max_{a\leq\xi\leq b}f''(\xi) (b-a)^3
+	\end{equation}\\
+\end{claim}
+
+\begin{proof}
+	We interpolate with the point $m=(a+b)/2$, with the data $f(m),f'(m)$. Let the interpolation be $p(x)$ with $deg(p)\leq 1$ such that $p(m)=f(m)$ and $p'(m)=f'(m)$. Then we can explicitly derive that \\
+	
+	\begin{equation}\nonumber
+		p(t)= f'(m)(t-m) + f(m)
+	\end{equation}\\
+	
+	Then the functional $M(f)$ can be expressed in terms of the int: \\
+	
+	\begin{equation}\nonumber
+		M(f) = \int_{a}^{b} p(t) \dif t
+	\end{equation}\\
+	
+	and again using the interpolation error, for $^\forall t \in [a,b]$ and $^\exists \xi \in [a,b]$ \\
+	
+	\begin{equation}\nonumber
+		f(t)-p(t) =  \frac{f''(\xi)}{2!}(t-m)^2
+	\end{equation}\\
+	
+	Thus we can write the equation of total integration error as :\\
+	
+	\begin{equation}\nonumber
+		\begin{split}
+		\left| \int_{a}^{b} f(t) \dif t - M(f) \right| &= \left| \int_{a}^{b} (f(t) - p(t))  \dif t \right| \\[2.5ex]
+		&= \left| \int_{a}^{b} \frac{f''(\xi)}{2!}(t-m)^2 \dif t \right| \\[2.5ex]
+		&\leq \frac{1}{2} \max_{a\leq\xi\leq b}f''(\xi) \left| \int_{a}^{b} (t-m)^2 \dif t \right| \\[2.5ex]
+		&= \frac{1}{24} \max_{a\leq\xi\leq b}f''(\xi) (b-a)^3 \\
+		\end{split}
+	\end{equation}
+	
+\end{proof}
 
 \subsubsection{Simpson}
 

@@ -567,30 +567,36 @@ Now we know that for any cyclic groups, their subgroups are also cyclic. We also
 	\item $\mathcal{O}(a^s)=\frac{n}{gcd(n,s)}$ for $s\in\mathbb{Z}$
 	\vskip 0.5ex
 	Let $m=\mathcal{O}(a^s)$ which implies $(a^s)^m = a^{sm} =e$ in $G=\cyc{a}$. As $\mathcal{O}(a)=n$, it follows that $n \mid sm$. Then, \\
+	
 	\begin{equation}\nonumber
 		\begin{split}
-		n | sm &\implies \frac{n}{gcd(n,s)} \mid \frac{s}{gcd(n,s)} m\\
-		&\implies \frac{n}{gcd(n,s)} \mid m \\
+		n | sm &\implies \frac{n}{gcd(n,s)} \mid \frac{s}{gcd(n,s)} m\\[2.5ex]
+		&\implies \frac{n}{gcd(n,s)} \mid m \\[2.5ex]
 		\end{split}
 	\end{equation}\\
-	where the second implication was derived by the fact that $ \frac{n}{gcd(n,s)}\nmid \frac{s}{gcd(n,s)}$. So as $m$ is the smallest integer that should satisfy the above relation, $m=\mathcal{O}(a^s)=\frac{n}{gcd(n,s)}$.
+	
+	where the second implication was derived by the fact that $ \frac{n}{gcd(n,s)}\nmid \frac{s}{gcd(n,s)}$. So as $m$ is the smallest integer that should satisfy the above relation, $m=\mathcal{O}(a^s)=\frac{n}{gcd(n,s)}$.\\
+	
 	\item  There exists exactly one subgroup of order $m : m |n$, which is $\cyc{a^{n/m}}$.
 	\vskip 0.5ex
 %	First we will show that $\cyc{a^\frac{n}{m}}$ suffices the statement. 
 	Suppose $H \leqslant G$ and $|H|=m$. Also as $H$ is a subgroup of a cyclic group it is also cyclic, which implies that $H=\cyc{a^s}$ for some $s\in\mathbb{Z}$. Then due to 1,\\
+	
 	\begin{equation}\nonumber
 		|H| =\mathcal{O}(a^s) = \frac{n}{gcd(n,s)} = m
 	\end{equation}\\
-	which implies that $gcd(n,s)=\frac{n}{m} \implies \frac{n}{m} \mid s$. Recall that $\frac{n}{m} \mid s \implies \cyc{a^s} \subset \cyc{a^\frac{n}{m}}$. But as $\mathcal{O}(a^s)=\mathcal{O}(a^\frac{n}{m})=m$, it should satisfy that $\cyc{a^\frac{n}{m}}=\cyc{a^s}$.
-	\item  $\cyc{a^s}=\cyc{a^t} \iff gcd(n,s)=gcd(n,t)$.
+	
+	which implies that $gcd(n,s)=\frac{n}{m} \implies \frac{n}{m} \mid s$. Recall that $\frac{n}{m} \mid s \implies \cyc{a^s} \subset \cyc{a^\frac{n}{m}}$. But as $\mathcal{O}(a^s)=\mathcal{O}(a^\frac{n}{m})=m$, it should satisfy that $\cyc{a^\frac{n}{m}}=\cyc{a^s}$.\\
+	
+	\item  $\cyc{a^s}=\cyc{a^t} \iff gcd(n,s)=gcd(n,t)$.\\
 	\vskip 0.5ex
 	\begin{enumerate}[label=(\roman*)]
 		\item $\cyc{a^s}=\cyc{a^t} \implies gcd(n,s)=gcd(n,t)$.
 	%	\vskip 0.5ex
 		\begin{equation}\nonumber
 			\begin{split}
-			\cyc{a^s}=\cyc{a^t} &\implies |\cyc{a^s}|=|\cyc{a^t}| \\
-			&\iff \frac{n}{gcd(n,s)} = \frac{n}{gcd(n,t)} \\
+			\cyc{a^s}=\cyc{a^t} &\implies |\cyc{a^s}|=|\cyc{a^t}| \\[2.5ex]
+			&\iff \frac{n}{gcd(n,s)} = \frac{n}{gcd(n,t)} \\[2.5ex]
 			&\iff gcd(n,s) = gcd(n,t)
 			\end{split}
 		\end{equation} \\
