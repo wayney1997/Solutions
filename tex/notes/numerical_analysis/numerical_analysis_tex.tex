@@ -652,6 +652,10 @@ As $\alpha \simeq 1.62$, we can conclude that this method has efficiency somewhe
 
 Also do not forget about how to modify Newton method with functions with roots that have multiplicity, as regarding the multiplicity and modifying the method would enhance computation speed.
 
+\vspace{0.15in}
+\subsubsection{Two Variable Equations}
+\vspace{0.15in}
+
 \vspace{0.25in}
 
 \section{The Floating Number System}
@@ -1039,7 +1043,7 @@ Some cases of considering interpolation errors, let $\epsilon(x)=f(x)-P(x)$ :\\
 \subsection{Integration Methods}
 \vspace{0.15in}
 
-Using the interpolation methods and the concept of interpolation we've introduced we can numerically evaluate definite integrations of certain functions by \textit{slicing} the interval we want to integrate, and interpolating each intervals as polynomials with certain degrees that will differ by the various methods we will introduce. For the following, we will denote $f:[a,b]\to\mathbb{R}$ and $m=\frac{a+b}{2}$.
+Using the interpolation methods and the concept of interpolation we've introduced we can numerically evaluate definite integrations of certain functions by \textit{slicing} the interval we want to integrate, and interpolating each intervals as polynomials with certain degrees that will differ by the various methods we will introduce. For the following, we will denote $f:[a,b]\to\mathbb{R}$ and $m=\frac{a+b}{2}$. After introducing each methods of integration evaluation, 
 
 \vspace{0.15in}
 \subsubsection{Trapezoidal Rule}
@@ -1135,9 +1139,134 @@ The midpoint rule is to use the middle point of the interval rather than the end
 		&= \frac{1}{24} \max_{a\leq\xi\leq b}f''(\xi) (b-a)^3 \\
 		\end{split}
 	\end{equation}
-	
 \end{proof}
 
+\vspace{0.15in}
 \subsubsection{Simpson}
+\vspace{0.15in}
+
+If the above two methods used a interpolation yielding a polynomial with order at most 1, which is just a linear function, Simpson rule utilizes the interpolation of four data points, which yields a cubic function. First we introduce an exact rule of definite integrations regarding quadratic functions, then we utilize such rule to numerically evaluate definite integrals. \\
+
+\begin{claim}
+	For any cubic function $q:[a,b] \to \mathbb{R}$, the following holds :\\
+	
+	\begin{equation}\nonumber
+		\int_{a}^{b} q(t) \dif t = \frac{(b-a)}{6}(q(a) + 4 q(m) + q(b))
+	\end{equation}\\
+\end{claim}
+
+\begin{proof}
+	First we will let the range of integration as $[0,1]$ and show the above. As integration is a linear functional, it suffices for us to show the above claim holds for each basis, $1,x,x^2$, and $x^3$.\\
+	
+	\begin{equation}\nonumber
+		\begin{cases} 
+		\int_{0}^{1} 1 \dif t = 1 = \frac{1}{6}(1+4+1)& \\[1.5ex]
+		\int_{0}^{1} t  \dif t = \frac{1}{2} =& \\[1.5ex]
+		\int_{0}^{1} t^2 \dif t = \frac{1}{3}=& \\[1.5ex]
+		\int_{0}^{1} t^3 \dif t = \frac{1}{4}& \\[1.5ex]
+		\end{cases}
+	\end{equation}\\
+	
+	Then we pull back the region of integration $g:[0,1] \to [a,b]$ in order to get \\
+	
+	\begin{equation}\nonumber
+		\int_{a}^{b} q(t) \dif t = |g'| \int_{0}^{1} q(g(s)) \dif s = (b-a) \int_{0}^{1} q(g(s)) \dif s = \frac{(b-a)}{6}(q(a) + 4 q(m) + q(b))
+	\end{equation}\\
+\end{proof}
+
+Now we show that such interpolation of intervals yield errors proportional to the fifth power of the interval length. \\
+
+\begin{claim}
+	Define $S(f)$ as a functional such that : \\
+	
+	\begin{equation}\nonumber
+		S(f) = \frac{b-a}{6} (f(a) + 4 f(m) + f(b))
+	\end{equation}\\
+	
+	Then, \\
+	
+	\begin{equation}\nonumber
+		\left| \int_{a}^{b} f(t) \dif t - S(f) \right| \leq \frac{1}{4^2 4!} \max_{a\leq\xi\leq b} |f^{(4)}(\xi)| (b-a)^5
+	\end{equation}\\
+\end{claim}
+
+\begin{proof}
+Let $p(t)$ be the interpolation of $f(t)$ with $deg(p) \leq 3$ which is given by the conditions \\
+
+\begin{equation}\nonumber
+p(a) = f(a) \quad p(b)=f(b) \quad p(m)=f(m) \quad p'(m) = f'(m)
+\end{equation}\\
+
+Then due to the previous claim, \\
+
+\begin{equation}\nonumber
+	S(f) = \int_{a}^{b} p(t) \dif t
+\end{equation}\\
+
+and the interpolation error $^\forall t \in [a,b]$ and $^\exists \xi \in [a,b]$ \\
+
+\begin{equation}\nonumber
+	f(t)-p(t) = \frac{f^{(4)}(\xi)}{4!}(t-a)(t-m)^2(t-b)
+\end{equation}\\
+
+using all these relations we can derive that 
+
+\begin{equation}\nonumber
+\begin{split}
+	\left| \int_{a}^{b} f(t) \dif t - S(f) \right|  &= 	\left| \int_{a}^{b} (f(t)  - p(t)) \dif t\right|  \\[2.5ex]
+	&= (b-a) |f(s)-p(s)| \qquad  ^\exists s \in (a,b)\\[2.5ex]
+	&= (b-a) \left|  \frac{f^{(4)}(\xi)}{4!}(t-a)(t-m)^2(t-b)  \right| \\[2.5ex]
+	&\leq  \frac{(b-a)}{4!} \max_{a\leq\xi\leq b} |f^{(4)}(\xi)| \cdot \max_{s \in [a,b]} |s-m|^2 \cdot \max_{s \in [a,b]} |(s-a)(s-b)| \\[2.5ex]
+	&= \frac{1}{4^2 4!} \max_{a\leq\xi\leq b} |f^{(4)}(\xi)| (b-a)^5 \\
+\end{split}
+\end{equation}
+
+\end{proof}
+
+\vspace{0.15in}
+\subsubsection{\MATLAB code implementation}
+\vspace{0.15in}
+
+Now we will implement the methods of numerical integration and compare the error each method yields. We integrate $\frac{2}{\sqrt{pi}}\exp(-x^2)$ at $[0,1]$ to compare the numerical output with the real integration value which is $erf(1)$, as we have an internal function \texttt{erf(x)} in \MATLAB. \\
+
+\begin{lstlisting}[caption = 'int\_test.m']
+function int_test=int_test(n)
+
+f=inline('exp(-x.^2)*2/sqrt(pi)');
+true=[erf(1) erf(1) erf(1)];
+% erf(1) = 2/sqrt(pi)*\int_0^1 e^(-x^2)
+x=linspace(0,1,n+1);
+
+sum=[0 0 0];
+
+for k=1:n
+ a=x(k); b=x(k+1); 
+ sum(1)=sum(1)+(b-a)*(f(a)+f(b))/2; % Trapezoidal rule
+end
+
+for k=1:n
+ a=x(k); b=x(k+1); m=(a+b)/2; 
+ sum(2)=sum(2)+(b-a)*f(m); % Midpoint rule
+end
+
+for k=1:n
+ a=x(k); b=x(k+1); m=(a+b)/2;
+ sum(3)=sum(3)+(b-a)*(f(a)+4*f(m)+f(b))/6; % Simpson rule
+end
+
+err=abs(sum-true)
+\end{lstlisting}
+\vspace{0.15in}
+
+The scalar input \texttt{n} for the function \texttt{int\_test(n)} is the parameter of how much to slice the given interval $[0,1]$, which would be the $(b-a)$ value from the previous sections. Each routines are implemented to integrate in different methods and the result of error is shown below.
+
+\begin{verbatim}
+octave:1> format long
+octave:2> int_test(1000)
+err = 6.91845853939554e-08   3.45922926969777e-08   4.44089209850063e-16	
+\end{verbatim}
+
+Both methods only using linear interpolation of intervals yields an error of order around $10^{-8}$ while the Simpsons method which uses cubic interpolation yields a way smaller error with order around $10^{-16}$ .
+
 
 \end{document}
