@@ -149,7 +149,7 @@ fval = 0
 \end{verbatim}
 
 %Let us consider the convergence of the bisection method.
-
+\vspace{0.15in}
 \subsection{Newton Method}
 \vspace{0.15in}
 \subsubsection{Single Value Equation : No Multiplicity}
@@ -487,11 +487,15 @@ Elapsed time is 0.001894 seconds.
 Elapsed time is 0.000106096 seconds.
 Elapsed time is 5.00679e-05 seconds.
 \end{verbatim}
-\vspace{0.15in}
 
+\vspace{0.15in}
 \subsection{Secant Method}
 \vspace{0.15in}
 The secant method is somehow a negotiation between the bisection and Newton method. It also uses linear approximation but not via the derivative concept. If the Newton method was using a single point to obtain the linear approximation of a certain function which can be thought of obtaining the instantaneous \textit{slope}, the secant method uses the fact that we can also approximate such instant derivative by substituting it with the slope of the secant line between necessarily adherent points. Thus it eases derivational burden for obtaining a linear approximation while getting a somehow reasonable accuracy, and at the same time gains stability better than the Newton method. \\
+
+\vspace{0.15in}
+\subsubsection{Single Value Equation}
+\vspace{0.15in}
 
 Let a function $f(x):\mathbb{R}\to\mathbb{R}$ with two given points as an initial value, let it $(x_0,f(x_0))$ and $(x_1, f(x_1))$. Then we approximate $f$ to a linear function $l(x): deg(l)=1$ which satisfies $f(x_0)=l(x_0)$ and $f(x_1)=l(x_1)$ at the same time. Obtaining such $l(x)$ is a quite elementary problem, \\
 
@@ -1034,19 +1038,21 @@ Some cases of considering interpolation errors, let $\epsilon(x)=f(x)-P(x)$ :\\
 	$\implies \epsilon(x) = \frac{f^{(4)}(\xi)}{4!}(x-a)^3(x-b)$
 	\item $f(a)=P(a), f'(a)=P'(a), f''(a)=P''(a),f'''(a)=P'''(a)$.
 	\vskip 1.5ex
-	$\implies \epsilon(x) = \frac{f^{(4)}(\xi)}{4!}(x-a)^4$
+	$\implies \epsilon(x) = \frac{f^{(4)}(\xi)}{4!}(x-a)^4$\\
 	
 \end{enumerate}
 \end{example}
 
-\vspace{0.15in}
-\subsection{Integration Methods}
-\vspace{0.15in}
+Such interpolation error will be utilized a lot in the next section, when we numerically integrate a function.
+
+\vspace{0.25in}
+\section{Integration Methods}
+\vspace{0.25in}
 
 Using the interpolation methods and the concept of interpolation we've introduced we can numerically evaluate definite integrations of certain functions by \textit{slicing} the interval we want to integrate, and interpolating each intervals as polynomials with certain degrees that will differ by the various methods we will introduce. For the following, we will denote $f:[a,b]\to\mathbb{R}$ and $m=\frac{a+b}{2}$. After introducing each methods of integration evaluation, 
 
 \vspace{0.15in}
-\subsubsection{Trapezoidal Rule}
+\subsection{Trapezoidal Rule}
 \vspace{0.15in}
 
 Trapezoidal rule, as it name states is to interpolate the sliced intervals as trapezoidals, or to interpolate the function in the interval as a simple line between to points. We claim that certain approximation has cubic error respect to the size of the slice we chop up the interval.\\
@@ -1091,7 +1097,7 @@ Trapezoidal rule, as it name states is to interpolate the sliced intervals as tr
 \end{proof}
 
 \vspace{0.15in}
-\subsubsection{Midpoint}
+\subsection{Midpoint Rule}
 \vspace{0.15in}
 
 The midpoint rule is to use the middle point of the interval rather than the end points of the interval as interpolation data. This method again uses a $deg(P)\leq 1$ interpolation, which implies that we will use two points of data for interpolation, which will be the function value and the first derivative value of the middle point. We will then claim that again this method yields a cubic error respect to the interval width. \\
@@ -1142,7 +1148,7 @@ The midpoint rule is to use the middle point of the interval rather than the end
 \end{proof}
 
 \vspace{0.15in}
-\subsubsection{Simpson}
+\subsection{Simpson Rule}
 \vspace{0.15in}
 
 If the above two methods used a interpolation yielding a polynomial with order at most 1, which is just a linear function, Simpson rule utilizes the interpolation of four data points, which yields a cubic function. First we introduce an exact rule of definite integrations regarding quadratic functions, then we utilize such rule to numerically evaluate definite integrals. \\
@@ -1224,7 +1230,7 @@ using all these relations we can derive that
 \end{proof}
 
 \vspace{0.15in}
-\subsubsection{\MATLAB code implementation}
+\subsubsection{\MATLAB code implementation for comparision}
 \vspace{0.15in}
 
 Now we will implement the methods of numerical integration and compare the error each method yields. We integrate $\frac{2}{\sqrt{pi}}\exp(-x^2)$ at $[0,1]$ to compare the numerical output with the real integration value which is $erf(1)$, as we have an internal function \texttt{erf(x)} in \MATLAB. \\
@@ -1268,5 +1274,90 @@ err = 6.91845853939554e-08   3.45922926969777e-08   4.44089209850063e-16
 
 Both methods only using linear interpolation of intervals yields an error of order around $10^{-8}$ while the Simpsons method which uses cubic interpolation yields a way smaller error with order around $10^{-16}$ .
 
+\vspace{0.15in}
+\subsection{Gauss Quadrature Rule}
+\vspace{0.15in}
+
+We've introduced three exact rules of integration of polynomials for certain degrees. We want to extend such exact rules to higher order polynomials. The \textbf{Gauss quadrature rule} is such result, which will be shown its exactness by using a set of orthonomal polynomials, known as the \textbf{Legendre polynomials}.\\
+
+Before introducing them, we show how the Gauss quadrature rule works like for polynomials with certain degrees.\\
+
+\begin{claim}
+	If $p(x)$ is a polynomial with $deg(p) \leq 3$ the following holds : \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{1} p(x) \dif x = p\left( \frac{1}{\sqrt{3}} \right) + p\left(- \frac{1}{\sqrt{3}} \right)
+	\end{equation}\\
+\end{claim}
+
+\begin{proof}
+	We can show this is exact for any polynomial with degrees less than 3 by plugging in every basis $1,x,x^2$ and $x^3$, but we approach this claim in a slightly different method. Consider a polynomial $P_2(x)$, which is given as $P_2(x)=x^2 - \frac{1}{3}$. We can note that for such polynomial, for any $l(x)$ such that $deg(l)\leq 1$, \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{1} P_2(x) l(x) \dif x = 0
+	\end{equation}\\
+	
+	as $1,x$ yields 0 when integrated with $P_2$. Then we can express $p(x)$ which has degree of 3 for $^\exists q(x) ,l(x)$ as \\
+	
+	\begin{equation}\nonumber
+		p(x) = P_2(x)q(x) + l(x)
+	\end{equation}\\
+	
+	where $deg(g) \leq 1$ and $deg(l) \leq 1$. Then integrating the polynomial yields, \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{1} p(x) \dif x = \int_{-1}^{1}  P_2(x)q(x) \dif x  + \int_{-1}^{1}l(x) \dif x = \int_{-1}^{1} l(x) \dif x
+	\end{equation}\\
+	
+	and as the claim we stated obviously holds for any linear polynomials, \\
+	
+	\begin{equation}\nonumber
+			\int_{-1}^{1} p(x) \dif x =  \int_{-1}^{1} l(x) \dif x = l\left(-\frac{1}{\sqrt{3}}\right) + l\left( \frac{1}{\sqrt{3}}\right)
+	\end{equation}\\
+	
+	and as $P_2\left(\pm \frac{1}{\sqrt{3}} \right) =0 $, we can finally say that for any $deg(p)\leq 3$ polynomial $p(x)$, \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{1} p(x) \dif x = p\left( \frac{1}{\sqrt{3}} \right) + p\left(- \frac{1}{\sqrt{3}} \right)
+	\end{equation}\\
+\end{proof}
+
+Gauss quadrature rule is good because it shows higher performance (or efficiency) than the previous exact rules, as they require less data points and yields exact rules for higher degree polynomials. The main idea of the above claim was to find $P_2$ with certain properties. We higher the degree for the next claim.\\
+
+\begin{claim}
+	If $p$ is a polynomial with $deg(p)\leq5$ the following holds : \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{1} p(x) \dif x =  p\left( - \sqrt{\frac{3}{5}} \right)\frac{5}{9} +p(0) \frac{8}{9}+ p\left( -\sqrt{\frac{3}{5}} \right)\frac{5}{9}
+	\end{equation}\\
+\end{claim} 
+
+\begin{proof}
+Again we consider a polynomial $P_3(x) = x \left( x^2 -\frac{3}{5} \right)$, which has a property of for every $q(x)$ such that $deg(q) \leq 2$ , $\int_{-1}^{1} P_3(x) q(x) \dif x = 0$. Then for $p(x)$ there exists $q(x),r(x)$ such that $deg(q),deg(r) \leq 2$\\
+
+\begin{equation}\nonumber
+	p(x) = P_3(x) q(x) + r(x)
+\end{equation}\\
+
+Then the integration becomes, \\
+
+\begin{equation}\nonumber
+ 		\int_{-1}^{1} p(x) \dif x = 	\int_{-1}^{1} P_3(x) q(x) \dif x  + 	\int_{-1}^{1} r(x) \dif x = 	\int_{-1}^{1} r(x) \dif x
+\end{equation}\\
+
+And as the claim holds (can show explicitly by plugging in basis) for all polynomials with degree less than 2, and also using the fact that $\pm -\sqrt{\frac{3}{5}}$ and $0$ are the roots of $P_3$, we finally obtain : \\
+
+\begin{equation}\nonumber
+	\int_{-1}^{1} p(x) \dif x =  p\left( - \sqrt{\frac{3}{5}} \right)\frac{5}{9} +p(0) \frac{8}{9}+ p\left( -\sqrt{\frac{3}{5}} \right)\frac{5}{9}
+\end{equation}\\
+\end{proof}
+
+So we've just seen that finding $P_n(x)$ with certain properties is the main problem of obtaining such exact rules for definite integration of polynomials. It shows up to be that such $P_n(x)$ are called the Legendre polynomials with order $n$, and we will introduce them in the next section.\\
+
+\vspace{0.15in}
+\subsubsection{Legendre Polynomials}
+\vspace{0.15in}
+
+There are many different ways to define Legendre polynomials, but first we will introduce them as a recursive polynomials with $P_0(x) = 1$ and $P_1(x) =x$
 
 \end{document}
