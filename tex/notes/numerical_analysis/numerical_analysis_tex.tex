@@ -53,7 +53,7 @@
 \date{\normalsize\today} 
 %------------------------------
 \newtheorem{example}{Ex}
-\newtheorem{theorem}{Thm}
+\newtheorem{lemma}{Lem}
 \newtheorem{claim}{Claim}
 \newtheorem*{remark}{Remark}
 \newtheorem*{recall}{Recall}
@@ -1358,6 +1358,47 @@ So we've just seen that finding $P_n(x)$ with certain properties is the main pro
 \subsubsection{Legendre Polynomials}
 \vspace{0.15in}
 
-There are many different ways to define Legendre polynomials, but first we will introduce them as a recursive polynomials with $P_0(x) = 1$ and $P_1(x) =x$
+There are many different ways to define Legendre polynomials, but first we will introduce them as a recursive polynomials with $P_0(x) = 1$ and $P_1(x) =x$ with the recursion of \\
+
+\begin{equation}\nonumber
+	P_{n+1} (x) = \frac{2n+1}{n+1}x P_n(x) - \frac{n}{n+1}P_n(x)
+\end{equation}\\
+
+We can recursively obtain $P_n(x)$ using the above relation, and below example shows some low order Legendre polynomials.\\
+
+\begin{example}
+	Examples of Legendere polynomials. (yeah i've done this by recursion; trust me)
+	\begin{itemize}
+		\item $P_2(x) = \frac{1}{2}(3x^2+1)$
+		\item $P_3(x) = \frac{1}{2}(5x^3-3x)$
+		\item $P_4(x) = \frac{1}{8}(35x^4 - 30x^2 +3) $\\
+	\end{itemize}
+\end{example}
+
+There are certain properties of these polynomials, where we will use them alot later. \\
+
+\begin{lemma}
+The following holds for Legendre polynomials.
+\begin{enumerate}[label = T\arabic*.]
+\item $deg(P_n)=n$
+\item $P_n(1)=1$
+\item $\langle 1, x, x^2, \dots x^n \rangle = \langle P_0(x), P_1(x) , \dots P_n(x) \rangle$
+\item $P_n(-x)=(-1)^n P_{n-1}(x)$\\
+\end{enumerate}
+\end{lemma}
+
+Each property states that the $n$th Legendre polynomial has order $n$, for any $n$, its value at $1$ is fixed to $1$, it forms a basis when each order of Legendre polynomials are gatheres, and finally the parity of the function has parity. \\
+
+\begin{lemma}
+$P_n(x)$ satisfies the following first order ODE : \\
+
+\begin{equation}\nonumber
+	x P_n'(x) -n P_n(x) = P_{n-1}'(x)
+\end{equation}\\
+\end{lemma}
+
+\begin{proof}
+	We will use induction in order to prove the above lemma. It is obvious that $P_0,P_1$ satisfies the above ODE. So it suffices for us to just show that $P_{n+1}(x)$ holds when $P_n(x)$ and $P_{n-1}(x)$ holds.
+\end{proof}
 
 \end{document}
