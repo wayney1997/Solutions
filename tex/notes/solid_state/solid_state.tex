@@ -71,10 +71,10 @@
 \section{Introduction}
 \vspace{0.25in}
 
-Why is solid state physics, condensed matter physics is so important and has such value to be studied? From the early days mankind studied alot about various solids and their properties, for instance how well do they stretch, or how well do they accept heat energy, or how well do they conduct electricity and so on. We will first look 
+Why is solid state physics, condensed matter physics is so important and has such value to be studied? From the early days mankind studied alot about various solids and their properties, for instance how well do they stretch, or how well do they accept heat energy, or how well do they conduct electricity and so on. 
 
 \vspace{0.25in}
-\section{Thermal Properties of Phonons}
+\section{Thermal Properties : Heat Capacity of Solids}
 \vspace{0.25in}
 
 We mainly discuss about the specific heat or heat capacity of solids, where we will briefly define the \textbf{heat capacity} as \\
@@ -306,16 +306,123 @@ and in terms of resistivity, \\
 	\rho = \rho_L + \rho_I
 \end{equation}\\
 
-which well explains that the total resistivity can be expressed by the sum of resistivity occured by two different sources. An interesting fact is that $\rho_L(T)$ is dependent of temperature but $\rho_I$ is a constant dependent with the temperature. Also when $T\to 0$, $\rho_L(T) \to 0$ which implies that $\rho(0)= \rho_I$. This implies that $\rho_L(T) = \rho(T) - \rho_I $ is same for different specimens of metal, while $\rho_I$ should vary a lot by the purity of the specimen. Based on this, we use the \textbf{resistivity ratio} as an indicator of sample purity, which is defined as 
+which well explains that the total resistivity can be expressed by the sum of resistivity occured by two different sources. An interesting fact is that $\rho_L(T)$ is dependent of temperature but $\rho_I$ is a constant dependent with the temperature. Also when $T\to 0$, $\rho_L(T) \to 0$ which implies that the residual resistivity is $\rho(0)= \rho_I$. This implies that $\rho_L(T) = \rho(T) - \rho_I $ is same for different specimens of metal, while $\rho_I$ should vary a lot by the purity of the specimen. Based on this, we use the \textbf{resistivity ratio} as an indicator of sample purity, which is defined as the ratio of residual resistivity to room temperature resistivity. Note that the purer the smaple is the higher this value becomes. For instance, exceptionally pure specimen can have resistivity ratio of an order of $\sim 10^6$ while common alloy has a value around $1.1$. \\
+
+We can also think of the mean distance an electron can travel through without scattering, or the \textbf{mean free path} as the scattering time multiplied with the Fermi velocity, \\
+
+\begin{equation}\nonumber
+	l = v_F \tau 
+\end{equation}\\
+ 
+The purer the metal is, the longer $l$ becomes. The reason we used the Fermi velocity to calculate such physical quantity is because only the electrons in the Fermi level would get excited.\\
  
 \vspace{0.15in}
 \subsubsection{Drude Theory : Electromagnetic Fields}
 \vspace{0.15in}
 
+Now we consider the effects of $\mathbf{B}$, and again consider steady states. Then, \\
+
+\begin{equation}\nonumber
+\begin{split}
+		-\frac{m\mathbf{v}(t)}{e \tau} &=  \mathbf{E}  + \mathbf{v}(t) \times \mathbf{B} \\[2.5ex]
+		 \mathbf{E} &= - \left(  \mathbf{v}(t) \times \mathbf{B} + \frac{m\mathbf{v}(t)}{e \tau} \right)\\[2.5ex]
+		  \mathbf{E} &= \left(  \frac{1}{ne}\mathbf{j} \times    \mathbf{B} +\frac{m}{ne^2 \tau}  \mathbf{j}\right)
+\end{split}
+\end{equation}\\
+
+where we again used the relations of $\mathbf{j} = -en \mathbf{v}$. Let us think of a simple case where $\mathbf{B}=(0,0,B)$, which means that there is only the z-axis component for the magnetic field. Then, \\
+
+\begin{equation}\nonumber
+\frac{1}{ne} \mathbf{j} \times \mathbf{B} = \frac{1}{ne} \left( j_y B , -j_x B , 0 \right)
+\end{equation}\\
+
+Thus, \\
+
+\begin{equation}\nonumber
+\mathbf{E} = \frac{1}{ne} \left( j_y B , -j_x B , 0 \right) + \frac{1}{\sigma_0} (j_x,j_y,j_z) 
+\end{equation}\\
+
+where we defined $\sigma_0$ as $ ne^2\tau/m $. This can be again simplified as $\mathbf{E} = \tilde{\rho} \mathbf{j}$, where we define the tensor $\tilde{\rho}$ as the \textbf{(magneto) resistivity tensor}, \\
+
+\begin{equation}\nonumber
+	\tilde{\rho} = \frac{1}{\sigma_0}
+	\begin{pmatrix}
+	1 & \tau/\omega_c & 0 \\
+	-\tau/\omega_c & 1 & 0\\
+	0 & 0 & 1 \\
+	\end{pmatrix}
+\end{equation}\\
+
+where $\omega_c$ is the \textbf{cyclotron frequency}, defined as $eB/m$. Now we define the \textbf{Hall coefficient}, $R_H$ as \\
+
+\begin{equation}\nonumber
+	R_H = \frac{\rho_{yx}}{B} = -\frac{B}{ne}
+\end{equation}\\
+
+where the last equation is using the results of the Drude theory. This implies that we can measure the density of electrons in a metal via Hall effect. Or conversely, if you know the electron density of the sample we can calculate the magnetic field strength. We call an apparatus which utilizes such method, a \textbf{Hall sensor}.
 
 \vspace{0.15in}
-\subsection{Sommerfeld Theory : Statistic Approach}
+\subsubsection{The Success : The Wiedermann-Franz Law}
 \vspace{0.15in}
+
+Besides the electromagnetic effects the Drude model predicted, it also explained the empirical \textbf{Wiedermann-Franz Law}, which states that\\
+
+\begin{equation}\nonumber
+	\frac{K}{\sigma T} = L
+\end{equation} \\
+
+where $K$ is the thermal conductivity, $\sigma$ is the electrical conductivity and $L$ is a constant named the Lorenz number. Based on the Drude theory, we can derive $K$ as \\
+
+\begin{equation}\nonumber
+	K = \frac{1}{3} C v l = \frac{1}{3} n c v^2 \tau
+\end{equation}\\
+
+and as Drude theory was based on the kinetic theory of gas, we use the $v$ from the results of the Maxwell speed distribution. And the heat capacity per atom $c$ also follows the classical limit :\\
+
+\begin{equation}\nonumber
+	v = \sqrt{\frac{8RT}{\pi M}} \qquad c = \pder{}{T} \left( \frac{3}{2} \boltz T \right) = \frac{3}{2} \boltz	 
+\end{equation}\\
+
+Then we can derive that \\
+
+\begin{equation}\nonumber
+	K = \frac{1}{3} n \left(\frac{3}{2} \boltz\right) \left( \frac{8RT}{\pi M} \right) \tau = 4 \boltz \frac{n R T }{\pi M} \tau
+\end{equation}\\
+
+which leads to the Lorenz number : \\
+
+\begin{equation}\nonumber
+\begin{split}
+	L &= \frac{K}{\sigma T} \\[2.5ex]
+	& =   \frac{1}{\sigma T} \cdot 4 \boltz \frac{ nR T }{\pi M} \tau \\[2.5ex]
+	&= \frac{m}{e^2 n \tau T}  \cdot 4 \boltz \frac{ nR T }{\pi M} \tau \\[2.5ex]
+	&= \frac{4 \boltz^2}{\pi e^2 } \sim 1.11 \times 10^{-8} \text{  WhattOhm/K$^2$}
+\end{split}
+\end{equation}\\
+
+where we used the Drude conductivity to derive the final result. This was a huge success at that time as it explained the Wiedermann-Franz law in a quite precise order. Then one might think, how did this rough model well predict such thermal properties of metals? We all know that electrons do not follow the kinetic theory of gas, then how did it explain such phenomena so well?\\
+
+We will deal with the details later but the direct answer with that the heat capacity was overrated and the velocity was underrated, which kind of balenced out, leading the right results.\\
+
+\vspace{0.15in}
+\subsubsection{The Failure : The Peltier Effect and Seeback Coefficient }
+\vspace{0.15in}
+
+However, despite of the unintended success of Drude model giving a right value of the Lorenz number, it failed to do so for the \textbf{Seeback coefficient}. By Drude's theory, the thermal current is \\
+
+\begin{equation}\nonumber
+	j^q = 
+\end{equation} \\
+
+In this case Drude model failed to explain such phenomena as 
+
+\vspace{0.15in}
+\subsection{Sommerfeld Theory : Statistical Approach}
+\vspace{0.15in}
+
+Sommerfeld had a quite different perspective dealing with electrons in metal with Drude, where Drude applied the classical kinetic theory to electrons, he take a step further by using quantum statistics, based on his idea that Drude’s theory of metals could easily be generalized to incorporate Fermi statistics.\\
+
+Let us first introduce some basic Fermi statistics. A system which follows certain statistics should yield a 
 
 \vspace{0.25in}
 \section{Crystal Structures}
@@ -328,6 +435,10 @@ which well explains that the total resistivity can be expressed by the sum of re
 \vspace{0.15in}
 \subsection{Inert Gas Crystals : Cohesive Energy}
 \vspace{0.15in}
+
+Inert gases are generally neutral and non polarized. But just saying so doesn't really helps us explaining how inert gas bonds and form crystals. At some moment a dipole can be induced by instantaneous charge splitting, and such induced dipole would induce another dipole and so on, which would eventually make every inert gas molecules interact as dipoles. A model depicting such situation is the Van der Waals-London interaction model. \\
+
+The Van der Waals-London equation states that the attraction between induced inert gas dipoles follow a potential of an order of $\sim R^{-6}$. We also need a repulsive term, as if there was only the attraction term, we can't fully explain how the atoms stably bond without collapsing into each other. Also repulsion must occur due to the Pauli exclusion principle, as when two atoms get closer the electrons get closer too, which implies a higher chance of same states getting superpositioned. Conversely with the case of Van der Waals-London interaction, the repulsive term is derived somewhat phenomenologically. 
 
 \vspace{0.15in}
 \subsection{Ionic Crystals}
