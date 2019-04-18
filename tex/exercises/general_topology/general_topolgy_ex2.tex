@@ -72,7 +72,7 @@ $ $ \newline
 	\vskip 0.5ex 
 	\item $\overbar{A}= \{ (x,y) \in \mathbb{R}^2 : 1 \leq x^2+y^2 \leq 2 \}$
 	\vskip 0.5ex
-	\item $\partial A = \{ (x,y) \in \mathbb{R}^2 : x^2+y^2 = 1 \text{ or } x^2+y^2 = 2 \}$
+	\item $\partial A = \{ (x,y) \in \mathbb{R}^2 : x^2+y^2 = 1 \text{ or } x^2+y^2 = 2 \}$\\
 \end{enumerate}
 \end{proof}
 
@@ -84,10 +84,10 @@ $ $ \newline
 $ $ \newline
 \vspace{-0.15in}
 \begin{enumerate}
-	\item limit points : $\phi$
+	\item limit points : $\{0 \}$
 	\vskip 0.5ex
 	
-	\item isolated points : $A$
+	\item isolated points : $A \setminus \{ 0 \}$
 	\vskip 0.5ex
 	
 \end{enumerate}
@@ -138,6 +138,14 @@ $ $ \newline
 
 \begin{proof}
 	It suffices to show that $\bar{\mathbb{I}} = \mathbb{R}$ by the definition of dense subsets, which is same to show that for $\forall x \in \mathbb{R}$, there exists some $r'>0$ such that $B(x,r')\cap \mathbb{I} \neq \phi$. Then showing that for any $(a,b)\subset \mathbb{R}$, there exists some $k \in \mathbb{I}$ that is in $(a,b)$ would suffice it. Due to the density of rationals, there exists some $r \in \mathbb{R}$ such that $r \in (a,b)$. Using the Archimedean property, as $\frac{b-r}{2}>0$, there exists some $n \in \mathbb{N}$ such that $\frac{b-r}{2}> \frac{1}{n}$, which implies that $r+\frac{2}{n}<b$. As there exists some $k \in \mathbb{I}$ such that $a < k = r+\frac{\sqrt{2}}{n} < r+ \frac{2}{n} < b$ for any $(a,b) \in \mathbb{R}$, the closure of $\mathbb{I}$ is $\mathbb{R}$. \\
+\end{proof}
+
+\begin{proof}
+	Consider the fact that $\mathbb{I} = \mathbb{R} \setminus \mathbb{Q}$. Then, \\
+	
+	\begin{equation}\nonumber
+		\overbar{\mathbb{I} } = \overbar{\mathbb{R} \setminus \mathbb{Q} } =  \mathbb{R} \setminus int(\mathbb{Q}) - \mathbb{R}
+	\end{equation}\\
 \end{proof}
 
 \begin{problem}
