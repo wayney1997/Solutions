@@ -4,6 +4,7 @@
 \usepackage[english]{babel} 
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{tikz-cd}
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{changepage}
@@ -25,7 +26,7 @@
 
 \usepackage{enumitem}
 \newcommand{\subscript}[2]{$#1 _ #2$}
-
+\newcommand{\nextline}{$ $ \newline \vspace{-0.15in}}
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
 \newcommand{\ball}[2]{$B({#1};{#2})$}
 \newcommand{\overbar}[1]{
@@ -567,9 +568,172 @@ In order to prove this theorem, we need to introduce a lemma named Lebesguq numb
 \end{lemma}
 
 \begin{proof}
-	Let $b \in U \cap V$, and $\alpha : [0,1] \to X $ be a loop based at $b$. Since $U,V$ are open and $U \cup V = X$, $\alpha^{-1}(U)$ and $\alpha^{-1}(V)$ are open in $[0,1] $ and $\alpha^{-1}(U) \cup \alpha^{-1}(V) = [0,1]$, which implies that $\{ \alpha^{-1}(V) , \alpha^{-1}(U)\}$ becomes an open cover of $[0,1]$. Also we know that $[0,1]$ is a compact metric space, thus we can apply the Lebesgue number lemma we stated above. Thus, there exists $\delta > 0$ such that $A \subseteq [0,1]$ and $diam(A)\leq \delta$ such that $A \subseteq \alpha^{-1}(U)$ or $A \subseteq \alpha^{-1}(V)$. Choose $N \in \mathbb{N}$ such that $\frac{1}{N} < \delta$, and also choose $0= s_0 < s_1 < \dots < s_N=1$ such that $s_{i+1}-s_i=1/N$ for every $i$. Then for each $i$, $[s_i,s_{i+1}]$ becomes subsets of $U$ or $V$, i.e, $\alpha([s_i,s_{i+1}])\subset U$ or $\subset V$.
+	Let $b \in U \cap V$, and $\alpha : [0,1] \to X $ be a loop based at $b$. Since $U,V$ are open and $U \cup V = X$, $\alpha^{-1}(U)$ and $\alpha^{-1}(V)$ are open in $[0,1] $ and $\alpha^{-1}(U) \cup \alpha^{-1}(V) = [0,1]$, which implies that $\{ \alpha^{-1}(V) , \alpha^{-1}(U)\}$ becomes an open cover of $[0,1]$. Also we know that $[0,1]$ is a compact metric space, thus we can apply the Lebesgue number lemma we stated above. Thus, there exists $\delta > 0$ such that $A \subseteq [0,1]$ and $diam(A)\leq \delta$ such that $A \subseteq \alpha^{-1}(U)$ or $A \subseteq \alpha^{-1}(V)$. Choose $N \in \mathbb{N}$ such that $\frac{1}{N} < \delta$, and also choose $0= s_0 < s_1 < \dots < s_N=1$ such that $s_{i+1}-s_i=1/N$ for every $i$. Then for each $i$, $[s_i,s_{i+1}]$ becomes subsets of $U$ or $V$, i.e, $\alpha([s_i,s_{i+1}])\subset U$ or $\subset V$. For each $i$, define $\alpha_i : [0,1] \to X$ by $\alpha_i(t) = \alpha ((s_{i+1}-s_i)t+s_i)$ . Since $U \cap V$ is path connected for each $i=0, \cdot , N-1$ we can take a path $\beta_i : [0,1] \to U \cap V$ such that $\beta_i(0)= \alpha_i(1)$ and $\beta_i(1)=b$ Then,  \\
+	
+	\begin{equation}\nonumber
+		\alpha \simeq (\alpha_0 \beta_0)(\beta_0^{-1}\alpha_1\beta_1) \dots (\beta_{N-3}^{-1}\alpha_{N-2}\beta_{N-2})(\beta_{N-2}^{-1}\alpha_{N-1})
+	\end{equation}\\
+	
+	where each of the paths within a paranthesis is a loop in either $U$ or $V$. Since $\pi_1(U)=\pi_1(V)=0$, \\
+	
+	\begin{equation}\nonumber
+		\alpha_0 \beta_0 \simeq \beta_i^{-1} \alpha_{i+1} \beta_{i+1} \simeq \beta_{N-2}^{-1} \alpha_{N-1} \simeq b \qquad \text{rel } \{0,1\}
+	\end{equation}\\
+	
+	Thus, $\alpha \simeq b b \dots b b \simeq b $ $rel$ $\{0,1\}$. 
+	
 \end{proof}
 
+\vspace{0.15in}
 \section{Covering Spaces}
+\vspace{0.15in}
+
+Our goal in this section is to understand how $\pi_1(S^1) = \mathbb{Z}$ using a mathematical notion known as the covering spaces. Before getting into the general idea of covering spaces and liftings, let us first deal with the example of $S^1$. We will then introduce the general definitions of them.\\
+
+\begin{definition}
+Let $p : \mathbb{R} \to S^1$ be a map defined as $p(t)=e^{2\pi i t}$. An open subset of $U$ of $S^1$ is \textbf{evenly covered} by $p$ if $p^{-1}(U)=\bigsqcup\limits_{i \in \mathbb{Z}}V_i$ such that $p|_{V_i} : V_i \to U$ is a homeomorphism for each $i \in \mathbb{Z}$.\\
+\end{definition}
+
+\begin{lemma}
+	Every $x \in S^1$ has an open neighborhood which is evenly covered by $p : \mathbb{R} \to S^1$ such that $p(t)=e^{2\pi i t}$.\\
+\end{lemma}
+
+\begin{proof}
+\nextline
+\begin{enumerate}
+	\item For $x \neq -1$ let $U = S^1 \setminus \{-1\}$. Then $p^{-1}(U)=\bigsqcup\limits_{i \in \mathbb{Z}} \left( -\frac{1}{2}+i,\frac{1}{2}+i \right)$ and $p|_{\left( -\frac{1}{2}+i,\frac{1}{2}+i \right)} : \left( -\frac{1}{2}+i,\frac{1}{2}+i \right) \to U$ is a homeomorphism.
+	\item For $x\neq1$, let $U=S^1\setminus\{1\}$. Then $p^{-1}(U)=\bigsqcup\limits_{i \in \mathbb{Z}} \left( i,i+1 \right)$ and also $p|_{\left( i,i+1 \right)}$ is also a homeomorphism.\\
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+	Let $\alpha:[0,1]\to S^1$ be a loop such that $\alpha(0)=\alpha(1)=1 \in S^1$. Let $N \in \mathbb{Z}$, and $p:\mathbb{R} \to S^1$ be a map such that $p(t)=e^{2\pi i t}$. Then there exists a map $\tilde{\alpha}_N : [0.1] \to \mathbb{R}$ such that \\
+	
+	\begin{equation}\nonumber
+		p \circ \tilde{\alpha}_N = \alpha \qquad \tilde{\alpha}_N(0) = N\\
+	\end{equation}	
+\end{theorem}
+\vspace{0.15in}
+
+We call this lifting a path, and it could be also understood by the following commutative diagram : \\
+
+
+\[
+\begin{tikzcd}	
+& \mathbb{R} \arrow[d , "p"] \\
+\left[0,1\right] \arrow[r , "\alpha"] \arrow[ru ,dashrightarrow, "\tilde{\alpha}_N"] & S^1 	
+\end{tikzcd}	
+\]
+\\
+
+
+\begin{theorem}
+Let $F:[0,1]\times[0,1] \to S^1$ be a map such that $F(0,t)=F(1,t)=1$ for $\forall t \in [0,1]$ and $F(s,0)=\alpha$ and $F(s,1)=\beta$. Let $N \in \mathbb{Z}$, then there exists a map $\tilde{F}:[0,1]\times[0,1] \to \mathbb{R}$ such that \\
+
+\begin{equation}\nonumber
+	p \circ \tilde{F} = F \qquad \tilde{F}(0,1) = N \qquad \tilde{F}(1,t)=M 
+\end{equation}\\
+
+for some $M\in\mathbb{Z}$ and for every $t \in [0,1]$.\\
+\end{theorem}
+
+As paths can be lifted, the above theorem states that also path homotopy maps can be lifted too. This can also be represented as a commutative diagram : \\
+
+\[
+\begin{tikzcd}	
+& \mathbb{R} \arrow[d , "p"] \\
+\left[0,1\right]\times\left[0,1\right] \arrow[r , "F"] \arrow[ru ,dashrightarrow, "\tilde{F}"] & S^1 	
+\end{tikzcd}	
+\]
+\\
+
+\begin{corollary}
+Let $\alpha,\beta$ be loops in $S^1$ based at $1\in S^1$ and $N \in \mathbb{Z}$. If $\alpha \simeq \beta$ with $rel \{0,1\}$ then $\tilde{\alpha}_N \simeq \tilde{\beta}_N$ with $rel \{0,1\}$ and hence $\tilde{\alpha}_N(1)=\tilde{\beta}_N(1)$.\\
+\end{corollary}
+
+\begin{theorem}
+	$\pi_1(S^1) = \mathbb{Z}$\\
+\end{theorem}
+
+\begin{proof}
+Let us first define $\Phi:\pi_1(S^1) \to \mathbb{Z}$ by $\Phi([\alpha])=\tilde{\alpha}_0(1)$. We want to show that such $\Phi$ is an isomorphism.\\
+\begin{enumerate}
+	\item $\Phi$ is well defined 
+	\vskip 0.5ex
+	If $[\alpha]=[\beta]$ then it implies that $\Phi([\alpha])=\Phi([\beta])$ which directly follows from \textbf{Cor 3}.
+	\item $\Phi$ is surjective.
+	\vskip 0.5ex
+	Let arbitrary $N \in \mathbb{Z}$. Define $\alpha:[0,1]\to S^1$ by $\alpha(s)=e^{2\pi i N s}$. Then $\tilde{\alpha}_0 : [0,1] \to \mathbb{R}$ is obtained by $\tilde{\alpha}_0(s)=Ns$. So as $\tilde{\alpha}_0(1)=N$, for any  $N\in \mathbb{Z}$ there exists $[\alpha] \in \pi_1(S^1)$ such that $\Phi([\alpha])=\tilde{\alpha}_0(1)=N$.
+	\item $\Phi$ is injective
+	\vskip 0.5ex
+	Suppose $\Phi([\alpha])=\Phi([\beta]) \implies \tilde{\alpha}_0(1)=\tilde{\beta}_0(1)$. Then $\tilde{\alpha}_0\tilde{\beta}_0^{-1}$ is a loop in $\mathbb{R}$, and since $\pi_1(\mathbb{R})=0$, it implies that $\alpha_0\beta_0^{-1} \simeq 0$. So $p \circ (\tilde{\alpha}_0\tilde{\beta}_0^{-1}) \simeq p(0)$ $rel\{0,1\}$. This again implies that $\alpha\beta^{-1} \simeq 1$  $rel\{0,1\}$, 
+	
+	\begin{equation}\nonumber
+	 [\alpha][\beta]^{-1} = [1] \implies [\alpha] = [\beta]
+	\end{equation}
+	
+	thus for any $[\alpha],[\beta]$ such that $\Phi([\alpha])=\Phi([\beta])$, we've shown that $[\alpha] = [\beta]$ which implies that $\Phi$ is injective.
+	\item $\Phi$ is a homomorphism
+	\vskip 0.5ex
+	Suppose $\Phi([\alpha])=N$ and $\Phi([\beta])=M$. In order to show that $\Phi$ is a homomorphism, it suffices to show that \\
+	
+	\begin{equation}\nonumber
+		\Phi([\alpha][\beta]) = \Phi([\alpha]) + \Phi([\beta]) = N + M
+	\end{equation}\\
+	
+	And as $[\alpha][\beta] = [\alpha\beta]$ it suffices to show that $\tilde{\alpha\beta}_0 (1) = N+M$. Let us define $\tilde{h} : [0,1]\to \mathbb{R}$ by \\
+
+	\begin{equation}\nonumber
+	\tilde{h}(s)=
+		\begin{cases}
+		\tilde{\alpha}_0 (2s) & (0\leq s \leq \frac{1}{2})\\
+		\tilde{\beta}_N (2s-1) = \tilde{\beta}_0(2s-1) + N & (\frac{1}{2} \leq s \leq 1) \\
+		\end{cases}
+	\end{equation}\\
+	
+	Then $\tilde{h} = \tilde{\alpha\beta}_0$ since,\\
+	
+	\begin{equation}\nonumber
+		p \circ \tilde{h} =
+		\begin{cases}
+		\alpha(2s) & \\
+		\beta(2s-1) & \\
+		\end{cases}
+		 = \alpha\beta \qquad \tilde{h}(0) = 0
+	\end{equation}\\
+	
+	Thus $\tilde{\alpha\beta}_0(1) = \tilde{\beta}_N(1) = N + \tilde{\beta}_0(1)=N+M$, which proves that $\Phi$ is a homomorphism.
+\end{enumerate}
+
+Thus as we've shown that such $\Phi : \pi_1(S^1) \to \mathbb{Z}$ is an isomorphism and it exists, we can conclude that $\pi_1(S^1) \simeq \mathbb{Z}$.\\ 
+\end{proof}
+
+Now we will attempt to extend such idea we've used to show the fundamental group of a circle is $\mathbb{Z}$, to general topological spaces. \\
+
+Let $E,X$ be topological spaces, where $p:E\to X$ is a well defined map.\\
+
+\begin{definition}
+	An open subset $U$ of $X$ is \textbf{evenly covered} if $p^{-1}(U)=\bigsqcup\limits_{\alpha \in A} U_\alpha$ such that $p|_{U_\alpha}$ is a homeomorphism and each $U_\alpha$ are open in $E$.
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{definition}
+	A map $p:E\to X$ is called a \textbf{covering map} and $E$ a \textbf{covering space} over $X$ if 
+	\begin{enumerate}
+		\item  $p$ is a surjection.
+		\item For each $x \in X$, $x$ has an open neighborhood which is evenly covered by $p$.
+	\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $p:E\to X $ be a covering map.
+	\begin{enumerate}
+		\item The set $p^{-1}(x)$ for some $x\in X$ is called the \textbf{fibre} over $x$.
+		\item For an open subset $U$ of $X$ which is evenly covered by $p$ such that $p^{-1}(U)=\bigsqcup\limits_{\alpha \in A} U_\alpha$, each $U_\alpha$ is called a \textbf{sheet} of $p^{-1}(U)$.
+	\end{enumerate}
+\end{definition}
 
 \end{document}
