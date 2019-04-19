@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.6)  19 APR 2019 15:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.6)  19 APR 2019 15:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1810,7 +1810,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 1519--1520
 
  []
 
-[39] (./numerical_analysis_tex.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 1523--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1525--1526
+
+ []
+
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 1529--1530
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1533--1534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1537--1538
+
+ []
+
+[40] (./numerical_analysis_tex.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1843,10 +1868,10 @@ type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1
 095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on numerical_analysis_tex.pdf (39 pages, 460104 bytes).
+Output written on numerical_analysis_tex.pdf (40 pages, 460843 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 151 compressed objects within 2 object streams
+ 219 PDF objects out of 1000 (max. 8388607)
+ 153 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

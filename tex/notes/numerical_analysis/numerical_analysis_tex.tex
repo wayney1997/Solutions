@@ -1516,10 +1516,31 @@ $P_n(x)$ has $n$ simple roots in $(-1,1)$.\\
 \subsubsection{Gauss Quadrature}
 \vspace{0.15in}
 
-The main objective here is to find $x_i$ and $w_i$ for a polynomial $p(x)$ such that : \\
+The main objective here is to find $x_i$ and $w_i$ for a $deg(p)\leq 5$ polynomial $p(x)$ such that \\
 
 \begin{equation}\nonumber
-	\int_{-1}^{1} p(x) \dif x = \sum_{i=1}^{k} p(x_i) w_i
-\end{equation}
+	\int_{-1}^{1} p(x) \dif x = \sum_{i=1}^{3} p(x_i) w_i
+\end{equation}\\
+
+We follow such steps in order to obtain such values : \\
+
+\begin{enumerate}
+	\item Let $x_i$ be the values that satisfy $P_3(x_i)=0$. 
+	\item Obtain $w_i$ by : \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{1} q(x) \dif x =  \sum_{i=1}^{3} p(x_i) w_i
+	\end{equation}\\
+	
+	for $p(x)$ such that $deg(q)\leq 2$ by plugging in all the basis $1,x, x^2$.
+	
+	\item Let $deg(p) \leq 5$ and $p(x)=P_3(x)q(x) + r(x)$ for some polynomials satisfying $deg(q),deg(r)\leq 1$. Then, \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{+1} p(x) \dif x = \int_{-1}^{+1} P_2(x) q(x) \dif x + \int_{-1}^{1} r(x) = 
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{Integration}
 
 \end{document}
