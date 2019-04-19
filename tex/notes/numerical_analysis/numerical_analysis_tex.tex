@@ -53,6 +53,7 @@
 \date{\normalsize\today} 
 %------------------------------
 \newtheorem{example}{Ex}
+\newtheorem{theorem}{Thm}
 \newtheorem{lemma}{Lem}
 \newtheorem{claim}{Claim}
 \newtheorem*{remark}{Remark}
@@ -1400,5 +1401,125 @@ $P_n(x)$ satisfies the following first order ODE : \\
 \begin{proof}
 	We will use induction in order to prove the above lemma. It is obvious that $P_0,P_1$ satisfies the above ODE. So it suffices for us to just show that $P_{n+1}(x)$ holds when $P_n(x)$ and $P_{n-1}(x)$ holds.
 \end{proof}
+
+\begin{theorem}
+For any $n\in \mathbb{N}$, the following holds : \\
+
+\begin{equation}\nonumber
+	(1-x^2)P_n'' - 2x P_n' + n(n+1) P_n =0
+\end{equation}\\
+\end{theorem}
+
+\begin{proof}
+We again use induction, it can be easily shown that for $P_0$ and $P_1$ the above holds. Suppose $P_{k-1},P_{k}$ holds. Then,\\
+
+\begin{equation}\nonumber
+	(1-x^2)P_{k+1}'' - 2x P_{k+1}' + (k+1)(k+2) P_{k+1} = \frac{4k+2}{k+1} \left( (1-x^2)P_k' + kxP_{k} -k P_{k-1} \right)
+\end{equation}\\
+
+Let us define $g(x)$ as $(1-x^2)P_k' + kxP_{k} -k P_{k-1} $ then, \\
+
+\begin{equation}\nonumber
+	\begin{split}
+	 g'(x) &= ((1-x^2)P_k')' + kP_k +kxP_k' - kP_{k-1}' \\[2.5ex]
+	 &= -k(k+1)P_k + kP_k + kP_k +kxP_k' - kP_{k-1}' \\[2.5ex]
+	 &= k(-kP_k +x P_k ' - P_{k-1}')=0
+	\end{split}
+\end{equation}\\
+
+where we used the fact that $(1-x^2)P_k'' - 2x P_k' + k(k+1) P_k =0 \implies ((1-x^2)P_k ')' = -k(k+1) P_k$ and \textbf{Lem 2}. As $g'(x)=0$, it implies that $g(x)$ has a constant value. As $g(1)=0$, we get that $g(x)=0$. Thus, \\
+
+\begin{equation}\nonumber
+	(1-x^2)P_{k+1}'' - 2x P_{k+1}' + (k+1)(k+2) P_{k+1} = 0
+\end{equation}\\
+
+and due to induction it holds for any $n$.
+\end{proof}
+\vspace{0.15in}
+
+Let us define a notation for inner products between functions : \\
+
+\begin{equation}\nonumber
+	(f,g) = \int_{-1}^1 f(x) g(x) \dif x
+\end{equation}
+
+\begin{theorem}
+For any $n\neq m$, $(P_n,P_m)=0$
+\end{theorem}
+
+\begin{proof}
+Consider, \\
+
+\begin{equation}\nonumber
+	m(m+1) (P_n,P_m) = (P_n,m(m+1)P_m) = \int_{-1}^{1} P_n(x) m (m+1) P_m(x) \dif x
+\end{equation}\\
+
+using the relation $((1-x^2)P_n')' = -n(n+1) P_n$, \\
+
+\begin{equation}\nonumber
+\begin{split}
+\int_{-1}^{1} P_n(x) m (m+1) P_m(x) \dif x &= - \int_{-1}^{1} P_n(x) ((1-x^2)P_m(x)')' \dif x \\[2.5ex]
+&= -(1-x^2)P_m ' P_n \bigg|_{-1}^{+1} + \int_{-1}^{1} P_n' (1-x^2) P_m' \dif x\\[2.5ex]
+&=  \int_{-1}^{1} P_n' (1-x^2) P_m' \dif x\\
+\end{split}
+\end{equation}\\
+
+and $n(n+1)(P_n,P_m)$ should also give us the same result, which implies that $n(n+1)=m(m+1)$ or $(P_n,P_m)=0$. The former leads us to a contradiction as we assumed that $n\neq m$, thus $(P_n,P_m)=0$.
+\end{proof}
+\vspace{0.15in}
+
+\begin{lemma}
+	For a polynomial $l(x)$ such that $deg(l) < k$ and $P_k(x)$, \\
+	
+	\begin{equation}\nonumber
+		\int_{-1}^{1} P_k(x) l(x) \dif x = 0
+	\end{equation}\\
+\end{lemma}
+
+\begin{proof}
+As $deg(l)<k$ , due to the spanning property of $P_n$ , $l \in \langle P_0 , \dots P_{deg(l)} \rangle$. And due to the orthonogal property of $P_n$ it follows that such inner product should be 0.
+\end{proof}
+\vspace{0.15in}
+
+\begin{lemma}
+$P_n(x)$ has $n$ simple roots in $(-1,1)$.\\
+\end{lemma}
+
+\begin{proof}
+\nextline
+\begin{enumerate}
+	\item Roots are in $(-1,1)$.
+	\vskip 0.5ex
+	Let $\alpha \in \mathbb{R} \setminus (-1,1)$ such that $P_n(\alpha)=0$. Then $P_n(x) = (x-\alpha)q(x)$ for some $deg(q)<n$ polynomial. Then, due to \textbf{Lem 3},\\
+	
+	\begin{equation}\nonumber
+		0 = \int_{-1}^{1} P_n(x) q(x) \dif x = \int_{-1}^{1} (x-\alpha) q(x)^2 \dif x 
+	\end{equation}\\
+	
+	which is a contradiction as $(x-\alpha) q(x)^2 $ has no sign change in $(-1,1)$.\\
+	\item Roots are real.
+	\vskip 0.5ex
+	Let $\alpha \in \mathbb{C}$ such that $P(\alpha)=0$. Then it implies that $P(\bar{\alpha})=0$. Then we can write $P_n(x)=(x^2 + ax + b)g(x)=h(x)g(x)$ for some $a,b$ such that $h(\alpha)=h(\bar{\alpha})=0$ for some $deg(g)<n$ polynomial $g(x)$. Then again due to \textbf{Lem 3}, \\
+	
+	\begin{equation}\nonumber
+		0 = \int_{-1}^{1} P_n(x) g(x) \dif x = \int_{-1}^{1} h(x)g(x)^2 \dif x
+	\end{equation}\\
+	
+	and again this leads to a contradiction as the integrand has no sign change.\\
+	\item Roots are simple.
+	\vskip 0.5ex
+	Consider the root having multiplicity, let $P_n(x)=(x-\alpha)^2 g(x)$ for some $deg(g)<n$ polynomial $g$, then again using \textbf{Lem 3} as the above cases it leads to contradiction, implying that every roots should be simple.
+\end{enumerate}
+\end{proof}
+
+\vspace{0.15in}
+\subsubsection{Gauss Quadrature}
+\vspace{0.15in}
+
+The main objective here is to find $x_i$ and $w_i$ for a polynomial $p(x)$ such that : \\
+
+\begin{equation}\nonumber
+	\int_{-1}^{1} p(x) \dif x = \sum_{i=1}^{k} p(x_i) w_i
+\end{equation}
 
 \end{document}
