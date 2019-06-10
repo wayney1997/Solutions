@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.6)  12 APR 2019 13:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.6)  29 MAY 2019 13:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -527,7 +527,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 163--164
 Here is how much of TeX's memory you used:
  6478 strings out of 492982
  101682 string characters out of 6134897
- 266475 words of memory out of 5000000
+ 265475 words of memory out of 5000000
  9935 multiletter control sequences out of 15000+600000
  18367 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -548,7 +548,7 @@ onts/type1/public/cm-super/sfcc1095.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb>
 </usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fo
 nts/type1/public/cm-super/sfti1095.pfb>
-Output written on algtop_1_ex.pdf (3 pages, 217503 bytes).
+Output written on algtop_1_ex.pdf (3 pages, 217753 bytes).
 PDF statistics:
  83 PDF objects out of 1000 (max. 8388607)
  60 compressed objects within 1 object stream

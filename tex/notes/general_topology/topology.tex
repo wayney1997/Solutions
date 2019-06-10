@@ -26,6 +26,8 @@
 \usepackage{enumitem}
 \newcommand{\subscript}[2]{$#1 _ #2$}
 
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\nextline}{$ $ \newline \vspace{-0.15in}}
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
 \newcommand{\ball}[2]{$B({#1};{#2})$}
 \newcommand{\overbar}[1]{
@@ -529,6 +531,565 @@ $ $ \newline
 	For $A \subset X$, $A$ is \textbf{nowhere dense} in $X$ if $int(\overbar{A})=\phi$.
 \end{definition}
 
+\vspace{0.15in}
+\subsection{Compactness}
+\vspace{0.15in}
 
+\begin{definition}
+	Let $X$ be a metric space.
+	\begin{enumerate}[label=\arabic*)]
+		\item Let $U_\alpha$ be subsets of $X$. Then $\{ U_\alpha \}_{\alpha \in A}$ is a \textbf{cover} of $X$ if $\bigcup\limits_{\alpha \in A} U_\alpha = X$.
+		\item A cover $\{ U_\alpha \}_{\alpha \in A}$ is an \textbf{open cover} if all $U_\alpha$ are open in $X$.
+		\item Let $\{U_\alpha \}_{\alpha \in A}$ be a cover of $X$. Then $\{ V_\beta \}_{\beta \in B}$ is a \textbf{subcover} of $\{U_\alpha \}_{\alpha \in A}$ if $\{ V_\beta \}_{\beta \in B} \subset \{U_\alpha \}_{\alpha \in A}$ and $\bigcup\limits_{\beta \in B} V_\beta = X$.
+		\item Let $\{U_\alpha \}_{\alpha \in A}$ be a cover of $X$. Then $\{ V_\beta \}_{\beta \in B}$ is a \textbf{finite subcover} of $\{U_\alpha \}_{\alpha \in A}$ if $\{ V_\beta \}_{\beta \in B}$ is a subcover of $\{U_\alpha \}_{\alpha \in A}$ and $B$ is finite. \\
+	\end{enumerate}
+\end{definition}
+
+\begin{example}
+	content...\\
+\end{example}
+
+\begin{definition}
+	A metric space $X$ is \textbf{compact} if every open cover has a finite subcover.\\
+\end{definition}
+
+\begin{remark}
+	Let $X$ be a metric space and $Y$ be a subspace of $X$.\\
+\end{remark}
+
+\begin{theorem}
+	The following are equivalent.
+	\begin{enumerate}[label=\arabic*)]
+		\item $X$ is compact. (cover sense)
+		\item Every sequence in $X$ has a convergent subsequent. 
+		\item $X$ is complete and totally bounded.\\
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+$ $ \newline
+\vspace{-0.15in}
+\begin{enumerate}[label=(\arabic*)]
+	\item  1) $\implies$ 2)
+	\vskip 0.5ex
+	Let $\{x_n\}$ be a sequence in $X$ such that any subsequence of $\{x_n\}$ doesn't converge. Then for each $x\in X$ there exists $\epsilon_x >0$ such that $B(x,\epsilon_x)$ contains only finitely many terms. (if not, there exists a converging subsequence). Then $X = \bigcup\limits_{x \in X} B(x,\epsilon_x)$, which implies that $\{B(x,\epsilon_x)\}_{x\in X}$ is an open cover of $X$. As $X$ is compact by assumption, there exists a finite subcover of  $\{B(x,\epsilon_x)\}_{x\in X}$. Let such finite subcover $\{B(y_i,\epsilon_{y_i})\}_{i=1}^n$ by some $y_1, \dots , y_n \in X$ such that $X = \bigcup\limits_{i=1}^n B(y_i,\epsilon_{y_i})$ for some finite $n \in \mathbb{N}$. Since $\{x_n\}_{n=1}^\infty \subset X$ we have $\{x_n\}_{n=1}^\infty \subset \bigcup\limits_{i=1}^n B(y_i,\epsilon_{y_i})$ which induces a contradiction as $B(x,\epsilon_x)$ contains only finitely many terms and a finite union of such $B(y_i,\epsilon_{y_i})$ couldn't contain such series as a subset as the series has infinite terms.
+	\item 2) $\implies$ 3) (only completeness)
+	\vskip 0.5ex
+	Let $\{x_n\}$ be a Cauchy sequence in $X$. By assumption $\{x_n\}$ has a subsequence $\{x_{n_k}\}$ which converges in $X$. As a Cauchy sequence $\{x_n\}$ has a convergent subseqeunce, $\{x_n\}$ is a converging Cauchy sequence. Thus as any Cauchy sequence converges in $X$, $X$ is complete.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+	compactness $\implies$ completeness $\implies$ closedness \\
+\end{remark}
+
+\begin{theorem}
+	In $\mathbb{R}^n$ let $X$ be a subspace of it. Then TFAE, 
+	\begin{enumerate}[label=\arabic*)]
+		\item $X$ is compact.
+		\item Every sequence in $X$ has a converging subsequence.
+		\item $X$ is closed and bounded. \\
+	\end{enumerate}
+\end{theorem}
+
+The above theorem is also known as the well known \textbf{Heine-Borel theorem.}\\
+
+\begin{lemma}
+	Let $X \subset \mathbb{R}^n$.
+	\begin{enumerate}[label=\arabic*)]
+		\item $X$ is complete $\iff$ $X$ is closed in $\mathbb{R}^n$.
+		\item $X$ is totally bounded $\iff$ $X$ is bounded. \\
+	\end{enumerate}
+\end{lemma}
+
+For general metric spaces, the above doesn't hold, but rather the left to right implication holds.\\
+
+\begin{definition}
+	Let $X$ be a metric space. 
+	\begin{enumerate}[label=\arabic*)]
+		\item $X$ is \textbf{bounded} if there exists $r>0$ such that $d(x,y)<r$ for all $x,y \in X$.
+		\item $X$ is \textbf{totally bounded} if for each $\epsilon > 0$ there are a finite number of open balls $B(x_1 , \epsilon)$, $B(x_2, \epsilon)$, $\dots$ , $B(x_n, \epsilon)$ such that \\
+		\begin{equation}\nonumber
+			X = \bigcup\limits_{i=1}^n B(x_i,\epsilon). \\
+		\end{equation}
+	\end{enumerate}
+\end{definition}
+
+\begin{lemma}
+	For $Y\subset X$, 
+	\begin{enumerate}[label = \arabic*) ]
+		\item $X$ is bounded $\implies$ $Y$ is bounded. 
+		\item $X$ is totally bounded $\implies$ $Y$ is totally bounded.\\
+	\end{enumerate}
+\end{lemma}
+
+\begin{example}
+	content...\\
+\end{example}
+
+\vspace{0.15in}
+\subsection{Seperable, Second Countable, Basis}
+\vspace{0.15in}
+
+\begin{definition}
+	A metric space $X$ is \textbf{seperable} if $X$ has a countable dense subset.
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{example}
+\nextline
+\begin{enumerate}
+	\item A countable metric space is seperable. (trivial)
+	\item $\mathbb{R}$ is seperable as $\exists \mathbb{Q}\subset \mathbb{R}$ such that $\overbar{\mathbb{Q}}=\mathbb{R}$.
+	\item $\mathbb{R}^n$ is also seperable as $\exists \mathbb{Q}^n \subset \mathbb{R}^n$ such that $\overbar{\mathbb{Q}^n}=\mathbb{R}$.
+	\item A compact metric space is seperable.
+	\item If $X$ is seperable and $A \subset X$ then $A$ is also seperable.
+\end{enumerate}
+\end{example}
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $X$ be a metric space. Let $\mathcal{B}$ be a family of some open subsets of $X$. Then $\mathcal{B}$ is a \textbf{base} if every open subset of $X$ is a union of subsets in $\mathcal{B}$. 
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{example}
+\nextline
+\begin{enumerate}
+	\item The family of all open balls of $X$ is a base of $X$.
+	\item The family of all open sets of $X$ is a base of $X$. (trivial)\\
+\end{enumerate}
+\end{example}
+
+\begin{lemma}
+	Let $\mathcal{B} \subset \mathcal{P}(X)$ where $X$ is a metric space. Then $\mathcal{B}$ is a base for open sets of $X$ iff for each $x \in X$ and each open neighborhood $U$ of $x$, there exists $V_x \in\mathcal{B}$ such that $x \in V_x \subset U$.
+\end{lemma}
+
+\begin{proof}
+\nextline
+\begin{enumerate}[label=\roman*)]
+	\item $(\implies)$
+	\vskip 0.5ex
+	Let $U$ be an open neighborhood of $x\in X$. As $\mathcal{B}$ is a base, $U=\bigcup\limits_{\alpha \in A}V_\alpha$ for some $V_\alpha \in \mathcal{B}$. Then for some $\alpha'\in A$, as $x \in U= \bigcup\limits_{\alpha \in A}V_\alpha \implies x \in V_{\alpha'} \subset U$ where $V_{\alpha'}\in \mathcal{B}$.
+	\item $(\impliedby)$
+	\vskip 0.5ex
+	Let $U$ be an open subset of $X$. For each $x\in U$ there exists $V_x \in \mathcal{B}$ such that $x \in V_x \subset U$ by assumption. Now we claim that $U = \bigcup\limits_{x\in U} V_x$ : 
+	\begin{enumerate}[label=(\roman*)]
+		\item $\bigcup V_x \subseteq U$ is obvious since for each $x$, $V_x \subset U$
+		\item $U = \bigcup\limits_{x \in  U}\{x\} \subset \bigcup\limits_{x \in  U} V_x$
+	\end{enumerate}
+	which shows that our claim holds. Thus $\mathcal{B}$ is a basis.
+\end{enumerate}
+\end{proof}
+
+\vspace{0.15in}
+
+\begin{example}
+Then for $\mathbb{R}$ the following are all bases :
+\begin{enumerate}
+	\item $\mathcal{B} = \{ \text{all open subsets of } \mathbb{R} \}$ (trivial)
+	\item $\mathcal{B} = \{ B(x,r) : x\in\mathbb{R} ,r>0 \}$
+	\item $\mathcal{B} = \{ B(x,r) : x\in\mathbb{R},r\in\mathbb{Q},r>0 \}$
+	\vskip 0.5ex 
+	Such family being a basis can be shown using \textbf{Lem 4.} : \\
+	 Choose any $x\in U \subset \mathbb{R}$ where $U$ is an open neighborhood of $x$. As $U$ is open, there exists $r>0$ such that $B(x,r)\in U$. Then we can choose some $r'>0$ in $\mathbb{Q}$ such that $0<r'<r$. Then $x \in B(x,r') \subset B(x,r) \subset U$ where $B(x,r') \in \mathcal{B}$.
+	 \item $\mathcal{B} = \{ B(x,r) : x,r\in\mathbb{Q},r>0 \}$
+	 \vskip 0.5ex 
+	 Suppose for any $x\in U \subset \mathbb{R}$ where $U$ is an open set. Then there exists $r>0$ such that $B(x,r) \subset U$
+\end{enumerate}
+\end{example}
+
+\vspace{0.15in}
+
+\begin{definition}
+	A metric space is \textbf{second countable} if $X$ has a countable base.
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{theorem}
+	For a metric space $X$, $X$ is seperable $\iff$ $X$ is second countable.
+\end{theorem}
+
+\vspace{0.15in}
+
+\begin{remark}
+	For a metric space $X$, $X$ is compact $\iff$ seperable $\iff$ second countable
+\end{remark}
+
+\vspace{0.15in}
+\subsection{Continuous Functions}
+\vspace{0.15in}
+
+\begin{recall}
+	If $f:\mathbb{R} \to \mathbb{R}$ is continuous at $x\in\mathbb{R}$, TFAE : 
+	\begin{enumerate}[label=\arabic*)]
+		\item For a given $\epsilon>0$ there exists $\delta > 0$ s.t $|x-y|<\epsilon \implies |f(x)-f(y)|<\delta$
+		\item For a given $\epsilon>0$ there exists $\delta > 0$ s.t if $y \in B(x,\delta) \implies f(y) \in B(f(x),\epsilon)$
+		\item For a given $\epsilon>0$  $\exists \delta > 0$ s.t $f(B(x,\delta))\subset B(f(x),\epsilon)$
+		\item For a given $\epsilon>0$ $\exists \delta > 0$ s.t $B(x,\delta)\subset f^{-1}(B(f(x),\epsilon))$
+	\end{enumerate}
+\end{recall}
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces. Also let $f:X \to Y$ be a function then :
+	\begin{enumerate}[label=\arabic*)]
+		\item We say that for some $x\in X$, $f$ is \textbf{continuous at} $x$ if for a given $\epsilon > 0 $ there exists $\delta>0$ such that 
+		\begin{equation}\nonumber
+			d_X(x,x') < \delta \implies d_Y(f(x),f(x')) < \epsilon
+		\end{equation}
+		which also can be expressed as, 
+		\begin{equation}\nonumber
+			\exists \delta>0 : B_X(x,\delta) \subset f^{-1}(B_Y(f(x),\epsilon))
+		\end{equation}
+		\item $f$ is said to be continuous if $f$ is continous at $x$ for every $x \in X$.
+	\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{remark}
+	$f:(X,d_x) \to (Y,d_Y)$ is an \textbf{isometry} if for $\forall x,y \in X$ 
+	\begin{equation}\nonumber
+		d_X(x,y) = d_Y(f(x),f(y))
+	\end{equation}
+	holds. This implies that any isometry is a continuous function but not vice versa.
+\end{remark}
+
+\vspace{0.15in}
+
+\begin{theorem}
+Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and $f:X \to Y$ be a function. Then TFAE :
+\begin{enumerate}[label=\arabic*)]
+	\item $f$ is a continuous function.
+	\item For each $x\in X$, if $\{x_n\}$ is a sequence in $X$ s.t $\lim\limits_{n\to \infty} x_n =x $ then $\lim\limits_{n \to \infty}f(x_n)=f(x)$.
+	\item For each open subset $U$ of $Y$, the preimage $f^{-1}(U)$ is open in $X$.
+	\item For each closed subset $E$ of $Y$, the preimage $f^{-1}(E)$ is closed in $X$.\\
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	We will only prove that 1) $\iff$ 3).
+	\begin{enumerate}[label=\roman*)]
+		\item 1) $\implies$ 3)
+		\vskip 0.5ex
+		Let $U$ be an open subset of $Y$. Let $x\in f^{-1}(U)$. Then there exists $\epsilon>0$ such that $f(x) \in B(f(x),\epsilon)\subset U$ as by assumption $f$ is a continuous function. It implies that 
+		\begin{equation}\nonumber
+			x \in f^{-1} (B(f(x),\epsilon)) \subset f^{-1} (U)	\\	\end{equation}
+		Again as $f$ is continuous by assumption, there exists $\delta >0$ such that $B(x,\delta) \subset f^{-1} (B(f(x),\epsilon))$. Thus as there exists $\delta>0$ for $x\in f^{-1}(U)$ such that $B(x,\delta) \subset f^{-1}(U)$, $f^{-1}(U)$ is open. 
+		\item 3) $\implies$ 1)
+		\vskip 0.5ex
+		Let $x \in X$ and suppose $\epsilon >0$ is given. Then as $B(f(x),\epsilon)$ is open in $Y$, by assumption $f^{-1}(B(f(x),\epsilon))$ is also open. As $x$ is in $f^{-1}(B(f(x),\epsilon))$ which is open, there exists $\delta>0$ such that $B(x,\delta)\subset f^{-1}(B(f(x),\epsilon))$. Thus $f$ is a continuous function.
+	\end{enumerate}
+\end{proof}
+
+\vspace{0.15in}
+
+\begin{theorem}
+Let $X,Y$ both be metric spaces with a continuous function $f:X\to Y$. If $X$ is compact then $f(X)$ is also compact.\\
+\end{theorem}
+
+\begin{proof}
+\nextline
+\begin{enumerate}[label=\arabic*)]
+	\item Compactness as sequential compactness :
+	\vskip 0.5ex
+	Let $\{y_n\}_{n=1}^\infty$ be a sequence in $f(X)$. Then there is a sequence $\{x_n\}_{n=1}^\infty$ in $X$ such that for every $i\in \mathbb{N} : f(x_i)=y_i$. Since $\{x_n\}$ is a sequence in $X$ and by assumption as it is compact, there exists a converging subsequence $\{ x_{n_k} \}$ in $X$. Let it converges to $x$, i.e, $x_{n_k}\to x$ as $k \to \infty $. Then $\{ f(x_{n_k}) \}$ is a subsequence of $\{y_n\}=\{f(x_n)\}$, which also converges. This is as $f$ is a continuous function : 
+	\begin{equation}\nonumber
+		\lim\limits_{k\to\infty} f(x_{n_k}) = f \left( \lim\limits_{k\to\infty} x_{n_k} \right) = f(x)
+	\end{equation}
+	which implies that for any sequence in $f(X)$, it has a convergent subsequence, thus $f(X)$ is compact.
+	\item Compactness as cover sense :
+	\vskip 0.5ex
+	Let $\{U_\alpha\}_{\alpha\in A}$ be an open cover of $f(X)$ where for every $\alpha\in A$ it is open in $Y$. Then by definition, 
+	\begin{equation}\nonumber
+		f(X) \subset \bigcup\limits_{\alpha \in A} U_\alpha \implies X \subset f^{-1}\left( \bigcup\limits_{\alpha \in A} U_\alpha  \right) = \bigcup\limits_{\alpha \in A} f^{-1} \left(U_\alpha \right)
+	\end{equation}
+	Since $f$ is continuous, for each $\alpha \in A$, $f^{-1}(U_\alpha)$ are open, and as the above holds $\{f^{-1}(U_\alpha)\}_{\alpha\in A}$ suffices to be an open cover of $X$. Since $X$ is compact by assumption, there exists $\alpha_1 , \dots , \alpha_N$ such that $X \subset \bigcup\limits_{i=1}^N f^{-1}(U_{\alpha_i})$. This implies that 
+	\begin{equation}\nonumber
+	\begin{split}
+	f(X) &\subset f \left( \bigcup\limits_{i=1}^N f^{-1}(U_{\alpha_i}) \right) \\
+	&= \bigcup\limits_{i=1}^N f\left( f^{-1}\left( U_{\alpha_i} \right) \right) \\
+	&\subset \bigcup\limits_{i=1}^N U_{\alpha_i}
+	\end{split}
+	\end{equation}
+	Thus as for any open cover of $f(X)$ as there exists a finite subcover that covers $f(X)$, we can conclude that $f(X)$ is compact too.
+\end{enumerate}
+\end{proof}
+
+\vspace{0.15in}
+\section{Topological Spaces}
+\vspace{0.15in}
+
+\subsection{Topological Spaces}
+\vspace{0.1in}
+
+\begin{definition}
+	Let $X$ be a set. Also let $\mathcal{T}\subset \mathcal{P}(X)$. Then we say $\mathcal{T}$ is a topology of $X$ if 
+	\begin{enumerate}\nonumber
+		\item $\phi,X \in \T$
+		\item For $U_\alpha \in \T$ where $\alpha \in A$ then $\bigcup\limits_{\alpha \in A} U_\alpha \in \T$
+		\item For $U_1,\dots,U_n \in \T$ then $\bigcap\limits_{i=1}^n U_i \in \T$ \\
+	\end{enumerate} 
+\end{definition}
+
+The definition for a topology is simple, it is just a collection of subsets with some conditions, it should be still in it under arbitrary union but under finite intersection.
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $\T$ be a topology for a set $X$. Then we define :
+	\begin{enumerate}[label=\arabic*)]
+		\item $(X,\T)$ is a topological space equipped with $\T$.
+		\item Let $U \in X$. $U$ is open in $X$ if $U\in \T$.
+		\item $U$ is closed in $X$ if $X \setminus U$ is open , i.e $X\setminus U \in \T$.\\
+	\end{enumerate}
+\end{definition}
+
+Two topological spaces are said to be equal if they have thhe same set and topology. For instance $(\mathbb{R} , \{ \phi, \mathbb{R} \})$ and $(\mathbb{R}, \mathcal{P}(\mathbb{R}))$ are different topological spaces.\\
+
+\begin{example}
+\nextline
+\begin{enumerate}[label=\arabic*)]
+	\item For any set $X$, $\T = \{ \phi, X \}$ is a topology. We call such topology the \textbf{trivial topplogy} or the \textbf{indiscrete topology}.
+	\item We can also let $\T = \mathcal{P}(X)$, which also becomes a topology for $X$. We call such $\T$ the \textbf{discrete topology}.\\
+\end{enumerate}
+\end{example}
+
+If open sets where still open sets after arbitraty union and finite intersection, closed sets are still closed after finite union and arbitrary intersection. It implies that as for any topology the null set and the total set is in it, they are always both closed and open.\\
+
+\begin{remark}
+	Let $(X,\T)$ be a topological space.
+	\begin{enumerate}
+		\item $\phi,X$ are closed and open.
+		\item For $X\setminus E_\alpha \in \T$ where $\alpha\in A$ i.e each $E_\alpha$ are closed ,  $\bigcap\limits_{\alpha \in A} E_\alpha$ is also closed.
+		\item For $X\setminus E_1 , \dots , X\setminus E_n \in \T$, i.e each $E_i$ are closed, $\bigcup\limits_{i=1}^n E_i$ is also closed.
+	\end{enumerate}
+\end{remark}
+
+\vspace{0.15in}
+
+\begin{example}
+For the following examples the topology are defined for $\mathbb{R}$.
+\begin{enumerate}[label=\arabic*)]
+	\item $\T=\{ (a,b) : a<b \}$ is not a topology :
+	\vskip 0.5ex As unions of intervals is not necessarily an interval.
+	\item Let $\T_U$ be the collection of all possible unions of $(a.b)$ where $a<b$.
+	\vskip 0.5ex This suffices to be a topology for $\mathbb{R}$. We call such topology the \textbf{usual topology} or the \textbf{standard topology} for $\mathbb{R}$.
+	\item Let $\T_d$ be a collection which includes all of the open sets of $(\mathbb{R},d)$, where $d$ is the usual metric. Then we can easily see that $\T_U = \T_d $. For such situation we say that $\T_U$ is \textbf{metrizable}.
+	\item Now consider the trivial topology $\T_{tr} = \{ \phi , \mathbb{R} \}$.
+	\vskip 0.5ex Then $\T_{tr}$ is not metrizable, i.e there doesn't exist a metric $d$ on $\mathbb{R}$ such that the collection of open sets induced by $d$ becomes $\T_{tr}$. This is because if we suppose such $d$ exists and the collection of all open subsets 
+\end{enumerate}
+\end{example}
+
+\vspace{0.15in}
+
+\begin{example}
+Let $X=\mathbb{R}^n$ with $d : \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}$ which is the usual metric. If we let $\T_d$ to be the collection of all open sets induced by $d$, it becomes a topology for $\mathbb{R}^n$, thus $(\mathbb{R}^n,\T_d)$ is a topological space.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{example}\textbf{(Cofinite Topology)} \\[0.1in]
+	For a set $X$, let us define $\T = \{ U \subset X : |X\setminus U| < \infty \} \cup \{ \phi \}$. Such $\T$ becomes a topology and we call it the \textbf{cofinite topology} or the \textbf{finite conmpliment topology} for $X$. For example for $\mathbb{R}$ if $U,V$ are open under such topology it implies that :
+	\begin{equation}\nonumber
+	\begin{split}
+		\exists N : \mathbb{R} \setminus U = \{ p_1, \dots, p_N \} &\iff U = \mathbb{R} \setminus \{ p_1, \dots, p_N \} \in \T \\
+		\exists M : \mathbb{R} \setminus V = \{ q_1 , \dots , q_M \} &\iff V=\mathbb{R} \setminus \{ q_1 , \dots , q_M \} \in \T\\
+	\end{split}
+	\end{equation}
+	Consider the union and intersection of $U,V$ : 
+	\begin{equation}\nonumber
+	\begin{split}
+		U \cup V &= \mathbb{R} \setminus \left( \{p_i\}_{i=1}^N \cap \{q_i\}_{i=1}^M \right) \\
+		U \cap V &= \mathbb{R} \setminus \left( \{p_i\}_{i=1}^N \cup \{q_i\}_{i=1}^M \right)
+	\end{split}
+	\end{equation}
+	where the finiteness of the compliment of the union is guranteed under arbitrary union, while for the intersection it is only guranteed under finite intersections.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $(X,\T)$ be a topological space, where $x\in S \subset X$.
+	\begin{enumerate}[label=\arabic*)]
+		\item $S$ is an \textbf{open neighborhood} of $x$ if $S$ is open.
+		\item $S$ is a \textbf{neighborhood} of $x$ if $S$ contains an open neoghborhood of $x$, i.e there exists some $U \in \T$ such that $x \in U \subset S$.
+		\item $x$ is an \textbf{interior point} of $S$ if there exists an open set $U \in \T$ such that $x\in U \subset S$.
+		\item The \textbf{interior} of $S$, is defined as $int(S)=\{ y\in S : y \text{ is an interior point of } S \}$
+		\item Let $y\in X$ then $y$ is \textbf{adherent} to $S$ if for each open neighborhood $U$ of $y$, $U\cap S \neq \phi$.
+		\item The \textbf{closure} of $S$ is defined as $\overbar{S}=\{ y\in X : y \text{ is an adherent point of }S \}$.
+	\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{remark}
+	Same as the case for metric spaces the following always hold for $S\subset X$ where $X$ is a topological space. \\
+	\begin{equation}\nonumber
+		int(S) \subset S \subset \overbar{S}
+	\end{equation}\\
+	This is held naturally by the definition we stated above.
+\end{remark}
+
+\vspace{0.15in}
+
+\begin{theorem}
+	For a topological space $(X,\T)$ where $S \subset X$ , 
+	\begin{enumerate}[label=\arabic*)]
+		\item $S$ is open $\iff$ $S=int(S)$
+		\item $int(S)$ is open.
+		\item $S$ is closed $\iff$ $S=\overbar{S}$.
+		\item $\overbar{S}$ is closed.\\
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We will just prove for the first two theorems as we can use similar arguments for closed sets.
+\begin{enumerate}[label=\arabic*)]
+	\item $S$ is open $\iff$ $S=int(S)$
+	\begin{enumerate}[label=\roman*)]
+		\item $S$ is open $\implies$ $S=int(S)$
+		\vskip 0.5ex Let $x\in S$. In order to show the above implication we have to show that for any $x$, there exists an open set $U$ such that $x\in U \subset S$. But by assumption we can always choose such $U$ to be $S$ which is open and also a trivial subset of $S$. 
+		\item $S$ is open $\impliedby$ $S=int(S)$
+		\vskip 0.5ex As $S=int(S)$, for each $x\in S$ there exists an open neighborhood $U_x$, i.e $x\in U_x \subset S$. Then $S=\bigcup\limits_{x \in  S}U_x$ as 
+		\begin{enumerate}
+			\item $S=\bigcup\limits_{x \in  S}\{x\}\subset \bigcup\limits_{x \in  S}U_x$
+			\item As for all $x\in S : U_x \subset S$ which implies that $\bigcup\limits_{x \in  S}U_x \subset S$
+		\end{enumerate}
+	As $S$ is an union of open neighborhoods, it is open.\\
+	\end{enumerate}
+	\item $int(S)$ is open.
+	\vskip 0.5ex It suffices to show that $int(S) \subset int(int(S))$. Let $x\in int(S)$, then there exists an open set $U$ such that $x\in U \subset S$ by definition. Let $y\in U$. Then $y\in U \subset S$ and as $U$ is open, $y\in int(S)$. This implies that $U\subset int(S)$, which again implies that $x\in U \subset int(S)$ where $U$ is open. Thus $x\in int(S) \implies x\in int(int(S))$.
+\end{enumerate}
+\end{proof}
+
+\begin{example}
+	Let $X=\{ a,b,c \}$ with the topology $\T$ given as $\T=\{ \phi,X,\{a\},\{c\},\{a,c\} \}$.
+	\begin{enumerate}
+		\item For $S=\{a,b\}$ what is $int(S)$?
+		\vskip 0.5ex $\implies$ $int(S)=\{ a \}$
+		\item For the same $S$ what is $\overbar{S}$?
+		\vskip 0.5ex $\implies$ $\overbar{S}=\{a,b\}$ which can be derived in many ways : \\
+		\begin{enumerate}
+			\item Directly from the definition of adherent points.
+			\vskip 0.5ex j
+			\item Find all closed sets $E$ such that $S\subset E$.
+			\vskip 0.5ex Closed sets : $\{ \phi, X, \{b,c\} , \{a,b\},\{b\} \}$. Then such $E$ shows up to be $X,\{a,b\}$. Then the closure of $\overbar{S} = X \cap \{a,b\} = \{a,b\}$.
+			\item Fortunately as $X\setminus S = \{c\} \in \T$ we know $S$ is closed, thus $\overbar{S}=S$
+		\end{enumerate}
+	\end{enumerate}
+\end{example}
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $(X,\T)$ be a topological space where $S\subset X$. Then the \textbf{boundary} of $S$ denoted as $\partial S$ is defined as $\partial S = \overbar{S} \cap \overbar{X\setminus S}$.
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{definition}
+	\nextline
+	\begin{enumerate}
+		\item For a topological space $X$, a \textbf{sequence} $\{x_n\}$ in $X$ is a function $f:\mathbb{N} \to X$ or its image, $x_n=f(n)$.
+		\item A sequence $\{x_n\}_{n=1}^\infty$ in $X$ \textbf{converges} to $x\in X$ if for each open neighborhood $U$ of $x$, there exists $N>0$ such that $x_n\in U$ for all $n \geq N$.
+	\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{example}
+	Let $X=(\mathbb{R},\{\phi,\mathbb{R}\})$ be a topological space. Let $x_n$ be a sequence in $X$ where for all $n\in \mathbb{N} : x_n=0$. Under such circumstances, any $y\in\mathbb{R}$ is the limit of $\{x_n\}$. Let $U$ be an open neighborhood of $y$. As the trivial topology is given, $U=\mathbb{R}$. Take $N=1$, then for all $n\geq N=1$, as $x_n\in U \subset \mathbb{R}$, $y$ is the limit of $\{x_n\}$.
+\end{example}
+
+\vspace{0.15in}
+\subsection{Subspaces}
+\vspace{0.1in}
+
+\begin{lemma}
+	Let $(X,\T_X)$ be a topological space where $S\subset X$. Let $\T_S = \{U \cap S : S \in\T_X \}$. Then such $\T_S$ suffices to be a topology for $S$.
+\end{lemma}
+
+\vspace{0.15in}
+
+\begin{definition}
+Using the same notations from the previous Lemma, 
+\begin{enumerate}[label=\arabic*)]
+	\item $\T_S$ is called the \textbf{relative topology} of $S$ inherited from $(X,\T_X)$.
+	\item Let $V \subset S$. $V$ is \textbf{(relatively) open} in $S$ if $V \in \T_S$.
+	\item Similarly, $V$ is \textbf{(relatively) closed} in $S$ if $S\setminus V \in \T_S$.
+	\item  $(S,\T_S)$ is a \textbf{subspace} of $(X,\T_X)$.
+\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{example}
+Consider $X=\mathbb{R}$ and $S=[0,\infty)\subset X$, where the usual topology $\T_X$ is given for $X$. Then $\T_S = \{ U \cap [0,\infty) : U \in \T_X \}$ which is the relative topology of $S$. Of course $(S,\T_S)$ is a subspace of $(X,\T_X)$. Then we can ask if we equip $S$ with its discrete topology $\T_{disc}$ does it also become a subspace of $X$? The answer is no, of course. Such question reduces into check whether the inherited relative topology $\T_S$ and the discrete topology $\T_{disc}$ is same, which is not. Consider $\{0\}\in \T_{disc}$, as any subset is open when the discrete topology is given, which is not open when $\T_S$ is given.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{example}
+Consider $X=\{ a,b,c \}$ where the topology is given as $\T_X = \{ \phi, X, \{a\}, \{a,b\} \}$. If we let $S=\{b,c\} \subset X$ then we can directly derive the relative topology $\T_S = \{ U \cap \{b,c\} : U\in \T_X \}= \{ \phi, S , \{b\} \}$.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{example}
+	Let $X$ be a set equipped with the discrete topology $\T_X=\mathcal{P}(X)$. Then the relative topology $\T_S$ of any $S\subset X$ is $\T_S =\{ U \cap S : U\in \mathcal{P}(X) \} = \mathcal{P}(S)$. Thus this tells us that the relative topology inherited by a discrete topology is also a discrete topology.
+\end{example}
+
+\vspace{0.15in}
+\subsection{Continuous Functions}
+\vspace{0.1in}
+
+\begin{definition}
+	Let $(X,\T_X)$ and $(Y,\T_Y)$ both be topological spaces where $f:X\to Y$ be a function. 
+	\begin{enumerate}[label=\arabic*)]
+		\item $f$ is \textbf{continuous} if for every open set $U$ of $Y$, $f^{-1}(U)$ is open in $X$. In other words, for any $U\in \T_Y \implies f^{-1}(U)\in \T_X$.
+		\item $f$ is \textbf{continuous at} $x\in X$ if for an open neighborhood  $U$ of $f(x)$ there exists an open neighborhood $V$ of $x$ such that $x\in V \subset f^{-1}(U)$
+	\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{lemma}
+	$f$ is continuous $\iff$ $f$ is continuous at $x$ for all $x\in X$.
+\end{lemma}
+
+\vspace{0.15in}
+
+\begin{theorem}
+Let $X,Y,Z$ all be topological spaces where the topology is given as $\T_X,\T_Y,\T_Z$ respectively. If $f:X\to T$ and $g: Y\to Z$ are continuous functions then $g\circ f : X \to Z$ is also a continuous function.\\
+\end{theorem}
+
+\begin{proof}
+	Let $U\in \T_Z$, and since $g$ is continuous $g^{-1}(U) \in \T_Y$. Also since $f$ is continuous, $f^{-1} \left( g^{-1}(U) \right) \in \T_X$. As $f^{-1} \left( g^{-1}(U) \right) = (g\circ f)^{-1}(U)$, for any $U\in \T_Z \implies (g\circ f)^{-1}(U) \in \T_X$ thus $g\circ f$ is also continuous.
+\end{proof}
+
+\vspace{0.15in}
+
+Continuous functions gurantees that the preimage of an open set is also open in the domain, but it is not always guranteed that the image of an open set it open. Such maps which map open sets to open sets are called as \textbf{open maps}.\\
+
+\begin{example}
+	Consider $f:\mathbb{R}\to \mathbb{R}$ which maps $x\mapsto x^2$ where each $\mathbb{R}$ is equipped with the usual topology. Then $f$ is a continuous function but not an open map as $f((-1,1))=[0,1)\not\in \T_\mathbb{R}$ while $(-1,1) \in \T_\mathbb{R}$.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $X,Y$ be topological spaces where $f:X\to Y$ is a function. Then $f$ is a homeomorphism if : 
+	\begin{enumerate}[label=\arabic*)]
+		\item $f$ is a bijection.
+		\item $f$ and $f^{-1}$ are both continuous.
+	\end{enumerate}
+\end{definition}
 
 \end{document}

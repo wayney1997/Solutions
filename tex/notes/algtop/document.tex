@@ -1,0 +1,22 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,arrows}
+\begin{document}
+
+
+\begin{tikzpicture}
+\draw[postaction={decorate},decoration={
+    markings,
+    mark=at position .145 with {\arrow{latex}},
+    mark=at position .375 with {\arrow{latex}},
+    mark=at position .395 with {\arrow{latex}},
+    mark=at position .635 with {\arrowreversed{latex}},
+    mark=at position .875 with {\arrowreversed{latex}},
+    mark=at position .895 with {\arrowreversed{latex}}
+    }
+  ]
+    (0,-1) -- +(2,0) -- +(2,2) -- +(0,2) -- cycle;
+
+
+\end{tikzpicture}
+\end{document}

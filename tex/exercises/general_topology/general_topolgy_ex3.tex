@@ -1,0 +1,228 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{changepage}
+\usepackage{titlesec}
+\usepackage{sectsty} 
+\sectionfont{\centering \normalfont \scshape}
+\subsectionfont{\normalfont}
+\subsubsectionfont{\normalfont}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancyplain} 
+\fancyhead{} 
+\fancyfoot[L]{} 
+\fancyfoot[R]{} 
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt} 
+\setlength{\headheight}{13.6pt} 
+
+\usepackage{mathtools}
+\usepackage{enumitem}
+\newcommand{\subscript}[2]{$#1 _ #2$}
+
+\newcommand{\nextline}{$ $ \newline \vspace{-0.15in}}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+\newcommand{\ball}[2]{$B({#1};{#2})$}
+\newcommand{\overbar}[1]{
+	\mkern 1.5mu \overline{\mkern-1.5mu\raisebox{0pt}[\dimexpr\height+0.5mm\relax]{$#1$}\mkern-1.5mu}\mkern 1.5mu
+}
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Konkuk University Dept. Of Physics} \\ [25pt] %Konkuk University Dept. of Physics
+	\horrule{1pt} \\[0.4cm] 
+	\huge General Topology, Exercises 3 \\
+	\vspace{0.1in}
+	\Large 2019 Spring Semester
+	\horrule{1pt} \\[0.4cm] 
+}
+
+\author{Youngwan Kim} 
+\date{\normalsize\today} 
+%\newtheorem{theorem}{Thm}
+%\newtheorem{definition}{Def}
+%\newtheorem{examples}{Examples}
+%\newtheorem{example}{Ex}
+%\newtheorem{lemma}{Lem}
+%\newtheorem{corollary}{Cor}
+\newtheorem*{remark}{Remark}
+\newtheorem*{recall}{Recall}
+\newtheorem{problem}{Problem}
+
+\begin{document}
+	
+\maketitle	
+\vspace{0.25in}
+
+\begin{problem}
+	Is $\mathbb{Z}$ compact? Are $\mathbb{Q}$ and $\mathbb{R}\setminus\mathbb{Q}$ compact?
+\end{problem}
+
+\begin{proof}
+	As all of them are subsets of $\mathbb{R}$ we could apply Heine-Borel to check if such spaces are compact or not. 
+	\begin{enumerate}
+		\item $\mathbb{Z}$ is not compact. 
+		\vskip 0.5ex 
+		$\mathbb{Z}$ is not bounded. 
+		\item $\mathbb{Q}$ is not compact.
+		\vskip 0.5ex
+		As we know that $\overbar{\mathbb{Q}} = \mathbb{R}$, it is not closed. Thus it is not compact. 
+		\item $\mathbb{R}\setminus\mathbb{Q}$ is not compact.
+		\vskip 0.5ex
+		Again as  $\overbar{\mathbb{R}\setminus\mathbb{Q}} = \mathbb{R}$, it is not compact. 
+	\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Show that a finite metric space is compact.
+\end{problem}
+
+\begin{proof}
+Let $\{x_n\}_{n=1}^\infty$ be a sequence in a finite metric space $X=\{a_1 ,\dots,a_N \}$. Then for at least one element $a_i$ of $X$, the sequence would take it as a value finitely many times. If not, it implies that for every finite element of $X$ it only appears finite times in the sequence, which contradicts the assumption that the sequence is infinite. Thus for any sequences in a finite metric space, we can find a converging subsequence, thus $X$ is compact.
+\end{proof}
+
+\begin{problem}
+	Is $S^1 \subset \mathbb{R}^2$ compact?
+\end{problem}
+
+\begin{proof}
+	Yes $S^1$ is compact. As it is a subspace of $\mathbb{R}^2$ we can apply Heine-Borel. $S^1$ is bounded as we can see that for any $x,y \in S^1$, there exists some $\epsilon>0$ such that $d(x,y)\leq 2$. Also consider a continuous function $F(x,y)=x^2 + y^2 - 1$. As $\{0\}$ is a closed set in $\mathbb{R}^2$, $F^{-1}(0)$ should also be a closed set too. Here $F^{-1}(0)={(x,y)\in\mathbb{R}^2 : a^2 + y^2 = 1}=S^1$, thus we can also see that $S^1$ is closed too. Thus $S^1$ is compact. 
+\end{proof}
+
+\begin{problem}
+	Is $B^2 \subset \mathbb{R}^2$ compact? Also is $int(B^2)$ compact?
+\end{problem}
+
+\begin{proof}
+Again we can apply Heine-Borel.
+	\begin{enumerate}
+		\item $B^2$ is compact.
+		\vskip 0.5 ex
+		First $B^2$ is closed as $\overbar{B^2}=B^2$. $B^2$ is also bounded as for any $x,y \in B^2$, there exists $\epsilon>0$ such that $d(x,y)<2+\epsilon$.
+		\item $int(B^2)$ is not compact. 
+		\vskip 0.5ex
+		$int(B^2)=\{(x,y)\in \mathbb{R}^2 : x^2 + y^2 < 1\}$ is bounded as for any $x,y \in int(B^2)$, $d(x,y)<2$ but it is not closed as $\overbar{int(B^2)}=\phi\neq B^2$.
+	\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Let $A=\{ (x,y)\in \mathbb{R}^2 : x \geq 0 \}$. Is $A$ compact?
+\end{problem}
+
+\begin{proof}
+	$A$ is closed but not bounded, thus $A$ is not compact.
+\end{proof}
+
+\begin{problem}
+	Let $A=\{ (x,y)\in \mathbb{R}^2 : x \neq 0 \text{ and } y=1/x \}$. Is $A$ compact?
+\end{problem}
+
+\begin{proof}
+	$A$ is not compact.
+\end{proof}
+
+\begin{problem}
+	Show that TFAE. Recall that a metric space $X$ is bounded if there exists $b > 0$ such that $d(x,y) < b$ for all $x,y \in X$.
+	\begin{enumerate}[label=\arabic*)]
+		\item $X$ is bounded.
+		\item There exists $b>0$ such that $d(x,y)\leq b$ for all $x,y \in X$.
+		\item There exists $p \in X$ and $r > 0$ such that $X \subset B(p,r)$.
+		\item There exists $p \in X$ and $r > 0$ such that $d(p,x)\leq r$ for all $x \in X$.
+	\end{enumerate}
+\end{problem}
+
+\begin{proof}
+\nextline
+\begin{enumerate}
+	\item 1) $\implies$ 2) 
+	\vskip 0.5ex 
+	$d(x,y)<b \implies d(x,y)\leq b$
+	\item 2) $\implies$ 3)
+	\vskip 0.5ex
+	For such $b$ of assumption, we can see that $X \in B(p,b+\epsilon)$.
+	\item 3) $\implies$ 4)
+	\vskip 0.5ex
+	$d(p,x)<r \implies d(p,x)\leq r $
+	\item 4) $\implies$ 1)
+	\vskip 0.5ex
+	$d(x,y) \leq d(x,p) + d(p,y) \leq 2r$ then $^\exists \epsilon >0$ such that $d(x,y)<2r+\epsilon$.
+\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Show that if $A$ and $B$ are bounded subsets of $X$ then $A \cup B$ and $A \cap B$ are also bounded.
+\end{problem}
+
+\begin{proof}
+Let $r_A,r_B>0$ such that each for any $x,y\in A$, $d(x,y)<r_A$ and for any $x,y \in B$, $d(x,y)<r_B$.
+\begin{enumerate}
+	\item $A\cap B$
+	\vskip 0.5ex
+	As $A \cap B \subset A$ and $A \cap B \subset B$ and $A,B$ are bounded $A \cap B$ is also bounded.
+	\item $A \cup B$
+	For arbitrary $x,y\in A \cup B$, where $a\in A$ and $b \in B$ is fixed,\\
+	\begin{equation}\nonumber
+		d(x,y) \leq d(x,a) + d(a,b) + d(b,y) \leq r_1 + d(a,b) + r_2
+	\end{equation}
+\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Let $X$ be a metric space with the discrete metric. Show that $X$ is compact iff $X$ is finite.
+\end{problem} 
+
+\begin{proof}
+	Suppose $X$ is infinite. Then $\{ \{x\} \}_{x\in X}$ is an open cover of $X$ since discrete metric is given. But this open cover couldn't have a finite subcover as if we suppose $\{\{x_1\},\dots,\{x_n\} \}$ as a finite subcover of $\{\{x\}\}_{x\in X}$ we can easily check that such finite subcover doesn't actually covers $X$. Thus our initial assumption of $X$ being infinite is wrong. 
+\end{proof}
+
+\begin{problem}
+	Prove or disprove : If $A_1$ and $A_2$ are compact subspaces of a metric space $X$, then $A_1 \cup A_2$ is also compact.
+\end{problem}
+
+\begin{proof}
+	Consider a open cover $\{U_\alpha\}_{\alpha \in A}$ that covers $A_1 \cup A_2$. As $A_1$ and $A_2$ are each a subset of $A_1 \cup A_2$, $\{U_\alpha\}_{\alpha \in A}$ is also a cover of $A_1 \cup A_2$. Also as both are compact, there exists a finite subcover of $\{U_\alpha\}_{\alpha \in A}$, which implies that $\exists \alpha_1, \alpha_2, \dots \alpha_N \in A$ such that $A_1 = \bigcup\limits_{i=1}^N U_{\alpha_i}$ and $\exists \beta_1,\dots,\beta_M \in A$ such that $A_2 = \bigcup\limits_{j=1}^M U_{\beta_j}$. Then we can say that there exists a finite subcover of $\{U_{\alpha_i}\} \cup \{U_{\beta_j}\}$ of $\{U_\alpha\}_{\alpha \in A}$, such that $A_1 \cup A_2 =  \bigcup\limits_{i=1}^N U_{\alpha_i} \cup \bigcup\limits_{j=1}^M U_{\beta_j}$. Thus $A_1 \cup A_2 $ is also compact.
+\end{proof}
+
+\begin{problem}
+	Prove or disprove : If $A_1$ and $A_2$ are compact subspaces of a metric space $X$, then $A_1 \cap A_2$ is also compact.
+\end{problem}
+
+\begin{proof}
+Let $\{U_\alpha\}_{\alpha\in A}$ be a open cover of $A_1 \cap A_2$. Consider $X\setminus A_2$ as a subset of $X$. As $A_2$ is a compact subset of $X$, it is complete, which implies it is closed in $X$ thus the complement $X \setminus A_2$ is open in $X$. Then we can now consider another open cover $\{U_\alpha\}_{\alpha\in A} \cup \{X \setminus A_2\}$ which covers $A_1$. Since $A_1$ is compact there exists a finite subcover $\{U_{\alpha_i}\}_{i=1}^N \cup \{X \setminus A_2\}$ for $^\exists \alpha_1,\dots,\alpha_N \in A$ such that $A_1 \subset \bigcup\limits_{i=1}^N U_{\alpha_i} \cup (X \setminus A_2)$. As $A_1 \cap A_2 \subset A_1$, we can also conclude that :\\
+
+\begin{equation}\nonumber
+	A_1 \cap A_2 \subset \bigcup\limits_{i=1}^N U_{\alpha_i} \cup (X \setminus A_2)
+\end{equation}\\
+
+But notice that $(A_1 \cap A_2) \cap (X \setminus A_2) = \phi$ , which implies that : \\
+
+\begin{equation}\nonumber
+		A_1 \cap A_2 \subset \bigcup\limits_{i=1}^N U_{\alpha_i}
+\end{equation}\\
+
+which directly shows us that there exists a finite subcover $\{U_{\alpha_i}\}_{i=1}^N$ for $A_1 \cap A_2$. 
+\end{proof}
+
+\begin{problem}
+	Let $\mathcal{B} = \{ (a,\infty) : a \in \mathbb{R} \}$. Is $\mathcal{B}$ a base of open sets in $\mathbb{R}$ with the usual metric?
+\end{problem}
+
+\begin{proof}
+No. Consider $0 \in \mathbb{R}$ and a neighborhood of it, $(-\epsilon,\epsilon)$. Then $\nexists V \in \mathcal{B}$ such that $0 \in V \subset (-\epsilon,\epsilon)$, thus $\mathcal{B}$ fails to be a basis of $\mathbb{R}$.
+\end{proof}
+
+\begin{problem}
+	Let $X$ be a metric space with the discrete metric. Find all possible bases of open sets in $X$.
+\end{problem}
+
+\begin{proof}
+	First we claim that for such circumstances $\mathcal{B}$ is a basis iff for $\forall x \in X : \{x\} \in \mathcal{B}$. The only if statement is pretty obvious as the discrete metric is given, any subset of $X$ is an open set in $X$. Now for the other direction let us assume that for some $x_0 \in X$, $\{x_0\} \notin \mathcal{B}$. Then for $\{x_0\}$ which is an open set in $X$, $\nexists V \in \mathcal{B}$ such that $x_0 \in V \subset \{x_0\}$, which implies that such $\mathcal{B}$ fails to be a basis. Thus as our assumption faced a contradiction, it is shown that $\forall x \in X : \{x\} \in \mathcal{B}$ for $\mathcal{B}$ in order to be a base.
+\end{proof}
+\end{document} 

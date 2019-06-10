@@ -5,6 +5,8 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{tikz-cd}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,arrows}
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{changepage}
@@ -735,5 +737,277 @@ Let $E,X$ be topological spaces, where $p:E\to X$ is a well defined map.\\
 		\item For an open subset $U$ of $X$ which is evenly covered by $p$ such that $p^{-1}(U)=\bigsqcup\limits_{\alpha \in A} U_\alpha$, each $U_\alpha$ is called a \textbf{sheet} of $p^{-1}(U)$.
 	\end{enumerate}
 \end{definition}
+
+\vspace{0.15in}
+
+%-------------- MID/FINAL BORDER ----------------%
+
+\begin{theorem}
+Let $p:(E,e_0) \to (X,x_0)$ be a covering map. Then the induced homomorphism $p_\ast : \pi_1(E,e_0) \to \pi_1(X,x_0)$ is injective.\\
+\end{theorem}
+
+\begin{proof}
+	Let $\tilde{\sigma} :[0,1] \to E$ such that $\tilde{\sigma}(0)=\tilde{\sigma}(1)=e_0$. Also let $\sigma = p \circ \tilde{\sigma} : [0,1] \to X$. Then $\tilde{\sigma}$ is a lift of $\sigma$ by definition. Also then it implies that $[\sigma]=p_\ast ([\tilde{\sigma}])$. To show that $p_\ast$ is injective, it suffices to show that $p_\ast([\tilde{\sigma}])=[x_0] \implies [\tilde{\sigma}]=[e_0]$. As 
+	\begin{equation} \nonumber
+		p_\ast([\tilde{\sigma}])=[x_0] \implies p \circ \tilde{\sigma} \simeq x_0 = p(e_0)
+	\end{equation}
+	and applying the homotopy lift theorem, we can show that $\tilde{\sigma} \simeq e_0$ which implies that $[\tilde{\sigma}]=[e_0]$.
+\end{proof}
+
+This theorem states us that while covering spaces get \textit{bigger} as they cover more and more, the fundamental group of them get \textit{smaller and smaller}. If it gets small until the biggest covering space has a trivial fundamental group recall that we called such cover an \textbf{universal cover}.
+
+\vspace{0.15in}
+
+\begin{theorem}
+	Let $p:E\to X$ be a covering map. Then, 
+	\begin{enumerate}[label=\arabic*)]
+		\item For $x_0,x_1 \in X$, $|p^{-1}(x_0)|=|p^{-1}(x_1)|$
+		\item For $x\in X$, $|p^{-1}(x)| = [\pi_1(X) : p_\ast(\pi_1(E))]$
+	\end{enumerate}
+\end{theorem}
+
+\vspace{0.15in}
+
+\begin{example} 
+	Consider $p:\mathbb{R} \to S^1$ where $t \mapsto e^{2\pi i t}$. Then $p^{-1}(1)=\mathbb{Z}$ and $p^{-1}(-1)=\frac{1}{2}+\mathbb{Z}$.
+	\begin{enumerate}[label=(\arabic*)]
+		\item $|p^{-1}(-1)|=|p^{-1}(1)|$ as $|p^{-1}(\mathbb{Z})|=|p^{-1}(\frac{1}{2}+\mathbb{Z})|$
+		\item $\pi(S^1)\simeq \mathbb{Z}$ and $\pi(\mathbb{R})=0$ which implies that $p_\ast(\pi(\mathbb{R}))=0$ then :
+		\begin{equation}\nonumber
+			[\pi_1(S^1):p_\ast(\pi(\mathbb{R}))] = [\mathbb{Z}:0] = |\mathbb{Z}|
+		\end{equation}
+		whcih is equal to $|p^{-1}(1)|$.
+	\end{enumerate}
+\end{example}
+
+\vspace{0.15in}
+
+\begin{example}
+	Consider $p:S^1\to S^1$ where $z \mapsto z^2$. Then $p^{-1}(1)=\{+1,-1\}$ and $p^{-1}(-1)=\{-i,+i\}$.
+	\begin{enumerate}[label=(\arabic*)]
+		\item  $|p^{-1}(-1)|=|p^{-1}(1)|=2$
+		\item Let $p_\ast : \pi_1(S^1) \to \pi_1(S^1)$ such that $n \mapsto 2n$. Then as $\pi_1(S^1)\simeq \mathbb{Z}$, $p_\ast(\pi_1(S^1))\simeq 2\mathbb{Z}$. Then :
+		\begin{equation}\nonumber
+			[\pi_1(S^1):p_\ast(\pi(S^1))] = [\mathbb{Z} : 2\mathbb{Z}] = 2
+		\end{equation}
+		which is equal to $|p^{-1}(1)|$.\\
+	\end{enumerate}
+\end{example}
+
+\begin{definition}
+	Let $p:E\to X$ be a covering map. $E$ is called a \textbf{n-fold covering space} if $|p^{-1}(x)|=n \in \mathbb{N}$ for $x\in X$.\\
+\end{definition}
+
+ Such $n$ is well defined due to \textbf{Thm 15}. For covering spaces such that $p^{-1}(x)=\mathbb{Z}$ we call it an \textbf{infinite (cyclic) covering space} or a \textbf{$\mathbb{Z}$ covering space}.
+
+\vspace{0.15in}
+
+\begin{recall}
+	The 2 dimensional real projective space $\mathbb{R}P^2$ can be defined as 
+	\begin{enumerate}[label=\arabic*)]
+		\item $\left(\mathbb{R}^3 \setminus \{0\} \right)/_{x \sim \lambda x}$ where $\lambda \in \mathbb{R}\setminus \{0\}$.
+		\item $S^2 /_{x \sim - x}$ 
+		\item $S^2_+ /_{x \sim - x}$ where $x\in S^1$
+		%\item The following construction using quotient topology: %\\[0.15in]
+		%\begin{tikzpicture}
+
+		%\draw[postaction={decorate},decoration={
+		%	markings,
+		%	mark=at position .145 with {\arrow{latex}},
+		%	mark=at position .375 with {\arrow{latex}},
+		%	mark=at position .395 with {\arrow{latex}},
+		%	mark=at position .635 with {\arrowreversed{latex}},
+		%	mark=at position .875 with {\arrowreversed{latex}},
+		%	mark=at position .895 with {\arrowreversed{latex}}
+	%	}
+	%	]
+	%	(0,-1) -- +(2,0) -- +(2,2) -- +(0,2) -- cycle;
+	%
+	%	\end{tikzpicture} 
+	\end{enumerate}
+\end{recall}
+
+\vspace{0.15in}
+
+\begin{theorem}
+	$\pi_1(\mathbb{R}P^2) \simeq \mathbb{Z}_2$.\\
+\end{theorem}
+
+\begin{proof}
+Let $p:S^2 \to \mathbb{R}P^2$ as $x \mapsto [x]$ which is given by the equivalence of $x \sim -x$. Then such $p$ becomes a 2-fold covering map as $p^{-1}(x) = \{+x,-x\}$ for any $x\in S^2$. Then applying \textbf{Thm 15}, we can see that 
+\begin{equation} \nonumber
+	[ \pi_1(\mathbb{R}P^2):p_\ast(\pi_1(S^2))] = [\pi_1(\mathbb{R}P^2):0] =2
+\end{equation}
+which implies that $|\pi_1(\mathbb{R})P^2|=2$. As for any finite groups with order 2 are isomorphic to $\mathbb{Z}_2$ we can conclude that $\mathbb{R}P^2 \simeq \mathbb{Z}_2$.
+\end{proof}
+
+\vspace{0.15in}
+
+\begin{theorem}
+If $p_1 : E_1 \to X_1$ and $p_2 : E_2 \to X_2$ are covering maps, then \\
+\begin{equation}\nonumber
+	p : E_1 \times E_2 \to X_1 \times X_2\\
+\end{equation}
+is also a covering map. 
+\end{theorem}
+
+
+\begin{example}
+	Consider two covering maps $p_1 : \mathbb{R} \to S^1$ and $p_2 : \mathbb{R} \to S^1$ which both maps $t \mapsto e^{2\pi i t}$. Then the following product $p_1 \times p_2$ is also a covering map : 
+	\begin{equation}\nonumber
+		p_1 \times p_2 : \mathbb{R}^2 \to S^1 \times S^1 = T^2
+	\end{equation}
+	is also a covering map.
+\end{example}
+
+\vspace{0.15in}
+
+%----------------------------------
+
+\section{Homotopic Maps}
+\vspace{0.15in}
+
+\begin{recall}
+	We dealt with a special map $r:A\subset X \to X$, which we called it asa retraction map, which makes the following diagram commutative : \\
+	\[
+	\begin{tikzcd}	
+	& X \arrow[r,"r"] &A \\
+	& A \arrow[u,hook',"\iota_A"] \arrow[dashrightarrow]{ru}[swap]{id_A}
+	\end{tikzcd}	
+	\]
+	
+	where $\iota_A$ is the trivial inclusion map.
+\end{recall}
+
+Such retraction was somehow useful but still it doesn't give us a lot of information. So we define such maps :
+
+\vspace{0.15in}
+
+\begin{definition}
+	Let $A\subset X$, and $\iota_A : A \hookrightarrow X$ be the inclusion map.
+	\begin{enumerate}[label=\arabic*)]
+		\item A map $r:X\to A$ is a \textbf{deformation retract} if $r \circ \iota_A = id_A$ and $\iota_A \circ r \simeq id_X$. That is, there exists $F:X\times[0.1] \to X$ such that $F(x,0)=(\iota_A \circ r)(x)$ and $F(x,1)=x$ for any $x\in X$.
+		\item A map  $r:X\to A$ is a \textbf{strong deformation retract} if $r \circ \iota_A = id_A$ and $\iota_A \circ r \simeq id_X$ with $rel$ $A$ condition. That is, there exists $F:X \times [0,1] \to X$ such that $F(x,0)=(\iota_A \circ r)(x)$, $F(x,1)=x$ and $F(a,t)=a$ for $\forall t \in [0,1]$ and $a \in A$.
+	\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{theorem}
+If $r:X\to A \subset X$ is a deformation retract, then $r_\ast : \pi_1(X) \to \pi_1(A)$ is an isomorphism. Hence $\pi_1(X) \simeq \pi_1(A)$.\\
+\end{theorem}
+
+\begin{proof}
+	Let $r:X \to A$ be a deformation retraction. Then,\\
+	\begin{equation}\nonumber
+		\begin{cases}
+		r \circ \iota_A= id_A &\\
+		\iota_A \circ r \simeq id_X &
+		\end{cases}
+	\end{equation}\\
+	holds which implies,\\
+	\begin{equation}\nonumber
+		\begin{cases}
+		r_\ast \circ (\iota_A)_\ast= id_{\pi_1(A)} &\\
+		(\iota_A)_\ast \circ r_\ast \text{ is an isomorphism}&
+		\end{cases}
+	\end{equation}\\
+	The first and second implication tells us that $r_\ast$ is surjective, and $r_\ast$ is injective, which implies that $r_\ast$ is bijective. As $r_\ast$ is a bijective homomorphism, it is an isomorphism.
+\end{proof}
+
+\vspace{0.15in}
+
+\begin{example}
+Consider $X=\mathbb{R}^2 \setminus \{(0,0)\}$ and $S^1$ as a subset of $X$. If we let $r:X \to A$ which maps $x \mapsto \frac{x}{|x|}$. Then such $r$ is a deformation retract as :
+\begin{enumerate}[label=\roman*)]
+	\item $r\circ \iota_A = id_A$
+	\vskip 0.5ex  
+	For $\forall a \in S^1 : \left( r \circ \iota_A \right) \left( a \right) = a / |a| = a$. Thus it holds.
+	\item $\iota_A \circ r \simeq id_X$
+	\vskip 0.5ex
+	Define $F:X\times [0,1] \to X$ which maps $(x,t) \mapsto \frac{x}{|x|^t}$. Such $F$ lets $\iota_A$ homotopic to $r$. Thus the above holds.
+\end{enumerate}
+Then due to \textbf{Thm 18}, as $r$ is a deformation retract  $\pi_1\left(\mathbb{R}\setminus \{0\} \right) \simeq \pi_1 \left( S^1 \right) \simeq \mathbb{Z}$.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{example}
+	Let $M$ be a M$\ddot{o}$bius strip. Then $S^1$ is a deformation retract of $X$, thus $\pi_1(M)\simeq\pi_1(S^1)\simeq \mathbb{Z}$.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{example}
+	Let $X$ be a puncutred 2-torus, i.e $X=T^2\setminus \{ p \}$ for some $p \in T^2$. Then $S^1 \vee S^1$ is a deformation retract of $X$. Thus $\pi_1\left( T^2 \setminus \{p\} \right) \simeq \pi_1 \left( S^1 \vee S^1 \right) \simeq \mathbb{Z} \ast \mathbb{Z}$.
+\end{example}
+
+\vspace{0.15in}
+
+\begin{definition}
+Let $X,Y$ be topological spaces. 
+\begin{enumerate}[label=(\arabic*)]
+	\item Then a map $f:X\to Y$ is a \textbf{homotopy equivalence} if 
+	\begin{enumerate}[label=\roman*)]
+		\item 
+		\item 
+	\end{enumerate}
+	\item We say that $X$ is \textbf{homotopy equivalent} to $Y$ if there exists a homotopy equivalence between $X$ and $Y$.
+\end{enumerate}
+\end{definition}
+
+\vspace{0.15in}
+
+\begin{theorem}
+Again let $X,Y$ be topological spaces. Then,
+\begin{enumerate}[label=\arabic*)]
+	\item $X \cong Y \implies X \simeq Y$
+	\item $f:X\to Y$ is a homeomorphism $\implies$ $f$ is a homotopy equivalence.
+	\item Homotopy equivalence is an equivalence relation.
+\end{enumerate}
+\end{theorem}
+
+\vspace{0.15in}
+
+\begin{theorem}
+If $f:X\to Y$ is a homotopy equivalence then $f_\ast : \pi_1(X) \to \pi_1(Y)$ is an isomorphism.\\
+\end{theorem}
+
+\begin{proof}
+	As $f$ is a homotopy equivalence $\exists g: Y \to X$ such that $g \circ f \simeq id_X$ and $f \circ g \simeq id_Y$. This implies that $g_\ast \circ f_\ast$ and $f_\ast \circ g_\ast$ are both an isomorphism, which again implies that $f_\ast$ is an isomorphism.
+\end{proof}
+
+\vspace{0.15in}
+
+\begin{corollary}
+	$X\simeq Y \implies \pi_1(X) \simeq \pi_1(Y)$
+\end{corollary}
+
+\vspace{0.15in}
+
+\begin{lemma}
+Let $A \subset X$ and $r:X\to A$ be a deformation retraction. Then $r$ is a homotopy equivalence.\\
+\end{lemma}
+
+\begin{proof}
+	content...
+\end{proof}
+
+\vspace{0.15in}
+
+\begin{remark}
+To sum up every situation :\\
+\begin{equation}\nonumber
+\begin{split}
+ SDR \implies &DR \implies R \\
+ &\Downarrow \\
+ X\cong Y \implies X &\simeq Y \\
+  &\Downarrow \\
+  \pi_1(X) &\simeq \pi_1(Y)
+\end{split}
+\end{equation}
+\end{remark}
+
+\section{The Seifert-van Kampen Theorem}
 
 \end{document}
